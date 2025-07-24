@@ -1,3 +1,9 @@
+import { NavBar } from "@/components/navbar";
+
 export default function IndexPage() {
-  return <h1>Welcome to Sibol</h1>;
+  return (
+    <div>
+      <NavBar />
+    </div>
+  );
 }
