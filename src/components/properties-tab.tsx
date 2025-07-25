@@ -7,10 +7,11 @@ import {
 } from "@tabler/icons-react";
 
 import { PropSearchContent } from "./prop-search-content";
+import { PropTourContent } from "./prop-virtual-tour-content";
 
 export const PropertiesTab = () => {
   return (
-    <div className="flex w-full flex-col p-10 container mx-auto">
+    <div className="flex w-full flex-col p-8 container mx-auto">
       <Tabs aria-label="Options" color="primary">
         <Tab
           key="/prop-search"
@@ -47,12 +48,7 @@ export const PropertiesTab = () => {
             </div>
           }
         >
-          <Card>
-            <CardBody>
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-              officia deserunt mollit anim id est laborum.
-            </CardBody>
-          </Card>
+          <PropTourContent />
         </Tab>
         <Tab
           key="/market-insights"

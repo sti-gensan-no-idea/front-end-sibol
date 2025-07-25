@@ -40,7 +40,7 @@ export const PropSearchContent = () => {
       </div>
 
       {/* Content List */}
-      <div className="flex flex-col gap-6 mt-8">
+      <div className="flex flex-col gap-6 mt-16">
         <div className="p-8 w-full h-60 rounded-large bg-gray-300" />
         <div className="p-8 w-full h-60 rounded-large bg-gray-300" />
         <div className="p-8 w-full h-60 rounded-large bg-gray-300" />
