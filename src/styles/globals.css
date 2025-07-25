@@ -121,3 +121,7 @@
 * {
   font-family: Roboto, Poppins, sans-serif;
 }
+
+img {
+  user-select: none;
+}
