@@ -1,7 +1,10 @@
+import { useLocation } from "react-router-dom";
 import { Button, Navbar, Tab, Tabs } from "@heroui/react";
 import { IconArrowNarrowRight } from "@tabler/icons-react";
 
 export const NavBar = () => {
+  const { pathname } = useLocation();
+
   return (
     <Navbar
       className="border-t-4 border-solid border-t-primary h-30"
@@ -16,13 +19,14 @@ export const NavBar = () => {
             <Tabs
               aria-label="Tabs variants"
               color="primary"
+              selectedKey={pathname}
               size="lg"
               variant="underlined"
             >
-              <Tab key="home" href="/" title="Home" />
-              <Tab key="properties" href="/properties" title="Properties" />
-              <Tab key="contact" href="#contact" title="Contact" />
-              <Tab key="about" href="#about-us" title="About Us" />
+              <Tab key="/" href="/" title="Home" />
+              <Tab key="/properties" href="/properties" title="Properties" />
+              <Tab key="/contact" href="/contact" title="Contact" />
+              <Tab key="/about-us" href="/about-us" title="About Us" />
             </Tabs>
           </div>
         </div>
