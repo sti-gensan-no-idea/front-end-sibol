@@ -8,7 +8,7 @@ import {
   Select,
   SelectItem,
 } from "@heroui/react";
-import { list } from "postcss";
+import { IconView360Number } from "@tabler/icons-react";
 
 export const PropTourContent = () => {
   const sortOptions = [
@@ -25,8 +25,8 @@ export const PropTourContent = () => {
   const properties = [
     {
       title: "Property name here",
-      img: "https://images.pexels.com/photos/221540/pexels-photo-221540.jpeg",
-      price: "$5.50",
+      img: "https://images.pexels.com/photos/323776/pexels-photo-323776.jpeg",
+      price: "₱5,300",
       address: "Provido Village City Heights, General Santos City.",
       bed: 3,
       bathroom: 2,
@@ -35,7 +35,7 @@ export const PropTourContent = () => {
     {
       title: "Property name here",
       img: "https://images.pexels.com/photos/3555615/pexels-photo-3555615.jpeg",
-      price: "$3.00",
+      price: "₱3,250",
       address: "Provido Village City Heights, General Santos City.",
       bed: 3,
       bathroom: 2,
@@ -44,7 +44,7 @@ export const PropTourContent = () => {
     {
       title: "Property name here",
       img: "https://images.pexels.com/photos/28272345/pexels-photo-28272345.jpeg",
-      price: "$10.00",
+      price: "₱8,000",
       address: "Provido Village City Heights, General Santos City.",
       bed: 3,
       bathroom: 2,
@@ -52,8 +52,8 @@ export const PropTourContent = () => {
     },
     {
       title: "Property name here",
-      img: "https://images.pexels.com/photos/221540/pexels-photo-221540.jpeg",
-      price: "$5.50",
+      img: "https://images.pexels.com/photos/4839348/pexels-photo-4839348.jpeg",
+      price: "₱5,300",
       address: "Provido Village City Heights, General Santos City.",
       bed: 3,
       bathroom: 2,
@@ -61,8 +61,8 @@ export const PropTourContent = () => {
     },
     {
       title: "Property name here",
-      img: "https://images.pexels.com/photos/3555615/pexels-photo-3555615.jpeg",
-      price: "$3.00",
+      img: "https://images.pexels.com/photos/5644337/pexels-photo-5644337.jpeg",
+      price: "₱3,250",
       address: "Provido Village City Heights, General Santos City.",
       bed: 3,
       bathroom: 2,
@@ -70,8 +70,8 @@ export const PropTourContent = () => {
     },
     {
       title: "Property name here",
-      img: "https://images.pexels.com/photos/28272345/pexels-photo-28272345.jpeg",
-      price: "$10.00",
+      img: "https://images.pexels.com/photos/24245793/pexels-photo-24245793.jpeg",
+      price: "₱8,000",
       address: "Provido Village City Heights, General Santos City.",
       bed: 3,
       bathroom: 2,
@@ -79,8 +79,8 @@ export const PropTourContent = () => {
     },
     {
       title: "Property name here",
-      img: "https://images.pexels.com/photos/221540/pexels-photo-221540.jpeg",
-      price: "$5.50",
+      img: "https://images.pexels.com/photos/5524166/pexels-photo-5524166.jpeg",
+      price: "₱5,300",
       address: "Provido Village City Heights, General Santos City.",
       bed: 3,
       bathroom: 2,
@@ -88,8 +88,8 @@ export const PropTourContent = () => {
     },
     {
       title: "Property name here",
-      img: "https://images.pexels.com/photos/3555615/pexels-photo-3555615.jpeg",
-      price: "$3.00",
+      img: "https://images.pexels.com/photos/6035315/pexels-photo-6035315.jpeg",
+      price: "₱3,250",
       address: "Provido Village City Heights, General Santos City.",
       bed: 3,
       bathroom: 2,
@@ -97,8 +97,8 @@ export const PropTourContent = () => {
     },
     {
       title: "Property name here",
-      img: "https://images.pexels.com/photos/28272345/pexels-photo-28272345.jpeg",
-      price: "$10.00",
+      img: "https://images.pexels.com/photos/11018238/pexels-photo-11018238.jpeg",
+      price: "₱8,000",
       address: "Provido Village City Heights, General Santos City.",
       bed: 3,
       bathroom: 2,
@@ -143,13 +143,16 @@ export const PropTourContent = () => {
             shadow="sm"
             onPress={() => console.log("item pressed")}
           >
-            <CardBody className="overflow-visible p-0">
+            <CardBody className="overflow-visible p-0 relative">
               <img
                 alt={property.title}
                 className="w-full object-cover h-[232px]"
                 src={property.img}
                 width="100%"
               />
+              <div className="absolute bg-black/50 right-4 bottom-4 p-2 rounded-full">
+                <IconView360Number color="white" size={26} />
+              </div>
             </CardBody>
             <CardFooter className="p-6">
               <div className="flex flex-col w-full">
@@ -157,9 +160,9 @@ export const PropTourContent = () => {
                   <span className="flex text-2xl text-primary">
                     {property.price}
                   </span>
-                  <span className="text-foreground-700 ml-2">/ month</span>
+                  <span className="text-foreground-500 ml-2">/ month</span>
                 </div>
-                <span className="flex font-bold text-4xl mt-3">
+                <span className="flex text-3xl mt-3 text-foreground-700 font-bold">
                   {property.title}
                 </span>
                 <span className="text-foreground-500 mt-3 flex">
