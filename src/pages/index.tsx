@@ -4,7 +4,7 @@ import { Features } from "@/components/features";
 import { Footer } from "@/components/footer";
 import { AboutUs } from "@/components/about-us";
 
-export default function IndexPage() {
+export const IndexPage = () => {
   return (
     <div>
       <NavBar />
@@ -14,4 +14,4 @@ export default function IndexPage() {
       <Footer />
     </div>
   );
-}
+};

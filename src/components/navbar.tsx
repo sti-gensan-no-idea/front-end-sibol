@@ -9,7 +9,9 @@ export const NavBar = () => {
     >
       <div className="flex flex-col justify-between">
         <div>
-          <h1 className="text-3xl ml-4 font-bold">Sibol Homes</h1>
+          <h1 className="text-3xl ml-4 font-bold text-foreground-700">
+            Sibol Homes
+          </h1>
           <div className="flex flex-wrap gap-4">
             <Tabs
               aria-label="Tabs variants"
@@ -17,10 +19,10 @@ export const NavBar = () => {
               size="lg"
               variant="underlined"
             >
-              <Tab key="home" title="Home" />
-              <Tab key="properties" title="Properties" />
-              <Tab key="contact" title="Contact" />
-              <Tab key="about" title="About Us" />
+              <Tab key="home" href="/" title="Home" />
+              <Tab key="properties" href="/properties" title="Properties" />
+              <Tab key="contact" href="#contact" title="Contact" />
+              <Tab key="about" href="#about-us" title="About Us" />
             </Tabs>
           </div>
         </div>
