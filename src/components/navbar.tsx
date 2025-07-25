@@ -4,12 +4,12 @@ import { IconArrowNarrowRight } from "@tabler/icons-react";
 export const NavBar = () => {
   return (
     <Navbar
-      className="border-t-4 border-solid border-t-primary h-26"
+      className="border-t-4 border-solid border-t-primary h-30"
       maxWidth="full"
     >
       <div className="flex flex-col justify-between">
         <div>
-          <h1 className="text-2xl ml-4 font-bold">Sibol Homes</h1>
+          <h1 className="text-3xl ml-4 font-bold">Sibol Homes</h1>
           <div className="flex flex-wrap gap-4">
             <Tabs
               aria-label="Tabs variants"
