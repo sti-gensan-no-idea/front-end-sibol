@@ -1,76 +1,69 @@
-import { Button, Link } from "@heroui/react";
-import {
-  IconBrandInstagram,
-  IconBrandFacebook,
-  IconBrandYoutube,
-} from "@tabler/icons-react";
+import { Link } from "@heroui/link";
+
+import ImgFooterBackground from "../assets/images/img_footer_background.jpg";
 
 export const Footer = () => {
   return (
-    <footer className="bg-gray-500 text-white p-8 ">
-      <div className="container mx-auto flex flex-col">
-        <div className="grid grid-cols-3 gap-8">
+    <footer className="min-h-screen relative overflow-y-hidden">
+      <img
+        alt="Footer Background"
+        className="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-cover -z-10"
+        src={ImgFooterBackground}
+      />
+      <span
+        className="flex items-center justify-center absolute bottom-0 left-0 right-0 text-center text-white font-bold select-none -z-10"
+        style={{ fontSize: 300 }}
+      >
+        sibolhomes
+      </span>
+      <div className="container mx-auto">
+        <div className="mt-20 bg-white rounded-2xl shadow-large shadow-gray-300 p-14 flex">
+          <div className="flex flex-col w-full">
+            <span className="text-4xl font-bold">SibolHomes</span>
+            <p className="max-w-sm mt-4">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
+              ornare rutrum sem, eget maximus mauris lobortis a.
+            </p>
+          </div>
           <div>
-            <h1 className="text-2xl font-bold">SIBOL</h1>
-            <ul className="mt-4 flex items-start gap-8">
-              <li>
-                <Link className="text-white" href="/home" underline="always">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="text-white"
-                  href="/properties"
-                  underline="always"
-                >
-                  Properties
-                </Link>
-              </li>
-              <li>
-                <Link className="text-white" href="/account" underline="always">
-                  Account
-                </Link>
-              </li>
-            </ul>
+            <span className="font-bold text-xl">Address</span>
+            <p className="mt-4 max-w-sm">
+              Tiongson Street, San Pedro Barangay Lagao
+            </p>
+          </div>
+          <div className="ml-8">
+            <span className="font-bold text-xl">Contact</span>
+            <p className="mt-4 max-w-sm">
+              rolandoferrer@hotmail.com +1 (09) 2359345t
+            </p>
           </div>
         </div>
-
-        <div className="mt-8 flex items-center justify-between">
-          <p>
-            Copyright &copy; {new Date().getFullYear()} Sibol. All rights
-            reserved.
-          </p>
-          <div className="flex items-center justify-center">
-            <Button
-              isIconOnly
-              aria-label="Take a photo"
-              className="text-white"
-              radius="full"
-              variant="light"
-            >
-              <IconBrandFacebook />
-            </Button>
-            <Button
-              isIconOnly
-              aria-label="Take a photo"
-              className="ml-4 text-white"
-              radius="full"
-              variant="light"
-            >
-              <IconBrandInstagram />
-            </Button>
-            <Button
-              isIconOnly
-              aria-label="Take a photo"
-              className="ml-4 text-white"
-              radius="full"
-              variant="light"
-            >
-              <IconBrandYoutube />
-            </Button>
-          </div>
+        <div className="text-white p-14">
+          <span className="font-bold text-xl">Quick Menu</span>
+          <ul className="flex gap-4 mt-4">
+            <li>
+              <Link className="text-white" href="#" underline="hover">
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link className="text-white" href="#" underline="hover">
+                Properties
+              </Link>
+            </li>
+            <li>
+              <Link className="text-white" href="#" underline="hover">
+                Contacts
+              </Link>
+            </li>
+            <li>
+              <Link className="text-white" href="#" underline="hover">
+                About Us
+              </Link>
+            </li>
+          </ul>
         </div>
+        <div className="h-screen" />
       </div>
     </footer>
   );
