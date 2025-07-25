@@ -8,6 +8,7 @@ import {
 
 import { PropSearchContent } from "./prop-search-content";
 import { PropTourContent } from "./prop-virtual-tour-content";
+import { PropInsightsContent } from "./prop-ai-chat-content";
 
 export const PropertiesTab = () => {
   return (
@@ -58,12 +59,7 @@ export const PropertiesTab = () => {
             </div>
           }
         >
-          <Card>
-            <CardBody>
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-              officia deserunt mollit anim id est laborum.
-            </CardBody>
-          </Card>
+          <PropInsightsContent />
         </Tab>
       </Tabs>
     </div>
