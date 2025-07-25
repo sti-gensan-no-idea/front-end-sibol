@@ -1,6 +1,6 @@
 import { Link } from "@heroui/link";
 
-import ImgFooterBackground from "../assets/images/img_footer_background.jpg";
+import ImgFooterBackground from "../assets/images/img_footer_background.png";
 
 export const Footer = () => {
   return (
@@ -10,13 +10,14 @@ export const Footer = () => {
         className="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-cover -z-10"
         src={ImgFooterBackground}
       />
+      <div className="absolute inset-0 bg-black/70 -z-10" />
       <span
         className="flex items-center justify-center absolute bottom-0 left-0 right-0 text-center text-white font-bold select-none -z-10"
         style={{ fontSize: 300 }}
       >
         sibolhomes
       </span>
-      <div className="container mx-auto">
+      <div className="container mx-auto z-20">
         <div className="mt-20 bg-white rounded-2xl shadow-large shadow-gray-300 p-14 flex">
           <div className="flex flex-col w-full">
             <span className="text-4xl font-bold">SibolHomes</span>
