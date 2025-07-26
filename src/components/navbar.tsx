@@ -24,7 +24,11 @@ export const NavBar = () => {
               variant="underlined"
             >
               <Tab key="/" href="/" title="Home" />
-              <Tab key="/properties" href="/properties" title="Properties" />
+              <Tab
+                key="/properties"
+                href="/properties?tab=search_properties"
+                title="Properties"
+              />
               <Tab key="/contact" href="/contact" title="Contact" />
               <Tab key="/about-us" href="/about-us" title="About Us" />
             </Tabs>
