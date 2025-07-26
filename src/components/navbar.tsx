@@ -37,7 +37,13 @@ export const NavBar = () => {
         </div>
       </div>
       <div className="flex items-center justify-center">
-        <Button className="mr-3" color="primary" radius="full" variant="ghost">
+        <Button
+          className="mr-3"
+          color="primary"
+          radius="full"
+          variant="ghost"
+          onPress={() => navigate("/sign-in")}
+        >
           Sign In
         </Button>
         <Button

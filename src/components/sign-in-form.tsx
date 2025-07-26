@@ -1,12 +1,7 @@
 import { Button, Divider, Input, Link } from "@heroui/react";
-import {
-  IconMailFilled,
-  IconUserFilled,
-  IconLockFilled,
-  IconMapPinFilled,
-} from "@tabler/icons-react";
+import { IconMailFilled, IconLockFilled } from "@tabler/icons-react";
 
-export const SignUpCardForm = () => {
+export const SignInCardForm = () => {
   return (
     <div className="container mx-auto p-8 h-screen flex flex-col items-center justify-center relative">
       <div className="absolute top-46 -left-10 w-72 h-72 bg-green-300 rounded-full blur-3xl opacity-30 -z-10" />
@@ -15,25 +10,19 @@ export const SignUpCardForm = () => {
 
       <div
         className="w-lg mx-auto bg-white rounded-2xl shadow-large shadow-gray-300 p-8
-        flex
-        flex-col
+		  flex
+		  flex-col
 				items-center
 				justify-center
-        z-10"
+		  z-10"
       >
         <span className="flex items-center justify-center text-foreground-700 text-4xl mt-4 font-bold">
-          Create your Account
+          Welcome Back!
         </span>
         <span className="flex items-center justify-center text-foreground-700 mt-3">
-          Join thousands of properties enthusiasts
+          Answers to your real estate questions and concerns
         </span>
         <div className="flex flex-col w-full mt-8">
-          <Input
-            label="Full name"
-            placeholder="Full name"
-            startContent={<IconUserFilled />}
-            type="text"
-          />
           <Input
             className="mt-4"
             label="Email"
@@ -43,36 +32,27 @@ export const SignUpCardForm = () => {
           />
           <Input
             className="mt-4"
-            label="Home address"
-            placeholder="Complete home address"
-            startContent={<IconMapPinFilled />}
-            type="text"
-          />
-          <Input
-            className="mt-4"
-            label="Set password"
-            placeholder="Set password"
+            label="Password"
+            placeholder="Password"
             startContent={<IconLockFilled />}
             type="password"
           />
-          <Input
-            className="mt-4"
-            label="Confirm password"
-            placeholder="Confirm password"
-            startContent={<IconLockFilled />}
-            type="password"
-          />
+          <div className="flex justify-end mt-4">
+            <Link color="foreground" href="/recover-account" underline="hover">
+              Forgot password?
+            </Link>
+          </div>
         </div>
         <Button className="mt-8 w-full" color="primary">
-          Submit
+          Sign In
         </Button>
         <Divider className="mt-4" />
         <div className="flex items-center justify-center w-full mt-10">
           <span className="text-foreground-700 flex justify-center items-center">
-            Already have an account?
+            Don&apos;t have an account?
           </span>
           <Link className="ml-3 cursor-pointer" underline="hover">
-            Sign In
+            Create an Account
           </Link>
         </div>
       </div>
