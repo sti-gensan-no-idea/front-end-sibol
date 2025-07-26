@@ -103,7 +103,6 @@ export const PropSearchContent = () => {
       {/* Pagination */}
       <div className="flex items-center justify-center mt-16 mb-24">
         <Pagination
-          isCompact
           showControls
           boundaries={1}
           color="primary"
