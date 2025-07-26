@@ -6,6 +6,7 @@ import {
   CardFooter,
   Divider,
   Input,
+  Pagination,
   Select,
   SelectItem,
 } from "@heroui/react";
@@ -189,6 +190,11 @@ export const PropTourContent = () => {
             </CardFooter>
           </Card>
         ))}
+      </div>
+
+      {/* Pagination */}
+      <div className="flex items-center justify-center mt-16 mb-24">
+        <Pagination isCompact showControls initialPage={1} total={10} />
       </div>
     </div>
   );

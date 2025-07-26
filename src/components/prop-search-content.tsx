@@ -1,4 +1,4 @@
-import { Button, Input, Select, SelectItem } from "@heroui/react";
+import { Button, Input, Pagination, Select, SelectItem } from "@heroui/react";
 
 export const PropSearchContent = () => {
   const sortOptions = [
@@ -45,6 +45,11 @@ export const PropSearchContent = () => {
         <div className="p-8 w-full h-60 rounded-large bg-gray-300" />
         <div className="p-8 w-full h-60 rounded-large bg-gray-300" />
         <div className="p-8 w-full h-60 rounded-large bg-gray-300" />
+      </div>
+
+      {/* Pagination */}
+      <div className="flex items-center justify-center mt-16 mb-24">
+        <Pagination isCompact showControls initialPage={1} total={10} />
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import {
   IconArrowsHorizontal,
   IconSearch,
 } from "@tabler/icons-react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 import { PropSearchContent } from "./prop-search-content";
 import { PropTourContent } from "./prop-virtual-tour-content";
@@ -15,8 +15,8 @@ export const PropertiesTab = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const tab = searchParams.get("tab") || "search_properties";
 
-  const handleTabChange = (key: string) => {
-    setSearchParams({ tab: key });
+  const handleTabChange = (key: React.Key) => {
+    setSearchParams({ tab: String(key) });
   };
 
   return (
