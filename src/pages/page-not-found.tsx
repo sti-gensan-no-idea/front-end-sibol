@@ -1,9 +1,14 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@heroui/button";
 import { IconArrowNarrowRight } from "@tabler/icons-react";
 
 export const NotFoundPage = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = "Page Not Found | Sibol";
+  }, []);
 
   return (
     <div className="flex items-center justify-center flex-col h-screen">
