@@ -1,4 +1,5 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   Button,
   Card,
@@ -14,6 +15,12 @@ import { IconView360Number } from "@tabler/icons-react";
 
 export const PropTourContent = () => {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Set up pagination state from URL
+  const pageParam = parseInt(searchParams.get("page") || "1", 10);
+  const [currentPage, setCurrentPage] = useState(pageParam);
+  const itemsPerPage = 6;
 
   const sortOptions = [
     { key: "name", label: "Name" },
@@ -119,6 +126,18 @@ export const PropTourContent = () => {
     },
   ];
 
+  const totalPages = Math.ceil(properties.length / itemsPerPage);
+
+  const paginatedProperties = useMemo(() => {
+    const start = (currentPage - 1) * itemsPerPage;
+
+    return properties.slice(start, start + itemsPerPage);
+  }, [currentPage, properties]);
+
+  useEffect(() => {
+    setSearchParams({ page: currentPage.toString(), tab: "virtual_tour" });
+  }, [currentPage, setSearchParams]);
+
   return (
     <div>
       {/* Search Property */}
@@ -148,8 +167,7 @@ export const PropTourContent = () => {
 
       {/* Content List */}
       <div className="mt-16 gap-4 grid grid-cols-3">
-        {properties.map((property, index) => (
-          /* eslint-disable no-console */
+        {paginatedProperties.map((property, index) => (
           <Card
             key={index}
             isPressable
@@ -193,8 +211,14 @@ export const PropTourContent = () => {
       </div>
 
       {/* Pagination */}
-      <div className="flex items-center justify-center mt-16 mb-24">
-        <Pagination isCompact showControls initialPage={1} total={10} />
+      <div className="flex items-center justify-center mt-16">
+        <Pagination
+          isCompact
+          showControls
+          page={currentPage}
+          total={totalPages}
+          onChange={(page) => setCurrentPage(page)}
+        />
       </div>
     </div>
   );
