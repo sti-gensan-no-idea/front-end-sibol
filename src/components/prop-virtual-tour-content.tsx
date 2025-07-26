@@ -80,6 +80,7 @@ export const PropTourContent = () => {
           <Card
             key={index}
             isPressable
+            className="shadow-medium shadow-gray-300 "
             shadow="sm"
             onPress={() => navigate(`/properties/preview?id=${property.id}`)}
           >
