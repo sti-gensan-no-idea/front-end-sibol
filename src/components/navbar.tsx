@@ -1,8 +1,9 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Navbar, Tab, Tabs } from "@heroui/react";
 import { IconArrowNarrowRight } from "@tabler/icons-react";
 
 export const NavBar = () => {
+  const navigate = useNavigate();
   const { pathname } = useLocation();
 
   return (
@@ -39,7 +40,12 @@ export const NavBar = () => {
         <Button className="mr-3" color="primary" radius="full" variant="ghost">
           Sign In
         </Button>
-        <Button color="primary" radius="full" variant="shadow">
+        <Button
+          color="primary"
+          radius="full"
+          variant="shadow"
+          onPress={() => navigate("/sign-up")}
+        >
           Get Started
           <IconArrowNarrowRight />
         </Button>
