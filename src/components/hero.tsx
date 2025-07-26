@@ -10,7 +10,7 @@ export const Hero = () => {
         className="absolute inset-0 w-full h-full object-cover z-0"
         src={ImgHeroBackground}
       />
-      <div className="h-full w-full absolute z-0 bg-gradient-to-b from-white to-transparent" />
+      <div className="h-2/3 w-full absolute top-0 z-0 bg-gradient-to-b from-white to-transparent" />
 
       <div className="z-10 flex flex-col absolute top-20 left-20">
         <h1 className="text-6xl font-bold text-foreground-700">Dream Home</h1>
