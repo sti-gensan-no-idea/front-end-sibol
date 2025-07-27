@@ -15,8 +15,11 @@ import {
   Chip,
   Tab,
   Tabs,
+  Divider,
 } from "@heroui/react";
+import { IconMapPinFilled } from "@tabler/icons-react";
 import { ReactPhotoSphereViewer } from "react-photo-sphere-viewer";
+import GoogleMapReact from "google-map-react";
 
 import ImgPanorama1 from "../assets/images/panorama_1.jpg";
 
@@ -27,7 +30,7 @@ export const PropSearchContent = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   // Extract query params
-  const initialSearch = searchParams.get("search") || "";
+  const initialSearch = searchParams.get("query") || "";
   const initialPage = parseInt(searchParams.get("page") || "1", 10);
 
   // Local state for form input and page
@@ -45,7 +48,7 @@ export const PropSearchContent = () => {
     };
 
     if (searchQuery.trim()) {
-      params.search = searchQuery.trim();
+      params.query = searchQuery.trim();
     }
 
     setSearchParams(params);
@@ -74,6 +77,14 @@ export const PropSearchContent = () => {
   const handleSearch = () => {
     setSearchQuery(searchInput.trim());
     setCurrentPage(1);
+  };
+
+  const defaultProps = {
+    center: {
+      lat: 6.114793507477916,
+      lng: 125.18320806965825,
+    },
+    zoom: 14,
   };
 
   return (
@@ -183,19 +194,35 @@ export const PropSearchContent = () => {
                         Luxe Living Properties
                       </span>
                       <div className="flex gap-3 mt-3">
-                        <Chip>Modern</Chip>
-                        <Chip>2 Bathrooms</Chip>
-                        <Chip>120 sq. ft.</Chip>
+                        <Chip size="sm" variant="flat">
+                          Modern
+                        </Chip>
+                        <Chip size="sm" variant="flat">
+                          2 Bathrooms
+                        </Chip>
+                        <Chip size="sm" variant="flat">
+                          120 sq. ft.
+                        </Chip>
                       </div>
-                      <p className="mt-4 text-foreground-500">
-                        Superville Subdivision, General Santos City
-                      </p>
-                      <span className="text-3xl mt-8 flex">₱ 5,00,000,000</span>
-                      <div className="mt-8">
-                        <Button color="primary" variant="shadow">
+                      <div className="mt-4 text-foreground-500 italic flex items-center">
+                        <IconMapPinFilled className="mr-3" size={18} />
+                        <p>
+                          Zone 5-B Provido Village City Heights, General Santos
+                          City.
+                        </p>
+                      </div>
+                      <span className="text-3xl mt-8 flex font-bold">
+                        ₱ 5,00,000,000
+                      </span>
+                      <div className="mt-8 flex">
+                        <Button
+                          className="w-full"
+                          color="primary"
+                          variant="shadow"
+                        >
                           Schedule Viewing
                         </Button>
-                        <Button className="ml-4">Contact Agent</Button>
+                        <Button className="ml-4 w-full">Contact Agent</Button>
                       </div>
                       <span className="mt-8 flex text-2xl font-bold text-foreground-700">
                         Description
@@ -206,27 +233,110 @@ export const PropSearchContent = () => {
                         magna aliqua. Ut enim ad minim veniam, quis nostrud
                         exercitation ullamco laboris nisi ut aliquip ex ea
                         commodo consequat.
-                        <br /> <br />
-                        Duis aute irure dolor in reprehenderit in voluptate
-                        velit esse cillum dolore eu fugiat nulla pariatur.
-                        Excepteur sint occaecat cupidatat non proident.
+                        <br />
+                        <br />
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat.
+                        <br />
+                        <br />
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat.
                       </p>
                     </div>
 
                     {/* More Info Section */}
                     <div className="p-8">
-                      <div className="bg-white rounded-2xl h-full shadow-medium shadow-gray-300 p-6 flex flex-col z-10" />
+                      <div className="bg-white rounded-2xl shadow-medium shadow-gray-300 p-6 flex flex-col z-10">
+                        {/* Total Info */}
+
+                        <div className="flex items-center justify-between text-lg font-bold text-foreground-700">
+                          <span>Down Payment</span>
+                          <span>₱ 10,000</span>
+                        </div>
+                        <span className="text-sm text-foreground-500 mt-4">
+                          Only 20% down payment.
+                        </span>
+
+                        <Divider className="mt-3" />
+                        <div className="mt-4 flex items-center justify-between text-lg font-bold text-foreground-700">
+                          <span>Monthly Payment</span>
+                          <span>₱ 5,000</span>
+                        </div>
+                        <div className="mt-4 flex items-center justify-between text-sm text-foreground-500">
+                          <span>Loan</span>
+                          <span>30-year fixed loan at 6.316%</span>
+                        </div>
+                        {/* Bar Chart */}
+                        <div className="mt-4 w-full h-3 flex rounded overflow-hidden gap-1">
+                          <div className="rounded-sm bg-blue-600 w-[80%]" />
+                          <div className="rounded-sm bg-purple-500 w-[9%]" />
+                          <div className="rounded-sm bg-green-400 w-[11%]" />
+                        </div>
+                        {/* Legend */}
+                        <div className="flex flex-col mt-4">
+                          <div className="flex items-center mb-2">
+                            <div className="h-3 w-3 min-w-3 rounded-full bg-blue-600" />
+                            <span className="ml-2 text-sm text-foreground-500">
+                              Principal &amp; Interest
+                            </span>
+                            <span className="font-bold ml-auto text-foreground-700 text-sm">
+                              ₱ 500
+                            </span>
+                          </div>
+                          <div className="flex items-center mb-2">
+                            <div className="h-3 w-3 min-w-3 rounded-full bg-purple-500" />
+                            <span className="ml-2 text-sm text-foreground-500">
+                              Property Tax
+                            </span>
+                            <span className="font-bold ml-auto text-foreground-700 text-sm">
+                              ₱ 1,230
+                            </span>
+                          </div>
+                          <div className="flex items-center mb-2">
+                            <div className="h-3 w-3 min-w-3 rounded-full bg-green-400" />
+                            <span className="ml-2 text-sm text-foreground-500">
+                              Home Insurance
+                            </span>
+                            <span className="font-bold ml-auto text-foreground-700 text-sm">
+                              ₱ 700
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Map Preview */}
+                      <div className="mt-8 bg-white rounded-2xl shadow-medium shadow-gray-300 flex flex-col z-10 overflow-hidden">
+                        <div className="aspect-video w-full">
+                          <GoogleMapReact
+                            bootstrapURLKeys={{ key: "" }}
+                            defaultCenter={defaultProps.center}
+                            defaultZoom={defaultProps.zoom}
+                          />
+                        </div>
+                        <div className="bg-white p-4">
+                          <span className="text-sm text-foreground-500">
+                            Zone 5-B Provido Village City Heights, General
+                            Santos City.
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
                   {/* 360 Preview */}
                   <Tabs
                     aria-label="Options"
-                    className="mt-8"
+                    className="mt-10"
                     color="primary"
                     radius="full"
-                    size="sm"
-                    variant="bordered"
+                    size="lg"
+                    variant="underlined"
                   >
                     <Tab key="living-room" title="Living Room">
                       <ReactPhotoSphereViewer
