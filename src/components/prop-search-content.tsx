@@ -21,7 +21,10 @@ import { IconMapPinFilled } from "@tabler/icons-react";
 import { ReactPhotoSphereViewer } from "react-photo-sphere-viewer";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 
-import ImgPanorama1 from "../assets/images/panorama_1.jpg";
+import ImgPanoramaDining from "../assets/images/panorama_1.jpg";
+import ImgPanoramaBedRoom from "../assets/images/panorama_bed_room.jpg";
+import ImgPanoramaKitchen from "../assets/images/panorama_kitchen.jpg";
+import ImgPanoramaLiving from "../assets/images/panorama_living_room.jpg";
 
 import { properties_data } from "@/data/properties_data";
 
@@ -370,35 +373,35 @@ export const PropSearchContent = () => {
                     <Tab key="living-room" title="Living Room">
                       <ReactPhotoSphereViewer
                         height={"36vh"}
-                        src={ImgPanorama1}
+                        src={ImgPanoramaLiving}
                         width={"100%"}
                       />
                     </Tab>
                     <Tab key="family-room" title="Family Room">
                       <ReactPhotoSphereViewer
                         height={"36vh"}
-                        src={ImgPanorama1}
+                        src={ImgPanoramaDining}
                         width={"100%"}
                       />
                     </Tab>
                     <Tab key="bedroom" title="Bedroom">
                       <ReactPhotoSphereViewer
                         height={"36vh"}
-                        src={ImgPanorama1}
+                        src={ImgPanoramaBedRoom}
                         width={"100%"}
                       />
                     </Tab>
                     <Tab key="kitchen" title="Kitchen">
                       <ReactPhotoSphereViewer
                         height={"36vh"}
-                        src={ImgPanorama1}
+                        src={ImgPanoramaKitchen}
                         width={"100%"}
                       />
                     </Tab>
                     <Tab key="dining-room" title="Dining Room">
                       <ReactPhotoSphereViewer
                         height={"36vh"}
-                        src={ImgPanorama1}
+                        src={ImgPanoramaDining}
                         width={"100%"}
                       />
                     </Tab>
