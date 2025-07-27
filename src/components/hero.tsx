@@ -4,7 +4,7 @@ import ImgHeroBackground from "../assets/images/img_hero_background.jpg";
 
 export const Hero = () => {
   return (
-    <div className="h-screen flex flex-col items-center justify-center relative">
+    <div className="flex flex-col items-center justify-center h-screen relative">
       <img
         alt="Hero Background"
         className="absolute inset-0 w-full h-full object-cover z-0"

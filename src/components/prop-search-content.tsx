@@ -17,7 +17,7 @@ import {
   Tabs,
   Divider,
 } from "@heroui/react";
-import { IconMapPinFilled } from "@tabler/icons-react";
+import { IconMapPinFilled, IconUserFilled } from "@tabler/icons-react";
 import { ReactPhotoSphereViewer } from "react-photo-sphere-viewer";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 
@@ -100,7 +100,7 @@ export const PropSearchContent = () => {
     setMap(map);
   }, []);
 
-  const onUnmount = useCallback(function callback(map: any) {
+  const onUnmount = useCallback(function callback() {
     setMap(null);
   }, []);
 
@@ -199,7 +199,7 @@ export const PropSearchContent = () => {
         onOpenChange={onOpenChange}
       >
         <ModalContent>
-          {(onClose) => (
+          {() => (
             <>
               <ModalHeader />
               <ModalBody>
@@ -228,6 +228,10 @@ export const PropSearchContent = () => {
                           City.
                         </p>
                       </div>
+                      <div className="mt-2 text-foreground-500 italic flex items-center">
+                        <IconUserFilled className="mr-3" size={18} />
+                        <p>Juanito Baldo Jr.</p>
+                      </div>
                       <span className="text-3xl mt-8 flex font-bold">
                         ₱ 5,00,000,000
                       </span>
@@ -245,13 +249,6 @@ export const PropSearchContent = () => {
                         Description
                       </span>
                       <p className="text-foreground-700 text-justify mt-3">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat.
-                        <br />
-                        <br />
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                         sed do eiusmod tempor incididunt ut labore et dolore
                         magna aliqua. Ut enim ad minim veniam, quis nostrud

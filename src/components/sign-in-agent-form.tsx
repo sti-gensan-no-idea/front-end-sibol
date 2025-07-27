@@ -1,10 +1,7 @@
-import { useNavigate } from "react-router-dom";
-import { Button, Divider, Input, Link } from "@heroui/react";
+import { Button, Input, Link } from "@heroui/react";
 import { IconMailFilled, IconLockFilled } from "@tabler/icons-react";
 
-export const SignInCardForm = () => {
-  const navigate = useNavigate();
-
+export const SignInAgentCardForm = () => {
   return (
     <div className="container mx-auto p-8 h-screen flex flex-col items-center justify-center relative">
       <div className="absolute top-46 -left-10 w-72 h-72 bg-green-300 rounded-full blur-3xl opacity-30 -z-10" />
@@ -20,10 +17,10 @@ export const SignInCardForm = () => {
 		  z-10"
       >
         <span className="flex items-center justify-center text-foreground-700 text-4xl mt-4 font-bold">
-          Welcome Back!
+          Welcome Agent!
         </span>
         <span className="flex items-center justify-center text-foreground-700 mt-3">
-          Answers to your real estate questions and concerns
+          Manage to your real estate clients
         </span>
         <div className="flex flex-col w-full mt-8">
           <Input
@@ -49,22 +46,6 @@ export const SignInCardForm = () => {
         <Button className="mt-8 w-full" color="primary">
           Sign In
         </Button>
-        <Divider className="mt-4" />
-        <Button
-          className="mt-10"
-          variant="flat"
-          onPress={() => navigate("/sign-in-agent")}
-        >
-          Sign In as Agent
-        </Button>
-        <div className="flex items-center justify-center w-full mt-4">
-          <span className="text-foreground-700 flex justify-center items-center">
-            Don&apos;t have an account?
-          </span>
-          <Link className="ml-3 cursor-pointer" underline="hover">
-            Create an Account
-          </Link>
-        </div>
       </div>
     </div>
   );
