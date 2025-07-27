@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
   Button,
@@ -19,7 +19,7 @@ import {
 } from "@heroui/react";
 import { IconMapPinFilled } from "@tabler/icons-react";
 import { ReactPhotoSphereViewer } from "react-photo-sphere-viewer";
-import GoogleMapReact from "google-map-react";
+import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 
 import ImgPanorama1 from "../assets/images/panorama_1.jpg";
 
@@ -37,6 +37,8 @@ export const PropSearchContent = () => {
   const [searchInput, setSearchInput] = useState(initialSearch);
   const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [currentPage, setCurrentPage] = useState(initialPage);
+
+  const [map, setMap] = useState(null);
 
   const itemsPerPage = 6;
 
@@ -79,13 +81,25 @@ export const PropSearchContent = () => {
     setCurrentPage(1);
   };
 
-  const defaultProps = {
-    center: {
-      lat: 6.114793507477916,
-      lng: 125.18320806965825,
-    },
-    zoom: 14,
-  };
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: "AIzaSyBh8LIlx1fHYqwxkU-8lwNOiaJgxXp0jM0",
+  });
+
+  const onLoad = useCallback(function callback(map: any) {
+    const bounds = new window.google.maps.LatLngBounds({
+      lat: 3.745,
+      lng: 38.523,
+    });
+
+    map.fitBounds(bounds);
+
+    setMap(map);
+  }, []);
+
+  const onUnmount = useCallback(function callback(map: any) {
+    setMap(null);
+  }, []);
 
   return (
     <>
@@ -313,13 +327,28 @@ export const PropSearchContent = () => {
                       {/* Map Preview */}
                       <div className="mt-8 bg-white rounded-2xl shadow-medium shadow-gray-300 flex flex-col z-10 overflow-hidden">
                         <div className="aspect-video w-full">
-                          <GoogleMapReact
-                            bootstrapURLKeys={{ key: "" }}
-                            defaultCenter={defaultProps.center}
-                            defaultZoom={defaultProps.zoom}
-                          />
+                          {isLoaded ? (
+                            <GoogleMap
+                              center={{
+                                lat: 3.745,
+                                lng: 38.523,
+                              }}
+                              mapContainerStyle={{
+                                width: "100%",
+                                height: "200px",
+                              }}
+                              zoom={10}
+                              onLoad={onLoad}
+                              onUnmount={onUnmount}
+                            >
+                              {/* Child components, such as markers, info windows, etc. */}
+                              <></>
+                            </GoogleMap>
+                          ) : (
+                            <></>
+                          )}
                         </div>
-                        <div className="bg-white p-4">
+                        <div className="bg-white pl-4 pr-4 pb-4">
                           <span className="text-sm text-foreground-500">
                             Zone 5-B Provido Village City Heights, General
                             Santos City.
