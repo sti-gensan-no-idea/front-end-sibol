@@ -86,7 +86,7 @@ export const PropSearchContent = () => {
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: "AIzaSyBh8LIlx1fHYqwxkU-8lwNOiaJgxXp0jM0",
+    googleMapsApiKey: import.meta.env.VITE_API_URL,
   });
 
   const onLoad = useCallback(function callback(map: any) {
