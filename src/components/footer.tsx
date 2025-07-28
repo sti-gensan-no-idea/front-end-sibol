@@ -7,18 +7,20 @@ export const Footer = () => {
     <footer className="min-h-screen relative overflow-y-hidden">
       <img
         alt="Footer Background"
-        className="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-cover -z-10"
+        className="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-cover"
         src={ImgFooterBackground}
       />
-      <div className="absolute inset-0 bg-black/70 -z-10" />
+      <div className="absolute inset-0 bg-black/70" />
       <span
-        className="flex items-center justify-center absolute bottom-0 left-0 right-0 text-center text-white font-bold select-none -z-10"
+        className="flex items-center justify-center absolute bottom-0 left-0 right-0 text-center text-white font-bold select-none"
         style={{ fontSize: 300 }}
       >
         sibolhomes
       </span>
-      <div className="container mx-auto z-20">
-        <div className="mt-20 bg-white rounded-2xl shadow-large shadow-gray-300 p-14 flex">
+
+      <div className="container mx-auto flex flex-col">
+        {/* I want this div to be at the top. */}
+        <div className="mt-20 bg-white rounded-2xl z-50 shadow-large shadow-gray-300 p-14 flex">
           <div className="flex flex-col w-full">
             <span className="text-4xl font-bold">SibolHomes</span>
             <p className="max-w-sm mt-4">

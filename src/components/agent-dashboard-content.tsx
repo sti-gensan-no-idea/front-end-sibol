@@ -1,5 +1,16 @@
 import { useCallback, useState } from "react";
-import { Button, Chip, Input } from "@heroui/react";
+import {
+  Avatar,
+  Button,
+  Chip,
+  Input,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+} from "@heroui/react";
 import {
   IconBuildingCommunity,
   IconTrendingUp,
@@ -130,9 +141,11 @@ export const AgentDashboardContent = () => {
 
       {/* Content */}
       <div className="grid grid-cols-3 mt-8 gap-4">
-        <div className="col-span-2 p-4 rounded-large shadow-small">
+        <div className="col-span-2 p-4 rounded-large shadow-small h-screen bg-white">
           <div className="flex items-center justify-between">
-            <span className="font-bold text-xl flex ml-3">Recent Listings</span>
+            <span className="font-bold text-2xl flex ml-3">
+              Recent Listings
+            </span>
             <div className="flex items-center">
               <Input
                 className="mr-3"
@@ -145,11 +158,54 @@ export const AgentDashboardContent = () => {
               </Button>
             </div>
           </div>
+          <Table removeWrapper className="mt-4">
+            <TableHeader>
+              <TableColumn>LOCATION</TableColumn>
+              <TableColumn>STATUS</TableColumn>
+              <TableColumn>PERIOD</TableColumn>
+            </TableHeader>
+            <TableBody>
+              <TableRow key="1" className="hover:bg-gray-100 cursor-pointer">
+                <TableCell className="flex items-center">
+                  <Avatar
+                    size="sm"
+                    src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
+                  />
+                  <span className="ml-3 text-foreground-700">
+                    Zone 5-B Provido Village City Heights, GSC.
+                  </span>
+                </TableCell>
+                <TableCell>
+                  <Chip color="primary" size="sm" variant="flat">
+                    Free
+                  </Chip>
+                </TableCell>
+                <TableCell>02-23-2025</TableCell>
+              </TableRow>
+              <TableRow key="1" className="hover:bg-gray-100 cursor-pointer">
+                <TableCell className="flex items-center">
+                  <Avatar
+                    size="sm"
+                    src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
+                  />
+                  <span className="ml-3 text-foreground-700">
+                    Zone 5-B Provido Village City Heights, GSC.
+                  </span>
+                </TableCell>
+                <TableCell>
+                  <Chip color="warning" size="sm" variant="flat">
+                    Booked
+                  </Chip>
+                </TableCell>
+                <TableCell>02-23-2025</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
         </div>
 
         {/* Map Preview */}
-        <div className="bg-white rounded-2xl shadow-medium shadow-gray-300 flex flex-col z-10 overflow-hidden">
-          <div className="min-h-96 w-full">
+        <div className="bg-white rounded-2xl shadow-small shadow-gray-300 flex flex-col z-10 overflow-hidden">
+          <div className="h-full w-full">
             {isLoaded ? (
               <GoogleMap
                 center={{
@@ -170,11 +226,6 @@ export const AgentDashboardContent = () => {
             ) : (
               <></>
             )}
-          </div>
-          <div className="bg-white pl-4 pr-4 pb-4">
-            <span className="text-sm text-foreground-500">
-              Zone 5-B Provido Village City Heights, General Santos City.
-            </span>
           </div>
         </div>
       </div>
