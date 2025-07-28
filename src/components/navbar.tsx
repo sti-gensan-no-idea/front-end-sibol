@@ -68,7 +68,9 @@ export const NavBar = () => {
 
   return (
     <Navbar
-      className="border-t-4 border-solid border-t-primary h-30"
+      className={`border-t-4 border-solid border-t-primary ${
+        user.role === "agent" ? "" : "h-30"
+      }`}
       maxWidth="full"
     >
       <div className="flex flex-col justify-between">
@@ -83,23 +85,25 @@ export const NavBar = () => {
               Sibol Homes
             </h1>
           </a>
-          <div className="flex flex-wrap gap-4">
-            <Tabs
-              aria-label="Tabs variants"
-              color="primary"
-              selectedKey={pathname}
-              size="lg"
-              variant="underlined"
-            >
-              <Tab key="/" href="/" title="Home" />
-              <Tab
-                key="/properties"
-                href="/properties?tab=search_properties"
-                title="Properties"
-              />
-              <Tab key="/about-us" href="/about-us" title="About Us" />
-            </Tabs>
-          </div>
+          {user.role !== "agent" && (
+            <div className="flex flex-wrap gap-4">
+              <Tabs
+                aria-label="Tabs variants"
+                color="primary"
+                selectedKey={pathname}
+                size="lg"
+                variant="underlined"
+              >
+                <Tab key="/" href="/" title="Home" />
+                <Tab
+                  key="/properties"
+                  href="/properties?tab=search_properties"
+                  title="Properties"
+                />
+                <Tab key="/about-us" href="/about-us" title="About Us" />
+              </Tabs>
+            </div>
+          )}
         </div>
       </div>
 

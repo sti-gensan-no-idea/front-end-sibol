@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 
 import { NavBar } from "@/components/navbar";
+import { ClientSideBar } from "@/components/client-side-bar";
+import { ClientDashboardContent } from "@/components/client-dashboard-content";
 
 export const DashboardClientPage = () => {
   useEffect(() => {
@@ -10,6 +12,8 @@ export const DashboardClientPage = () => {
   return (
     <div>
       <NavBar />
+      <ClientSideBar />
+      <ClientDashboardContent />
     </div>
   );
 };
