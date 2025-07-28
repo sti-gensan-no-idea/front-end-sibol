@@ -17,6 +17,8 @@ import {
   IconTrendingDown,
   IconFilter,
   IconSearch,
+  IconCoins,
+  IconChartBar,
 } from "@tabler/icons-react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 
@@ -82,7 +84,7 @@ export const AgentDashboardContent = () => {
         <div className="p-8 rounded-large shadow-small bg-white">
           <div className="flex items-center gap-4">
             <div className="bg-gray-200 w-12 h-12 flex items-center justify-center rounded-full">
-              <IconBuildingCommunity className="text-foreground-700" />
+              <IconChartBar className="text-foreground-700" />
             </div>
             <span className="text-2xl font-bold">Number of Sales</span>
           </div>
@@ -111,7 +113,7 @@ export const AgentDashboardContent = () => {
         <div className="p-8 rounded-large shadow-small bg-white">
           <div className="flex items-center gap-4">
             <div className="bg-gray-200 w-12 h-12 flex items-center justify-center rounded-full">
-              <IconBuildingCommunity className="text-foreground-700" />
+              <IconCoins className="text-foreground-700" />
             </div>
             <span className="text-2xl font-bold">Total Sales</span>
           </div>

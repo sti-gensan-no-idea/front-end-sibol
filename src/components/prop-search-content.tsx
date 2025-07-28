@@ -184,8 +184,8 @@ export const PropSearchContent = () => {
             )}
           </>
         ) : (
-          <p className="mt-4 flex items-center justify-center text-center text-foreground-700 h-96 text-xl bg-gray-100 rounded-large">
-            Enter a search term and click &quot;Search&quot; to see results.
+          <p className="mt-4 flex items-center justify-center text-center text-foreground-700 h-96 text-xl bg-white rounded-large">
+            Search to see results.
           </p>
         )}
       </div>
@@ -242,7 +242,7 @@ export const PropSearchContent = () => {
                           className="w-full"
                           color="primary"
                           variant="shadow"
-                          onPress={() => alert("Done")}
+                          onPress={() => navigate("/schedule-viewing")}
                         >
                           Schedule Viewing
                         </Button>
