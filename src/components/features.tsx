@@ -8,7 +8,7 @@ import {
 
 export const Features = () => {
   return (
-    <div className="h-screen p-8 flex flex-col items-center justify-center">
+    <div className="h-screen p-8 flex flex-col items-center justify-center bg-white">
       <h1 className="text-6xl text-center font-bold text-foreground-700">
         How It Works
       </h1>
@@ -19,7 +19,7 @@ export const Features = () => {
       </p>
 
       <div className="mt-20 container mx-auto p-8 grid grid-cols-3 gap-8 relative">
-        <div className="w-full top-16 flex items-center justify-center absolute -z-10">
+        <div className="w-full top-16 flex items-center justify-center absolute">
           <div className="w-full max-w-2/3 h-1 bg-primary" />
         </div>
         <div className="flex flex-col items-center relative">

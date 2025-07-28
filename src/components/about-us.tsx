@@ -17,6 +17,9 @@ const teamMembers = [
     image: ImgFerrer,
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare rutrum sem, eget maximus mauris lobortis a.",
+    linkedin: "https://www.linkedin.com/in/arjayferrer02",
+    facebook: "https://www.facebook.com/lucifero.3301",
+    github: "https://github.com/H4D3ZS",
   },
   {
     name: "Juanito Baldo Jr.",
@@ -24,6 +27,9 @@ const teamMembers = [
     image: ImgBaldo,
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare rutrum sem, eget maximus mauris lobortis a.",
+    linkedin: "https://www.linkedin.com/in/juanito-baldo-534632261",
+    facebook: "https://facebook.com/its.me.variant",
+    github: "https://github.com/variantxx",
   },
   {
     name: "Joshua Alvarez",
@@ -31,6 +37,9 @@ const teamMembers = [
     image: ImgAlvarez,
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare rutrum sem, eget maximus mauris lobortis a.",
+    linkedin: null,
+    facebook: "https://www.facebook.com/joshua.alvarez.946256",
+    github: "https://github.com/boosquack",
   },
   {
     name: "Joyce Armada",
@@ -38,6 +47,9 @@ const teamMembers = [
     image: ImgArmada,
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare rutrum sem, eget maximus mauris lobortis a.",
+    linkedin: "https://www.linkedin.com/in/joyce-armada-13491b278",
+    facebook: "https://www.facebook.com/theonly.joice",
+    github: null,
   },
 ];
 
@@ -70,16 +82,37 @@ export const AboutUs = () => {
             <p className="text-center mt-4 text-foreground-700">
               {member.description}
             </p>
-            <div className="mt-4">
-              <Button isIconOnly radius="full" variant="light">
-                <IconBrandLinkedin />
-              </Button>
-              <Button isIconOnly radius="full" variant="light">
-                <IconBrandFacebook />
-              </Button>
-              <Button isIconOnly radius="full" variant="light">
-                <IconBrandGithub />
-              </Button>
+            <div className="mt-4 flex gap-2">
+              {member.linkedin && (
+                <Button
+                  isIconOnly
+                  radius="full"
+                  variant="light"
+                  onPress={() => window.open(member.linkedin, "_blank")}
+                >
+                  <IconBrandLinkedin />
+                </Button>
+              )}
+              {member.facebook && (
+                <Button
+                  isIconOnly
+                  radius="full"
+                  variant="light"
+                  onPress={() => window.open(member.facebook, "_blank")}
+                >
+                  <IconBrandFacebook />
+                </Button>
+              )}
+              {member.github && (
+                <Button
+                  isIconOnly
+                  radius="full"
+                  variant="light"
+                  onPress={() => window.open(member.github, "_blank")}
+                >
+                  <IconBrandGithub />
+                </Button>
+              )}
             </div>
           </div>
         ))}

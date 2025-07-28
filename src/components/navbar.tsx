@@ -17,6 +17,7 @@ export const NavBar = () => {
     <Navbar
       className="border-t-4 border-solid border-t-primary h-30"
       maxWidth="full"
+      style={{ zIndex: 999 }}
     >
       <div className="flex flex-col justify-between">
         <div>

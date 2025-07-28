@@ -110,7 +110,7 @@ export const PropSearchContent = () => {
         {/* Search Bar */}
         <div className="flex items-center">
           <Input
-            className="max-w-4xl"
+            className="max-w-4xl bg-white rounded-large"
             color="primary"
             placeholder="Search by location, property type..."
             size="lg"
@@ -145,7 +145,7 @@ export const PropSearchContent = () => {
           <>
             <div className="mt-16 flex flex-col gap-4">
               {paginatedProperties.length === 0 ? (
-                <p className="flex items-center justify-center text-center text-gray-400 h-96 text-xl bg-gray-100 rounded-large">
+                <p className="flex items-center justify-center text-center text-foreground-700 h-96 text-xl bg-white rounded-large">
                   No properties found.
                 </p>
               ) : (
@@ -183,7 +183,7 @@ export const PropSearchContent = () => {
             )}
           </>
         ) : (
-          <p className="mt-4 flex items-center justify-center text-center text-gray-400 h-96 text-xl bg-gray-100 rounded-large">
+          <p className="mt-4 flex items-center justify-center text-center text-foreground-700 h-96 text-xl bg-gray-100 rounded-large">
             Enter a search term and click &quot;Search&quot; to see results.
           </p>
         )}
