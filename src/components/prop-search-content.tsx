@@ -41,7 +41,7 @@ export const PropSearchContent = () => {
   const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [currentPage, setCurrentPage] = useState(initialPage);
 
-  const [map, setMap] = useState(null);
+  const [_, setMap] = useState(null);
 
   const itemsPerPage = 6;
 

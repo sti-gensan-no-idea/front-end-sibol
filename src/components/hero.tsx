@@ -1,27 +1,19 @@
 import { Button, Input } from "@heroui/react";
 
-import ImgHeroBackground from "../assets/images/img_hero_background.jpg";
+import ImgHeroBackground from "../assets/images/img_hero_background1.jpg";
 
 export const Hero = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen relative">
       <img
         alt="Hero Background"
-        className="absolute inset-0 w-full h-full object-cover z-0"
+        className="absolute inset-0 w-full h-full object-cover z-0 object-top"
         src={ImgHeroBackground}
       />
-      <div className="h-2/3 w-full absolute top-0 z-0 bg-gradient-to-b from-white to-transparent" />
-
-      <div className="z-10 flex flex-col absolute top-20 left-20">
-        <h1 className="text-6xl font-bold text-foreground-700">Dream Home</h1>
-        <p className="text-2xl mt-8 max-w-1/2 text-foreground-700">
-          Discover exceptional properties in prime locations with our AI powered
-          search and expert guidance
-        </p>
-      </div>
+      {/* <div className="h-2/3 w-full absolute top-0 z-0 bg-gradient-to-b from-white to-transparent" /> */}
 
       {/* Search input */}
-      <div
+      {/* <div
         className="w-lg mx-auto mt-26 bg-white rounded-2xl shadow-large shadow-gray-300 p-6
         flex
         flex-col
@@ -38,7 +30,7 @@ export const Hero = () => {
           />
           <Button color="primary">Search</Button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -7,6 +7,7 @@ import { NotFoundPage } from "@/pages/page-not-found";
 import { SignUpPage } from "@/pages/sign-up";
 import { SignInPage } from "@/pages/sign-in";
 import { SignInAgentPage } from "@/pages/sign-in-agent";
+import { DashboardAgentPage } from "@/pages/dashboard-agent";
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
       <Route element={<SignUpPage />} path="/sign-up" />
       <Route element={<PropertiesPage />} path="/properties" />
       <Route element={<PropertyPreviewPage />} path="/properties/preview" />
+
+      <Route element={<DashboardAgentPage />} path="/profile/agent" />
+
       <Route element={<NotFoundPage />} path="*" />
     </Routes>
   );

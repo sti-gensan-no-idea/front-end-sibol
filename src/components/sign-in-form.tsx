@@ -61,7 +61,11 @@ export const SignInCardForm = () => {
           <span className="text-foreground-700 flex justify-center items-center">
             Don&apos;t have an account?
           </span>
-          <Link className="ml-3 cursor-pointer" underline="hover">
+          <Link
+            className="ml-3 cursor-pointer"
+            href="/sign-up"
+            underline="hover"
+          >
             Create an Account
           </Link>
         </div>

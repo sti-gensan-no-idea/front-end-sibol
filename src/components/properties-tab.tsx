@@ -10,6 +10,7 @@ import { useSearchParams } from "react-router-dom";
 import { PropSearchContent } from "./prop-search-content";
 import { PropTourContent } from "./prop-virtual-tour-content";
 import { PropInsightsContent } from "./prop-ai-chat-content";
+import { PropCompareContent } from "./prop-compare-content";
 
 export const PropertiesTab = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -45,14 +46,7 @@ export const PropertiesTab = () => {
             </div>
           }
         >
-          <Card>
-            <CardBody>
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur.
-            </CardBody>
-          </Card>
+          <PropCompareContent />
         </Tab>
         <Tab
           key="virtual_tour"

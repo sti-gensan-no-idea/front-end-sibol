@@ -1,0 +1,10 @@
+User-agent: *
+
+Allow: /sign-in
+Allow: /sign-up
+Allow: /properties
+Allow: /about-us
+
+Disallow: /sign-in-agent
+Disallow: /contact
+Disallow: /profile

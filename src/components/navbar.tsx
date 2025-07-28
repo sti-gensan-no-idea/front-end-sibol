@@ -1,6 +1,13 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { Button, Navbar, Tab, Tabs } from "@heroui/react";
-import { IconArrowNarrowRight } from "@tabler/icons-react";
+import { Button, Input, Navbar, Tab, Tabs } from "@heroui/react";
+import {
+  IconArrowNarrowRight,
+  IconBell,
+  IconMessage2,
+  IconSearch,
+} from "@tabler/icons-react";
+
+import ImgLogo from "../assets/images/ic_logo.png";
 
 export const NavBar = () => {
   const navigate = useNavigate();
@@ -13,9 +20,16 @@ export const NavBar = () => {
     >
       <div className="flex flex-col justify-between">
         <div>
-          <h1 className="text-3xl ml-4 font-bold text-foreground-700 tracking-tighter">
-            Sibol Homes
-          </h1>
+          <a className="flex items-center" href="/">
+            <img
+              alt="Sibol Homes Logo"
+              className="h-10 w-10 ml-4"
+              src={ImgLogo}
+            />
+            <h1 className="text-3xl ml-4 font-bold text-foreground-700 tracking-tighter">
+              Sibol Homes
+            </h1>
+          </a>
           <div className="flex flex-wrap gap-4">
             <Tabs
               aria-label="Tabs variants"
@@ -36,26 +50,57 @@ export const NavBar = () => {
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-center">
-        <Button
-          className="mr-3"
-          color="primary"
-          radius="full"
-          variant="ghost"
-          onPress={() => navigate("/sign-in")}
-        >
-          Sign In
-        </Button>
-        <Button
-          color="primary"
-          radius="full"
-          variant="shadow"
-          onPress={() => navigate("/sign-up")}
-        >
-          Get Started
-          <IconArrowNarrowRight />
-        </Button>
-      </div>
+
+      {pathname !== "/profile/agent" && pathname !== "/profile/client" ? (
+        <div className="flex items-center justify-center">
+          <Button
+            className="mr-3"
+            color="primary"
+            radius="full"
+            variant="ghost"
+            onPress={() => navigate("/sign-in")}
+          >
+            Sign In
+          </Button>
+          <Button
+            color="primary"
+            radius="full"
+            variant="shadow"
+            onPress={() => navigate("/sign-up")}
+          >
+            Get Started
+            <IconArrowNarrowRight />
+          </Button>
+        </div>
+      ) : (
+        <div className="flex items-center justify-center">
+          <Input
+            className="mr-3 w-sm shadow-small rounded-full bg-white"
+            placeholder="Search anything..."
+            radius="full"
+            size="lg"
+            startContent={<IconSearch className="text-primary" />}
+            type="text"
+            variant="bordered"
+          />
+          <Button
+            isIconOnly
+            className="bg-white shadow-medium mr-3"
+            radius="full"
+            variant="bordered"
+          >
+            <IconMessage2 className="text-foreground-700" />
+          </Button>
+          <Button
+            isIconOnly
+            className="bg-white shadow-medium"
+            radius="full"
+            variant="bordered"
+          >
+            <IconBell className="text-foreground-700" />
+          </Button>
+        </div>
+      )}
     </Navbar>
   );
 };
