@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 
+import { UnauthorizePage } from "@/pages/unauthorize";
 import ProtectedRoute from "@/hooks/protected-route";
 import { IndexPage } from "@/pages/index";
 import { PropertiesPage } from "@/pages/properties";
@@ -10,6 +11,7 @@ import { SignInPage } from "@/pages/sign-in";
 import { SignInAgentPage } from "@/pages/sign-in-agent";
 import { DashboardAgentPage } from "@/pages/dashboard-agent";
 import { DashboardClientPage } from "@/pages/dashboard-client";
+import { ContactAgentPage } from "@/pages/contact-agent";
 
 function App() {
   return (
@@ -28,8 +30,11 @@ function App() {
       <Route element={<ProtectedRoute allowedRole="agent" />}>
         <Route element={<DashboardAgentPage />} path="/profile/agent" />
       </Route>
+      <Route element={<ProtectedRoute allowedRole="client" />}>
+        <Route element={<ContactAgentPage />} path="/contact-agent" />
+      </Route>
 
-      <Route element={<NotFoundPage />} path="/not-authorized" />
+      <Route element={<UnauthorizePage />} path="/not-authorized" />
       <Route element={<NotFoundPage />} path="*" />
     </Routes>
   );

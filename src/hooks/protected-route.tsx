@@ -3,6 +3,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { onAuthStateChanged, User } from "firebase/auth";
+import { Spinner } from "@heroui/react";
 
 import { auth, db } from "../firebase";
 
@@ -12,7 +13,7 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ allowedRole }) => {
   const [role, setRole] = useState<string | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null); // null means loading
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -46,11 +47,15 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ allowedRole }) => {
       setLoading(false);
     });
 
-    return () => unsubscribe(); // Cleanup on unmount
+    return () => unsubscribe();
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>; // Replace with a spinner component
+    return (
+      <div className="h-screen container mx-aut0 flex items-center justify-center text-3xl">
+        <Spinner color="primary" size="lg" />
+      </div>
+    );
   }
 
   if (!isAuthenticated) {

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   Button,
   Card,
@@ -29,6 +29,7 @@ import ImgPanoramaLiving from "../assets/images/panorama_living_room.jpg";
 import { properties_data } from "@/data/properties_data";
 
 export const PropSearchContent = () => {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -232,18 +233,25 @@ export const PropSearchContent = () => {
                         <IconUserFilled className="mr-3" size={18} />
                         <p>Juanito Baldo Jr.</p>
                       </div>
-                      <span className="text-3xl mt-8 flex font-bold">
-                        ₱ 5,00,000,000
+                      <span className="text-5xl mt-8 flex font-bold">
+                        ₱ 5,000,000
                       </span>
                       <div className="mt-8 flex">
+                        {/* Popup a modal when clicked */}
                         <Button
                           className="w-full"
                           color="primary"
                           variant="shadow"
+                          onPress={() => alert("Done")}
                         >
                           Schedule Viewing
                         </Button>
-                        <Button className="ml-4 w-full">Contact Agent</Button>
+                        <Button
+                          className="ml-4 w-full"
+                          onPress={() => navigate("/contact-agent")}
+                        >
+                          Contact Agent
+                        </Button>
                       </div>
                       <span className="mt-8 flex text-2xl font-bold text-foreground-700">
                         Description

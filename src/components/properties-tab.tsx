@@ -1,16 +1,10 @@
-import { Tabs, Tab, Card, CardBody } from "@heroui/react";
-import {
-  IconChartLine,
-  IconCardboards,
-  IconArrowsHorizontal,
-  IconSearch,
-} from "@tabler/icons-react";
+import { Tabs, Tab } from "@heroui/react";
+import { IconChartLine, IconCardboards, IconSearch } from "@tabler/icons-react";
 import { useSearchParams } from "react-router-dom";
 
 import { PropSearchContent } from "./prop-search-content";
 import { PropTourContent } from "./prop-virtual-tour-content";
 import { PropInsightsContent } from "./prop-ai-chat-content";
-import { PropCompareContent } from "./prop-compare-content";
 
 export const PropertiesTab = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -37,16 +31,6 @@ export const PropertiesTab = () => {
           }
         >
           <PropSearchContent />
-        </Tab>
-        <Tab
-          key="compare_properties"
-          title={
-            <div className="flex items-center space-x-2">
-              <IconArrowsHorizontal /> <span>Property Comparison</span>
-            </div>
-          }
-        >
-          <PropCompareContent />
         </Tab>
         <Tab
           key="virtual_tour"
