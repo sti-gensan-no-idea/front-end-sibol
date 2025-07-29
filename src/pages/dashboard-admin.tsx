@@ -38,6 +38,7 @@ import {
 import { useAutomation } from "@/contexts/automation-context";
 import { EventPlannerScheduler } from "@/components/event-planner-scheduler";
 import { NavBar } from "@/components/navbar";
+import Pipeline from "./pipeline";
 
 export const AdminDashboardPage = () => {
   const {
@@ -59,7 +60,7 @@ export const AdminDashboardPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <Card className="border-l-4 border-l-primary">
           <CardBody className="flex flex-row items-center space-x-4">
-            <div className="bg-primary-100 p-3 rounded-full">
+            <div className="p-3 rounded-full">
               <IconHome className="h-6 w-6 text-primary-600" />
             </div>
             <div>
@@ -467,8 +468,8 @@ export const AdminDashboardPage = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <NavBar />
+    <div className="min-h-screen  ml-30">
+      {/* <NavBar /> */}
       
       <div className="container mx-auto px-4 py-8">
         {/* Navigation Tabs */}
@@ -502,19 +503,8 @@ export const AdminDashboardPage = () => {
         {activeTab === 'agents' && renderAgentPerformance()}
         {activeTab === 'properties' && renderPropertyAnalytics()}
         {activeTab === 'automation' && (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold">Marketing Automation Center</h2>
-            <Card>
-              <CardBody className="text-center py-12">
-                <IconSettings className="h-16 w-16 mx-auto text-foreground-300 mb-4" />
-                <h3 className="text-lg font-medium mb-2">Automation Configuration</h3>
-                <p className="text-foreground-600 mb-4">Configure and monitor your marketing automation workflows</p>
-                <Button color="primary">
-                  Coming Soon
-                </Button>
-              </CardBody>
-            </Card>
-          </div>
+
+          <Pipeline/>
         )}
       </div>
     </div>

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Card, CardBody, CardHeader, Button, Chip } from '@heroui/react';
+import { Card, CardBody, CardHeader, Button, Chip, Navbar } from '@heroui/react';
 import { DragDropContext, Droppable, Draggable, DropResult, DroppableProvided, DraggableProvided } from '@hello-pangea/dnd';
 import { IconPlus, IconChartBar } from '@tabler/icons-react';
+import { NavBar } from '@/components/navbar';
 
 interface Lead {
   id: string;
@@ -9,21 +10,47 @@ interface Lead {
   email: string;
   status: string;
   subStatus?: 'Closed Won' | 'Closed Lost' | 'Closed Abandoned';
+  tag: 'hot' | 'warm' | 'cold';
 }
 
-const initialLeads: Lead[] = [
-  { id: '1', name: 'Juan Dela Cruz', email: 'juan@example.com', status: 'Prospecting' },
-  { id: '2', name: 'Maria Santos', email: 'maria@example.com', status: 'Contacted' },
-  { id: '3', name: 'Pedro Reyes', email: 'pedro@example.com', status: 'Scheduled Viewing' },
-  { id: '4', name: 'Ana Gomez', email: 'ana@example.com', status: 'Qualified' },
-  { id: '5', name: 'Luis Torres', email: 'luis@example.com', status: 'Negotiation Started' },
-  { id: '6', name: 'Carmen Lopez', email: 'carmen@example.com', status: 'Sent Contract' },
-  { id: '7', name: 'Jose Garcia', email: 'jose@example.com', status: 'Closed' },
-];
+const getRandomName = () => {
+  const names = ['Juan', 'Maria', 'Pedro', 'Ana', 'Luis', 'Carmen', 'Jose', 'Elena', 'Ramon', 'Sofia'];
+  const surnames = ['Dela Cruz', 'Santos', 'Reyes', 'Gomez', 'Torres', 'Lopez', 'Garcia', 'Perez', 'Martinez', 'Hernandez'];
+  return `${names[Math.floor(Math.random() * names.length)]} ${surnames[Math.floor(Math.random() * surnames.length)]}`;
+};
+
+const getRandomEmail = (name: string) => `${name.toLowerCase().replace(' ', '.')}@example.com`;
+
+const initialLeads: Lead[] = Array.from({ length: 50 }, (_, i) => {
+  const statuses = [
+    'Prospecting', 'Contacted', 'Scheduled Viewing', 'Qualified', 'Negotiation Started', 'Sent Contract', 'Closed',
+    'Closed', 'Closed', 'Closed' // More weight on Closed for sub-status distribution
+  ];
+  const status = statuses[Math.floor(Math.random() * statuses.length)];
+  const subStatus = status === 'Closed' ? ['Closed Won', 'Closed Lost', 'Closed Abandoned'][Math.floor(Math.random() * 3)] : undefined;
+  const name = getRandomName();
+  return {
+    id: `lead${i + 1}`,
+    name,
+    email: getRandomEmail(name),
+    status: status,
+    subStatus,
+    tag: ['hot', 'warm', 'cold'][Math.floor(Math.random() * 3)] as 'hot' | 'warm' | 'cold',
+  };
+}).filter(lead => !lead.subStatus).concat(
+  Array.from({ length: 10 }, (_, i) => ({
+    id: `closed${i + 1}`,
+    name: getRandomName(),
+    email: getRandomEmail(getRandomName()),
+    status: 'Closed',
+    subStatus: ['Closed Won', 'Closed Lost', 'Closed Abandoned'][Math.floor(Math.random() * 3)] as 'Closed Won' | 'Closed Lost' | 'Closed Abandoned',
+    tag: ['hot', 'warm', 'cold'][Math.floor(Math.random() * 3)] as 'hot' | 'warm' | 'cold',
+  }))
+);
 
 const AutomationWorkflow: React.FC = () => {
-  const [leads, setLeads] = useState<Lead[]>(initialLeads);
-  const [closedLeads, setClosedLeads] = useState<Lead[]>([]);
+  const [leads, setLeads] = useState<Lead[]>(initialLeads.filter(l => !l.subStatus));
+  const [closedLeads, setClosedLeads] = useState<Lead[]>(initialLeads.filter(l => l.subStatus));
 
   const stages = [
     'Prospecting',
@@ -34,7 +61,7 @@ const AutomationWorkflow: React.FC = () => {
     'Sent Contract',
     'Closed',
   ];
-  const closedSubStatuses =  ['Closed Won', 'Closed Lost', 'Closed Abandoned'] as const;
+  const closedSubStatuses = ['Closed Won', 'Closed Lost', 'Closed Abandoned'] as const;
 
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
@@ -93,9 +120,10 @@ const AutomationWorkflow: React.FC = () => {
   const addLead = () => {
     const newLead: Lead = {
       id: `lead${Date.now()}`,
-      name: 'New Lead',
-      email: `lead${Date.now()}@example.com`,
+      name: getRandomName(),
+      email: getRandomEmail(getRandomName()),
       status: 'Prospecting',
+      tag: ['hot', 'warm', 'cold'][Math.floor(Math.random() * 3)] as 'hot' | 'warm' | 'cold',
     };
     setLeads(prev => [...prev, newLead]);
   };
@@ -114,7 +142,8 @@ const AutomationWorkflow: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto p-6 bg-gray-50 min-h-screen">
+    <>
+    <div className="container mx-auto p-6  min-h-screen">
       <Card className="w-full bg-white shadow-lg rounded-2xl">
         <CardHeader className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-t-2xl">
           <h2 className="text-lg font-bold text-white">Automation Workflow</h2>
@@ -148,8 +177,19 @@ const AutomationWorkflow: React.FC = () => {
                                 {...provided.dragHandleProps}
                                 className="bg-gray-100 p-3 mb-2 rounded-md cursor-move hover:bg-gray-200 transition-colors"
                               >
-                                <p className="text-sm font-medium">{lead.name}</p>
-                                <p className="text-xs text-gray-500">{lead.email}</p>
+                                <div className="flex justify-between items-start">
+                                  <div>
+                                    <p className="text-sm font-medium">{lead.name}</p>
+                                    <p className="text-xs text-gray-500">{lead.email}</p>
+                                  </div>
+                                  <Chip
+                                    color={lead.tag === 'hot' ? 'success' : lead.tag === 'warm' ? 'warning' : 'danger'}
+                                    variant="flat"
+                                    size="sm"
+                                  >
+                                    {lead.tag}
+                                  </Chip>
+                                </div>
                               </div>
                             )}
                           </Draggable>
@@ -185,8 +225,19 @@ const AutomationWorkflow: React.FC = () => {
                                     {...provided.dragHandleProps}
                                     className="bg-gray-100 p-3 mb-2 rounded-md cursor-move hover:bg-gray-200 transition-colors"
                                   >
-                                    <p className="text-sm font-medium">{lead.name}</p>
-                                    <p className="text-xs text-gray-500">{lead.email}</p>
+                                    <div className="flex justify-between items-start">
+                                      <div>
+                                        <p className="text-sm font-medium">{lead.name}</p>
+                                        <p className="text-xs text-gray-500">{lead.email}</p>
+                                      </div>
+                                      <Chip
+                                        color={lead.tag === 'hot' ? 'success' : lead.tag === 'warm' ? 'warning' : 'danger'}
+                                        variant="flat"
+                                        size="sm"
+                                      >
+                                        {lead.tag}
+                                      </Chip>
+                                    </div>
                                   </div>
                                 )}
                               </Draggable>
@@ -226,6 +277,8 @@ const AutomationWorkflow: React.FC = () => {
         </CardBody>
       </Card>
     </div>
+    </>
+    
   );
 };
 

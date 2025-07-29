@@ -61,7 +61,7 @@ function App() {
 
       
       {/* Admin Dashboard - for demo purposes, not protected */}
-      <Route element={<AdminDashboardPage />} path="/admin/dashboard" />
+      {/* <Route element={} path="/agent/dashboard" /> */}
       <Route element={<ProtectedRoute allowedRole="client" />}>
         <Route element={<ScheduleViewingPage />} path="/schedule-viewing" />
       </Route>

@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { AgentDashboardContent } from "@/components/agent-dashboard-content";
 import { AgentSideBar } from "@/components/agent-side-bar";
 import { NavBar } from "@/components/navbar";
+import { AdminDashboardPage } from "./dashboard-admin";
 
 export const DashboardAgentPage = () => {
   useEffect(() => {
@@ -13,7 +14,8 @@ export const DashboardAgentPage = () => {
     <div>
       <NavBar />
       <AgentSideBar />
-      <AgentDashboardContent />
+      <AdminDashboardPage/>
+
     </div>
   );
 };

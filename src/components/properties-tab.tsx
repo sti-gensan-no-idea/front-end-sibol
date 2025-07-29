@@ -1,9 +1,10 @@
 import { Tabs, Tab } from "@heroui/react";
-import { IconCardboards, IconSearch } from "@tabler/icons-react";
+import { IconCardboards, IconSearch, IconMessageChatbot } from "@tabler/icons-react";
 import { useSearchParams } from "react-router-dom";
 
 import { PropSearchContent } from "./prop-search-content";
 import { PropTourContent } from "./prop-virtual-tour-content";
+import ChatPage from "@/pages/ChatPage";
 
 export const PropertiesTab = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -41,6 +42,19 @@ export const PropertiesTab = () => {
         >
           <PropTourContent />
         </Tab>
+
+        <Tab
+          key="ai_chatbot"
+          title={
+            <div className="flex items-center space-x-2">
+              <IconMessageChatbot /> <span>ChatBot</span>
+            </div>
+          }
+        >
+          <ChatPage />
+        </Tab>
+
+
       </Tabs>
     </div>
   );
