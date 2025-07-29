@@ -1,20 +1,75 @@
 import { Route, Routes } from "react-router-dom";
 
-import IndexPage from "@/pages/index";
-import DocsPage from "@/pages/docs";
-import PricingPage from "@/pages/pricing";
-import BlogPage from "@/pages/blog";
-import AboutPage from "@/pages/about";
+import { AboutUsPage } from "./pages/about-us";
+
+import { UnauthorizePage } from "@/pages/unauthorize";
+import ProtectedRoute from "@/hooks/protected-route";
+import { IndexPage } from "@/pages/index";
+import { PropertiesPage } from "@/pages/properties";
+import { PropertyPreviewPage } from "@/pages/property-preview";
+import { NotFoundPage } from "@/pages/page-not-found";
+import { SignUpPage } from "@/pages/sign-up";
+import { SignInPage } from "@/pages/sign-in";
+import { SignInAgentPage } from "@/pages/sign-in-agent";
+import { DashboardAgentPage } from "@/pages/dashboard-agent";
+import { DashboardClientPage } from "@/pages/dashboard-client";
+import { AdminDashboardPage } from "@/pages/dashboard-admin";
+import { DemoShowcasePage } from "@/pages/demo-showcase";
+import { ContactAgentPage } from "@/pages/contact-agent";
+
+import ChatPage from "@/pages/ChatPage";
+
+
+
+
+import { ScheduleViewingPage } from "./pages/schedule-viewing";
+
+
+import Pipeline from "@/pages/pipeline"; 
 
 function App() {
   return (
     <Routes>
       <Route element={<IndexPage />} path="/" />
-      <Route element={<DocsPage />} path="/docs" />
-      <Route element={<PricingPage />} path="/pricing" />
-      <Route element={<BlogPage />} path="/blog" />
-      <Route element={<AboutPage />} path="/about" />
+      <Route element={<SignInPage />} path="/sign-in" />
+      <Route element={<SignInAgentPage />} path="/sign-in-agent" />
+      <Route element={<SignUpPage />} path="/sign-up" />
+      <Route element={<PropertiesPage />} path="/properties" />
+      <Route element={<PropertyPreviewPage />} path="/properties/preview" />
+
+      <Route element={<ChatPage />} path="/chat" />
+
+
+      {/* Demo Showcase */}
+      <Route element={<DemoShowcasePage />} path="/demo" />
+       <Route element={<Pipeline />} path="/pipeline" />
+
+      <Route element={<AboutUsPage />} path="/about-us" />
+
+
+      {/* Protected Routes */}
+      <Route element={<ProtectedRoute allowedRole="client" />}>
+        <Route element={<DashboardClientPage />} path="/profile/client" />
+      </Route>
+      <Route element={<ProtectedRoute allowedRole="agent" />}>
+     
+        <Route element={<DashboardAgentPage />} path="/profile/agent" />
+      </Route>
+      <Route element={<ProtectedRoute allowedRole="client" />}>
+        <Route element={<ContactAgentPage />} path="/contact-agent" />
+      </Route>
+
+      
+      {/* Admin Dashboard - for demo purposes, not protected */}
+      {/* <Route element={} path="/agent/dashboard" /> */}
+      <Route element={<ProtectedRoute allowedRole="client" />}>
+        <Route element={<ScheduleViewingPage />} path="/schedule-viewing" />
+      </Route>
+      <Route element={<UnauthorizePage />} path="/not-authorized" />
+      <Route element={<NotFoundPage />} path="*" />
     </Routes>
+
+    
   );
 }
 

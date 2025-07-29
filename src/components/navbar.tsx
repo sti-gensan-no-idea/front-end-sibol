@@ -1,144 +1,184 @@
-import { Button } from "@heroui/button";
-import { Kbd } from "@heroui/kbd";
-import { Link } from "@heroui/link";
-import { Input } from "@heroui/input";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { Avatar, Button, Input, Navbar, Tab, Tabs } from "@heroui/react";
 import {
-  Navbar as HeroUINavbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-  NavbarMenuToggle,
-  NavbarMenu,
-  NavbarMenuItem,
-} from "@heroui/navbar";
-import { link as linkStyles } from "@heroui/theme";
-import clsx from "clsx";
+  IconArrowNarrowRight,
+  IconBell,
+  IconMessage2,
+  IconSearch,
+} from "@tabler/icons-react";
 
-import { siteConfig } from "@/config/site";
-import { ThemeSwitch } from "@/components/theme-switch";
-import {
-  TwitterIcon,
-  GithubIcon,
-  DiscordIcon,
-  HeartFilledIcon,
-  SearchIcon,
-} from "@/components/icons";
-import { Logo } from "@/components/icons";
+import ImgLogo from "../assets/images/ic_logo.png";
 
-export const Navbar = () => {
-  const searchInput = (
-    <Input
-      aria-label="Search"
-      classNames={{
-        inputWrapper: "bg-default-100",
-        input: "text-sm",
-      }}
-      endContent={
-        <Kbd className="hidden lg:inline-block" keys={["command"]}>
-          K
-        </Kbd>
+import { auth, db } from "@/firebase";
+
+export const NavBar = () => {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const [user, setUser] = useState<{
+    isAuthenticated: boolean;
+    fullName: string | null;
+    role: string | null;
+    photoURL: string | null;
+  }>({
+    isAuthenticated: false,
+    fullName: null,
+    role: null,
+    photoURL: null,
+  });
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        const docRef = doc(db, "clients", firebaseUser.uid);
+        const docSnap = await getDoc(docRef);
+
+        const role = docSnap.exists() ? docSnap.data().role : "client";
+        const fullName = docSnap.exists() ? docSnap.data().fullName : "User";
+
+        setUser({
+          isAuthenticated: true,
+          fullName,
+          role,
+          photoURL: firebaseUser.photoURL,
+        });
+      } else {
+        setUser({
+          isAuthenticated: false,
+          fullName: null,
+          role: null,
+          photoURL: null,
+        });
       }
-      labelPlacement="outside"
-      placeholder="Search..."
-      startContent={
-        <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
-      }
-      type="search"
-    />
-  );
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleAvatarClick = () => {
+    if (user.role === "agent") {
+      navigate("/profile/agent");
+    } else {
+      navigate("/profile/client");
+    }
+  };
 
   return (
-    <HeroUINavbar maxWidth="xl" position="sticky">
-      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-        <NavbarBrand className="gap-3 max-w-fit">
-          <Link
-            className="flex justify-start items-center gap-1"
-            color="foreground"
-            href="/"
-          >
-            <Logo />
-            <p className="font-bold text-inherit">ACME</p>
-          </Link>
-        </NavbarBrand>
-        <div className="hidden lg:flex gap-4 justify-start ml-2">
-          {siteConfig.navItems.map((item) => (
-            <NavbarItem key={item.href}>
-              <Link
-                className={clsx(
-                  linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium",
-                )}
-                color="foreground"
-                href={item.href}
-              >
-                {item.label}
-              </Link>
-            </NavbarItem>
-          ))}
-        </div>
-      </NavbarContent>
-
-      <NavbarContent
-        className="hidden sm:flex basis-1/5 sm:basis-full"
-        justify="end"
-      >
-        <NavbarItem className="hidden sm:flex gap-2">
-          <Link isExternal href={siteConfig.links.twitter} title="Twitter">
-            <TwitterIcon className="text-default-500" />
-          </Link>
-          <Link isExternal href={siteConfig.links.discord} title="Discord">
-            <DiscordIcon className="text-default-500" />
-          </Link>
-          <Link isExternal href={siteConfig.links.github} title="GitHub">
-            <GithubIcon className="text-default-500" />
-          </Link>
-          <ThemeSwitch />
-        </NavbarItem>
-        <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
-        <NavbarItem className="hidden md:flex">
-          <Button
-            isExternal
-            as={Link}
-            className="text-sm font-normal text-default-600 bg-default-100"
-            href={siteConfig.links.sponsor}
-            startContent={<HeartFilledIcon className="text-danger" />}
-            variant="flat"
-          >
-            Sponsor
-          </Button>
-        </NavbarItem>
-      </NavbarContent>
-
-      <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-        <Link isExternal href={siteConfig.links.github}>
-          <GithubIcon className="text-default-500" />
-        </Link>
-        <ThemeSwitch />
-        <NavbarMenuToggle />
-      </NavbarContent>
-
-      <NavbarMenu>
-        {searchInput}
-        <div className="mx-4 mt-2 flex flex-col gap-2">
-          {siteConfig.navMenuItems.map((item, index) => (
-            <NavbarMenuItem key={`${item}-${index}`}>
-              <Link
-                color={
-                  index === 2
-                    ? "primary"
-                    : index === siteConfig.navMenuItems.length - 1
-                      ? "danger"
-                      : "foreground"
-                }
-                href="#"
+    <Navbar
+      className={`border-t-4 border-solid border-t-primary ${
+        user.role === "agent" ? "" : "h-30"
+      }`}
+      maxWidth="full"
+    >
+      <div className="flex flex-col justify-between">
+        <div>
+          <a className="flex items-center" href="/">
+            <img
+              alt="Atuna Homes Logo"
+              className="h-10 w-10 ml-4"
+              src={ImgLogo}
+            />
+            <h1 className="text-3xl ml-4 font-bold text-foreground-700 tracking-tighter">
+              Atuna
+            </h1>
+          </a>
+          {user.role !== "agent" && (
+            <div className="flex flex-wrap gap-4">
+              <Tabs
+                aria-label="Tabs variants"
+                color="primary"
+                selectedKey={pathname}
                 size="lg"
+                variant="underlined"
               >
-                {item.label}
-              </Link>
-            </NavbarMenuItem>
-          ))}
+                <Tab key="/" href="/" title="Home" />
+                <Tab
+                  key="/properties"
+                  href="/properties?tab=search_properties"
+                  title="Properties"
+                />
+                <Tab key="/about-us" href="/about-us" title="About Us" />
+              </Tabs>
+            </div>
+          )}
         </div>
-      </NavbarMenu>
-    </HeroUINavbar>
+      </div>
+
+      {user.isAuthenticated ? (
+        <div className="flex items-center justify-center gap-4">
+          <Input
+            className="mr-3 w-sm shadow-small rounded-full bg-white"
+            placeholder="Search anything..."
+            radius="full"
+            size="lg"
+            startContent={<IconSearch className="text-primary" />}
+            type="text"
+            variant="bordered"
+          />
+          <Button
+            isIconOnly
+            className="bg-white shadow-medium"
+            radius="full"
+            variant="bordered"
+          >
+            <IconMessage2 className="text-foreground-700" />
+          </Button>
+          <Button
+            isIconOnly
+            className="bg-white shadow-medium mr-8"
+            radius="full"
+            variant="bordered"
+          >
+            <IconBell className="text-foreground-700" />
+          </Button>
+          <div
+            className="flex items-center gap-3 cursor-pointer"
+            role="button"
+            tabIndex={0}
+            onClick={handleAvatarClick}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                handleAvatarClick();
+              }
+            }}
+          >
+            <span className="text-sm font-medium text-foreground-700">
+              {user.fullName?.split(" ")[0]}
+            </span>
+            <Avatar
+              isBordered
+              name={user.fullName ?? "User"}
+              size="md"
+              src={user.photoURL ?? undefined}
+            />
+          </div>
+        </div>
+      ) : (
+        <div className="flex items-center justify-center">
+          <Button
+            className="mr-3"
+            color="primary"
+            radius="full"
+            variant="ghost"
+            onPress={() => navigate("/sign-in")}
+          >
+            Sign In
+          </Button>
+          <Button
+            color="primary"
+            radius="full"
+            variant="shadow"
+            onPress={() => navigate("/sign-up")}
+          >
+            Get Started
+            <IconArrowNarrowRight />
+          </Button>
+        </div>
+      )}
+    </Navbar>
   );
 };
