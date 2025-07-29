@@ -17,7 +17,11 @@ import {
   Tabs,
   Divider,
 } from "@heroui/react";
-import { IconMapPinFilled, IconUserFilled } from "@tabler/icons-react";
+import {
+  IconMapPinFilled,
+  IconUserFilled,
+  IconBookmark,
+} from "@tabler/icons-react";
 import { ReactPhotoSphereViewer } from "react-photo-sphere-viewer";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 
@@ -165,6 +169,36 @@ export const PropSearchContent = () => {
                           className="h-full w-full object-center"
                           src={property.img!}
                         />
+                      </div>
+                      <div className="p-8 w-full">
+                        <div className="flex justify-between w-full">
+                          <div className="flex flex-col w-full">
+                            <span className="flex text-3xl text-foreground-700 font-bold">
+                              {property.title}
+                            </span>
+                            <span className="flex font-normal mt-2 text-foreground-700">
+                              {property.address}
+                            </span>
+                          </div>
+                          <Button
+                            isIconOnly
+                            className=""
+                            radius="full"
+                            variant="light"
+                          >
+                            <IconBookmark />
+                          </Button>
+                        </div>
+                        <span className="flex font-medium text-4xl mt-8">
+                          {property.price}
+                        </span>
+                        <div className="flex items-center mt-4 text-xl text-foreground-500 font-normal gap-3">
+                          <Chip>{property.bed} beds</Chip>
+                          <Chip>{property.bathroom} bathrooms</Chip>
+                          <Chip>
+                            {property.size[0]}x{property.size[1]} meters
+                          </Chip>
+                        </div>
                       </div>
                     </div>
                   </Card>
