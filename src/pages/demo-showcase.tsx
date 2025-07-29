@@ -12,7 +12,8 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  useDisclosure
+  useDisclosure,
+  Badge
 } from "@heroui/react";
 import {
   IconRocket,
@@ -26,10 +27,11 @@ import {
   IconMap,
   IconTarget,
   IconTrendingUp,
-  IconMail,
-  IconPhone,
   IconMapPin,
-  IconStar
+  IconStar,
+  IconSparkles,
+  IconArrowRight,
+  IconCheck
 } from "@tabler/icons-react";
 import { NavBar } from "@/components/navbar";
 import { useAutomation } from "@/contexts/automation-context";
@@ -43,16 +45,17 @@ export const DemoShowcasePage = () => {
     {
       id: 'client',
       title: 'Client Experience',
-      description: 'Property browsing, inquiry submission, and automated follow-ups',
+      description: 'Seamless property discovery with intelligent automation',
       icon: IconUser,
       color: 'primary',
+      gradient: 'from-blue-400 to-purple-500',
       features: [
-        'Smart property filtering (pet-friendly, non-haunted, flood risk)',
-        'Advanced search with Philippine-specific criteria',
-        'Automated inquiry processing and lead scoring',
-        'Real-time SMS/Email notifications',
-        'Favorite properties management',
-        'Scheduled viewing automation'
+        'AI-powered property matching',
+        'Smart filtering (pet-friendly, flood-safe)',
+        'Instant inquiry processing',
+        'Real-time notifications',
+        'Automated viewing schedules',
+        'Personalized recommendations'
       ],
       route: '/profile/client',
       metrics: {
@@ -65,97 +68,105 @@ export const DemoShowcasePage = () => {
     {
       id: 'agent',
       title: 'Agent Dashboard',
-      description: 'Lead management, event scheduling, and performance analytics',
+      description: 'Intelligent lead management with performance insights',
       icon: IconUsers,
       color: 'success',
+      gradient: 'from-green-400 to-emerald-500',
       features: [
-        'Prioritized lead management by seriousness score',
-        'Automated follow-up templates and triggers',
-        'Real-time chat with clients',
-        'Event scheduling with automatic notifications',
-        'Performance analytics and conversion tracking',
-        'Integration with CRM and communication tools'
+        'Smart lead prioritization',
+        'Automated follow-up sequences',
+        'Real-time client communication',
+        'Performance analytics',
+        'Calendar integration',
+        'CRM synchronization'
       ],
       route: '/profile/agent',
       metrics: {
         'Active Agents': '48',
-        'Avg Response Time': '< 2 hours',
+        'Response Time': '< 2hrs',
         'Conversion Rate': `${analytics.conversionRate.toFixed(1)}%`,
-        'Client Satisfaction': '4.7/5'
+        'Satisfaction': '4.7/5'
       }
     },
     {
       id: 'admin',
-      title: 'Admin Control Center',
-      description: 'Complete system oversight with marketing automation analytics',
+      title: 'Admin Control',
+      description: 'Complete system oversight with advanced analytics',
       icon: IconShield,
       color: 'warning',
+      gradient: 'from-orange-400 to-pink-500',
       features: [
-        'Comprehensive marketing automation dashboard',
-        'Agent performance monitoring and analytics',
-        'Property portfolio analysis and insights',
-        'Lead source performance tracking',
-        'Neighborhood market analysis',
-        'System integration health monitoring'
+        'Marketing automation dashboard',
+        'Agent performance monitoring',
+        'Property portfolio analysis',
+        'Lead source tracking',
+        'Market trend analysis',
+        'System health monitoring'
       ],
       route: '/admin/dashboard',
       metrics: {
-        'Total Properties': analytics.totalProperties.toString(),
+        'Properties': analytics.totalProperties.toString(),
         'Active Leads': analytics.activeLeads.toString(),
-        'Automation Rate': `${((analytics.automatedMessages / analytics.totalMessages) * 100).toFixed(1)}%`,
-        'System Uptime': '99.9%'
+        'Automation': `${((analytics.automatedMessages / analytics.totalMessages) * 100).toFixed(1)}%`,
+        'Uptime': '99.9%'
       }
     }
   ];
 
   const automationFeatures = [
     {
-      title: 'Lead Generation & Follow-ups',
-      description: 'Automated lead capture with Philippine-specific forms and instant SMS/email follow-ups',
+      title: 'Smart Lead Generation',
+      description: 'Automated capture with Philippine market integration',
       icon: IconTarget,
-      stats: `${analytics.activeLeads} active leads, ${((analytics.automatedMessages / analytics.totalMessages) * 100).toFixed(1)}% automated`
+      stats: `${analytics.activeLeads} active leads`,
+      color: 'primary'
     },
     {
-      title: 'Lead Scoring & Distribution',
-      description: 'Smart lead prioritization and automatic agent assignment based on specialization',
+      title: 'Intelligent Scoring',
+      description: 'AI-powered lead prioritization and distribution',
       icon: IconTrendingUp,
-      stats: `${analytics.conversionRate.toFixed(1)}% conversion rate for high-score leads`
+      stats: `${analytics.conversionRate.toFixed(1)}% conversion rate`,
+      color: 'success'
     },
     {
-      title: 'Event Scheduling',
-      description: 'Automated viewing appointments with calendar integration and SMS reminders',
+      title: 'Event Automation',
+      description: 'Seamless scheduling with smart reminders',
       icon: IconCalendar,
-      stats: `${analytics.scheduledEvents} events scheduled this month`
+      stats: `${analytics.scheduledEvents} events scheduled`,
+      color: 'secondary'
     },
     {
       title: 'Multi-Channel Messaging',
-      description: 'Coordinated SMS, email, and social media campaigns with sentiment analysis',
+      description: 'Coordinated communication with sentiment analysis',
       icon: IconMessage,
-      stats: `${analytics.totalMessages} messages sent, ${analytics.positiveMessages} positive responses`
+      stats: `${analytics.totalMessages} messages sent`,
+      color: 'warning'
     },
     {
-      title: 'Marketing Analytics',
-      description: 'Real-time insights on lead sources, conversion rates, and neighborhood performance',
+      title: 'Real-time Analytics',
+      description: 'Comprehensive insights and performance tracking',
       icon: IconChartBar,
-      stats: 'Live dashboard with 15+ key metrics'
+      stats: '15+ key metrics tracked',
+      color: 'danger'
     },
     {
-      title: 'Philippine Market Integration',
-      description: 'Local features including haunted properties, flood risk, and General Santos City data',
+      title: 'Local Market Integration',
+      description: 'Philippines-specific features and data',
       icon: IconMapPin,
-      stats: '5 neighborhoods analyzed, PHP pricing, local mobile formats'
+      stats: '5 neighborhoods analyzed',
+      color: 'primary'
     }
   ];
 
   const integrations = [
-    { name: 'Pipedrive CRM', status: 'Connected', description: 'Lead management and pipeline tracking' },
-    { name: 'DocuSign', status: 'Active', description: 'Automated document signing workflows' },
-    { name: 'Avochato SMS', status: 'Running', description: 'SMS automation and 2-way messaging' },
-    { name: 'Bryckel AI', status: 'Processing', description: 'Sentiment analysis and property scoring' },
-    { name: 'n8n Automation', status: 'Connected', description: 'Complex workflow automation' },
-    { name: 'Zapier', status: 'Active', description: 'App integration and trigger management' },
-    { name: 'Buildium', status: 'Synced', description: 'Property management and lease tracking' },
-    { name: 'Open Real Estate', status: 'Connected', description: 'Listing syndication and promotion' }
+    { name: 'Pipedrive CRM', status: 'Connected', color: 'success' },
+    { name: 'DocuSign', status: 'Active', color: 'primary' },
+    { name: 'Avochato SMS', status: 'Running', color: 'warning' },
+    { name: 'Bryckel AI', status: 'Processing', color: 'secondary' },
+    { name: 'n8n Automation', status: 'Connected', color: 'success' },
+    { name: 'Zapier', status: 'Active', color: 'primary' },
+    { name: 'Buildium', status: 'Synced', color: 'success' },
+    { name: 'Open Real Estate', status: 'Connected', color: 'success' }
   ];
 
   const openDemo = (demoId: string) => {
@@ -166,97 +177,129 @@ export const DemoShowcasePage = () => {
   const selectedDemoData = demoSections.find(demo => demo.id === selectedDemo);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
+      </div>
+      
+      {/* Floating Orbs */}
+      <div className="absolute top-20 left-20 w-72 h-72 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-40 right-20 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      <div className="absolute top-1/2 left-1/3 w-64 h-64 bg-pink-500/20 rounded-full blur-3xl animate-pulse delay-2000"></div>
+
       <NavBar />
       
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 py-16 relative z-10">
         {/* Hero Section */}
-        <div className="text-center mb-16">
-          <div className="flex justify-center mb-6">
-            <div className="bg-primary-100 p-4 rounded-full">
-              <IconRocket className="h-12 w-12 text-primary-600" />
+        <div className="text-center mb-20">
+          <div className="flex justify-center mb-8">
+            <div className="p-6 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 shadow-2xl">
+              <IconRocket className="h-16 w-16 text-purple-300" />
             </div>
           </div>
-          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent mb-6">
-            aTuna Marketing Automation
+          
+          <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-purple-300 via-pink-300 to-blue-300 bg-clip-text text-transparent mb-8 leading-tight">
+            aTuna Marketing
+            <br />
+            <span className="text-4xl md:text-6xl">Automation</span>
           </h1>
-          <p className="text-xl text-foreground-600 max-w-3xl mx-auto mb-8">
-            Complete real estate marketing automation solution for General Santos City. 
-            Experience 8 integrated automation strategies designed for the Philippine market.
+          
+          <p className="text-xl text-slate-300 max-w-4xl mx-auto mb-12 leading-relaxed">
+            Revolutionary real estate marketing automation for General Santos City. 
+            Experience intelligent automation strategies crafted for the Philippine market.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Chip size="lg" variant="flat" color="primary" className="px-4 py-2">
-              <IconMap className="h-4 w-4 mr-2" />
-              8 Automation Strategies
-            </Chip>
-            <Chip size="lg" variant="flat" color="success" className="px-4 py-2">
-              <IconHome className="h-4 w-4 mr-2" />
+          
+          <div className="flex flex-wrap justify-center gap-4 mb-12">
+            <Badge content="New" color="primary" variant="flat" className="p-0">
+              <Chip 
+                size="lg" 
+                className="bg-white/10 backdrop-blur-lg border border-white/20 text-white px-6 py-3"
+                startContent={<IconSparkles className="h-5 w-5" />}
+              >
+                8 AI Strategies
+              </Chip>
+            </Badge>
+            <Chip 
+              size="lg" 
+              className="bg-white/10 backdrop-blur-lg border border-white/20 text-white px-6 py-3"
+              startContent={<IconHome className="h-5 w-5" />}
+            >
               {analytics.totalProperties} Properties
             </Chip>
-            <Chip size="lg" variant="flat" color="warning" className="px-4 py-2">
-              <IconUsers className="h-4 w-4 mr-2" />
+            <Chip 
+              size="lg" 
+              className="bg-white/10 backdrop-blur-lg border border-white/20 text-white px-6 py-3"
+              startContent={<IconUsers className="h-5 w-5" />}
+            >
               {analytics.activeLeads} Active Leads
             </Chip>
           </div>
         </div>
 
         {/* Demo Sections */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-center mb-12">Interactive Demo Dashboards</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="mb-20">
+          <h2 className="text-4xl font-bold text-center mb-16 text-white">
+            Interactive Demo Dashboards
+          </h2>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {demoSections.map((demo) => {
               const Icon = demo.icon;
               return (
-                <Card key={demo.id} className="hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                  <CardHeader className="text-center pb-4">
-                    <div className="flex justify-center mb-4">
-                      <div className={`bg-${demo.color}-100 p-3 rounded-full`}>
-                        <Icon className={`h-8 w-8 text-${demo.color}-600`} />
+                <Card 
+                  key={demo.id} 
+                  className="bg-white/10 backdrop-blur-lg border border-white/20 hover:bg-white/20 transition-all duration-500 hover:scale-105 hover:shadow-2xl group"
+                >
+                  <CardHeader className="text-center pb-6">
+                    <div className="flex justify-center mb-6">
+                      <div className={`p-4 rounded-full bg-gradient-to-r ${demo.gradient} shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                        <Icon className="h-10 w-10 text-white" />
                       </div>
                     </div>
-                    <h3 className="text-xl font-bold">{demo.title}</h3>
-                    <p className="text-foreground-600">{demo.description}</p>
+                    <h3 className="text-2xl font-bold text-white mb-3">{demo.title}</h3>
+                    <p className="text-slate-300">{demo.description}</p>
                   </CardHeader>
-                  <CardBody className="space-y-4">
+                  
+                  <CardBody className="space-y-6">
                     <div className="grid grid-cols-2 gap-4">
                       {Object.entries(demo.metrics).map(([key, value]) => (
-                        <div key={key} className="text-center">
-                          <p className="text-lg font-bold text-primary">{value}</p>
-                          <p className="text-xs text-foreground-600">{key}</p>
+                        <div key={key} className="text-center bg-white/5 rounded-lg p-3 backdrop-blur-sm">
+                          <p className="text-xl font-bold text-purple-300">{value}</p>
+                          <p className="text-xs text-slate-400">{key}</p>
                         </div>
                       ))}
                     </div>
                     
-                    <Divider />
+                    <Divider className="bg-white/20" />
                     
-                    <div className="space-y-2">
-                      {demo.features.slice(0, 3).map((feature, index) => (
-                        <div key={index} className="flex items-center text-sm">
-                          <div className="w-2 h-2 bg-success rounded-full mr-2"></div>
+                    <div className="space-y-3">
+                      {demo.features.slice(0, 3).map((feature, idx) => (
+                        <div key={idx} className="flex items-center text-sm text-slate-300">
+                          <IconCheck className="h-4 w-4 text-green-400 mr-3 flex-shrink-0" />
                           {feature}
                         </div>
                       ))}
                       {demo.features.length > 3 && (
-                        <p className="text-xs text-foreground-500">+{demo.features.length - 3} more features</p>
+                        <p className="text-xs text-slate-400 ml-7">+{demo.features.length - 3} more features</p>
                       )}
                     </div>
                     
-                    <div className="flex space-x-2 pt-4">
+                    <div className="flex gap-3 pt-4">
                       <Button
                         as={Link}
                         href={demo.route}
-                        color={demo.color as any}
-                        variant="solid"
-                        className="flex-1"
+                        className={`flex-1 bg-gradient-to-r ${demo.gradient} text-white font-semibold hover:scale-105 transition-transform`}
+                        endContent={<IconArrowRight className="h-4 w-4" />}
                       >
                         Open Dashboard
                       </Button>
                       <Button
-                        variant="light"
+                        variant="bordered"
+                        className="flex-1 border-white/30 text-white hover:bg-white/10"
                         onPress={() => openDemo(demo.id)}
-                        className="flex-1"
                       >
-                        View Details
+                        Details
                       </Button>
                     </div>
                   </CardBody>
@@ -267,23 +310,31 @@ export const DemoShowcasePage = () => {
         </div>
 
         {/* Automation Features */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-center mb-12">Marketing Automation Features</h2>
+        <div className="mb-20">
+          <h2 className="text-4xl font-bold text-center mb-16 text-white">
+            Automation Features
+          </h2>
+          
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {automationFeatures.map((feature, index) => {
               const Icon = feature.icon;
               return (
-                <Card key={index} className="hover:shadow-lg transition-shadow">
+                <Card 
+                  key={index} 
+                  className="bg-white/10 backdrop-blur-lg border border-white/20 hover:bg-white/15 transition-all duration-300 group"
+                >
                   <CardBody className="space-y-4">
-                    <div className="flex items-center space-x-3">
-                      <div className="bg-primary-100 p-2 rounded-lg">
-                        <Icon className="h-5 w-5 text-primary-600" />
+                    <div className="flex items-center gap-4">
+                      <div className={`p-3 rounded-xl bg-${feature.color}/20 group-hover:scale-110 transition-transform`}>
+                        <Icon className={`h-6 w-6 text-${feature.color}`} />
                       </div>
-                      <h3 className="font-semibold">{feature.title}</h3>
+                      <h3 className="font-semibold text-white text-lg">{feature.title}</h3>
                     </div>
-                    <p className="text-sm text-foreground-600">{feature.description}</p>
-                    <div className="bg-gray-50 p-3 rounded-lg">
-                      <p className="text-xs font-medium text-primary">{feature.stats}</p>
+                    
+                    <p className="text-slate-300 leading-relaxed">{feature.description}</p>
+                    
+                    <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 p-3 rounded-lg border border-white/10">
+                      <p className="text-sm font-medium text-purple-200">{feature.stats}</p>
                     </div>
                   </CardBody>
                 </Card>
@@ -293,18 +344,28 @@ export const DemoShowcasePage = () => {
         </div>
 
         {/* System Integrations */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-center mb-12">System Integrations</h2>
-          <Card>
-            <CardBody>
+        <div className="mb-20">
+          <h2 className="text-4xl font-bold text-center mb-16 text-white">
+            System Integrations
+          </h2>
+          
+          <Card className="bg-white/10 backdrop-blur-lg border border-white/20">
+            <CardBody className="p-8">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {integrations.map((integration, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 border border-divider rounded-lg">
-                    <div>
-                      <p className="font-medium text-sm">{integration.name}</p>
-                      <p className="text-xs text-foreground-600">{integration.description}</p>
+                  <div 
+                    key={index} 
+                    className="flex items-center justify-between p-4 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-all duration-300"
+                  >
+                    <div className="flex-1">
+                      <p className="font-medium text-white text-sm">{integration.name}</p>
                     </div>
-                    <Chip size="sm" variant="flat" color="success">
+                    <Chip 
+                      size="sm" 
+                      color={integration.color as any}
+                      variant="flat"
+                      className="ml-2"
+                    >
                       {integration.status}
                     </Chip>
                   </div>
@@ -314,116 +375,144 @@ export const DemoShowcasePage = () => {
           </Card>
         </div>
 
-        {/* Quick Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-          <Card className="text-center">
-            <CardBody>
-              <IconMessage className="h-8 w-8 mx-auto mb-2 text-primary" />
-              <p className="text-2xl font-bold">{analytics.totalMessages}</p>
-              <p className="text-sm text-foreground-600">Messages Sent</p>
-            </CardBody>
-          </Card>
-          <Card className="text-center">
-            <CardBody>
-              <IconCalendar className="h-8 w-8 mx-auto mb-2 text-success" />
-              <p className="text-2xl font-bold">{analytics.scheduledEvents}</p>
-              <p className="text-sm text-foreground-600">Events Scheduled</p>
-            </CardBody>
-          </Card>
-          <Card className="text-center">
-            <CardBody>
-              <IconMap className="h-8 w-8 mx-auto mb-2 text-warning" />
-              <p className="text-2xl font-bold">{((analytics.automatedMessages / analytics.totalMessages) * 100).toFixed(0)}%</p>
-              <p className="text-sm text-foreground-600">Automated</p>
-            </CardBody>
-          </Card>
-          <Card className="text-center">
-            <CardBody>
-              <IconStar className="h-8 w-8 mx-auto mb-2 text-secondary" />
-              <p className="text-2xl font-bold">{analytics.averageAgentRating.toFixed(1)}</p>
-              <p className="text-sm text-foreground-600">Agent Rating</p>
-            </CardBody>
-          </Card>
+        {/* Stats Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+          {[
+            { icon: IconMessage, value: analytics.totalMessages, label: 'Messages', color: 'from-blue-400 to-purple-500' },
+            { icon: IconCalendar, value: analytics.scheduledEvents, label: 'Events', color: 'from-green-400 to-emerald-500' },
+            { icon: IconMap, value: `${((analytics.automatedMessages / analytics.totalMessages) * 100).toFixed(0)}%`, label: 'Automated', color: 'from-orange-400 to-pink-500' },
+            { icon: IconStar, value: analytics.averageAgentRating.toFixed(1), label: 'Rating', color: 'from-purple-400 to-indigo-500' }
+          ].map((stat, index) => (
+            <Card key={index} className="bg-white/10 backdrop-blur-lg border border-white/20 hover:scale-105 transition-transform duration-300">
+              <CardBody className="text-center p-6">
+                <div className={`inline-flex p-3 rounded-full bg-gradient-to-r ${stat.color} mb-4`}>
+                  <stat.icon className="h-6 w-6 text-white" />
+                </div>
+                <p className="text-3xl font-bold text-white mb-2">{stat.value}</p>
+                <p className="text-slate-400 text-sm">{stat.label}</p>
+              </CardBody>
+            </Card>
+          ))}
         </div>
 
         {/* Call to Action */}
-        <Card className="bg-gradient-to-r from-primary-500 to-secondary-500 text-white">
-          <CardBody className="text-center py-12">
-            <h2 className="text-3xl font-bold mb-4">Ready to Transform Your Real Estate Business?</h2>
-            <p className="text-lg mb-8 text-primary-100">
+        <Card className="bg-gradient-to-r from-purple-600/20 via-pink-600/20 to-blue-600/20 backdrop-blur-lg border border-white/20 shadow-2xl">
+          <CardBody className="text-center py-16">
+            <h2 className="text-4xl font-bold mb-6 text-white">
+              Ready to Transform Your Business?
+            </h2>
+            <p className="text-xl mb-12 text-slate-300 max-w-3xl mx-auto leading-relaxed">
               Experience the future of real estate marketing automation designed specifically for the Philippine market.
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Button as={Link} href="/admin/dashboard" size="lg" color="warning" variant="solid">
-                <IconChartBar className="h-5 w-5 mr-2" />
-                View Admin Dashboard
+            
+            <div className="flex flex-wrap justify-center gap-6">
+              <Button 
+                as={Link} 
+                href="/admin/dashboard" 
+                size="lg" 
+                className="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold px-8 py-4 hover:scale-105 transition-transform"
+                startContent={<IconChartBar className="h-5 w-5" />}
+              >
+                Admin Dashboard
               </Button>
-              <Button as={Link} href="/profile/agent" size="lg" variant="bordered" className="text-white border-white">
-                <IconUsers className="h-5 w-5 mr-2" />
-                Try Agent Dashboard
+              <Button 
+                as={Link} 
+                href="/profile/agent" 
+                size="lg"
+                variant="bordered"
+                className="border-white/30 text-white hover:bg-white/10 px-8 py-4"
+                startContent={<IconUsers className="h-5 w-5" />}
+              >
+                Agent Dashboard
               </Button>
-              <Button as={Link} href="/profile/client" size="lg" variant="light" className="text-white">
-                <IconUser className="h-5 w-5 mr-2" />
-                Browse as Client
+              <Button 
+                as={Link} 
+                href="/profile/client" 
+                size="lg"
+                variant="light"
+                className="text-white hover:bg-white/10 px-8 py-4"
+                startContent={<IconUser className="h-5 w-5" />}
+              >
+                Browse Properties
               </Button>
             </div>
           </CardBody>
         </Card>
       </div>
 
-      {/* Demo Details Modal */}
-      <Modal isOpen={isOpen} onClose={onClose} size="3xl">
+      {/* Enhanced Modal */}
+      <Modal 
+        isOpen={isOpen} 
+        onClose={onClose} 
+        size="3xl"
+        classNames={{
+          backdrop: "bg-black/80 backdrop-blur-sm",
+          base: "bg-white/10 backdrop-blur-lg border border-white/20",
+          header: "border-b border-white/20",
+          body: "py-6",
+          footer: "border-t border-white/20"
+        }}
+      >
         <ModalContent>
-          {selectedDemoData && (
+          {selectedDemoData ? (
             <>
-              <ModalHeader className="flex items-center space-x-3">
-                <selectedDemoData.icon className="h-6 w-6 text-primary" />
-                <span>{selectedDemoData.title} - Detailed Features</span>
+              <ModalHeader className="flex items-center gap-3 text-white">
+                <div className={`p-2 rounded-lg bg-gradient-to-r ${selectedDemoData.gradient}`}>
+                  <selectedDemoData.icon className="h-6 w-6 text-white" />
+                </div>
+                <span className="text-xl">{selectedDemoData.title}</span>
               </ModalHeader>
-              <ModalBody>
+              
+              <ModalBody className="text-white">
                 <div className="space-y-6">
-                  <p className="text-foreground-600">{selectedDemoData.description}</p>
+                  <p className="text-slate-300 text-lg leading-relaxed">{selectedDemoData.description}</p>
                   
                   <div>
-                    <h4 className="font-semibold mb-3">Key Metrics</h4>
+                    <h4 className="font-semibold mb-4 text-xl">Performance Metrics</h4>
                     <div className="grid grid-cols-2 gap-4">
                       {Object.entries(selectedDemoData.metrics).map(([key, value]) => (
-                        <div key={key} className="bg-gray-50 p-3 rounded-lg text-center">
-                          <p className="text-xl font-bold text-primary">{value}</p>
-                          <p className="text-sm text-foreground-600">{key}</p>
+                        <div key={key} className="bg-white/10 p-4 rounded-lg text-center backdrop-blur-sm border border-white/10">
+                          <p className="text-2xl font-bold text-purple-300">{value}</p>
+                          <p className="text-sm text-slate-400">{key}</p>
                         </div>
                       ))}
                     </div>
                   </div>
                   
                   <div>
-                    <h4 className="font-semibold mb-3">Complete Feature List</h4>
-                    <div className="space-y-2">
+                    <h4 className="font-semibold mb-4 text-xl">Complete Features</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {selectedDemoData.features.map((feature, index) => (
-                        <div key={index} className="flex items-center">
-                          <div className="w-2 h-2 bg-success rounded-full mr-3"></div>
-                          <span className="text-sm">{feature}</span>
+                        <div key={index} className="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
+                          <IconCheck className="h-4 w-4 text-green-400 flex-shrink-0" />
+                          <span className="text-slate-300">{feature}</span>
                         </div>
                       ))}
                     </div>
                   </div>
                 </div>
               </ModalBody>
+              
               <ModalFooter>
-                <Button variant="light" onPress={onClose}>
+                <Button 
+                  variant="light" 
+                  onPress={onClose}
+                  className="text-white hover:bg-white/10"
+                >
                   Close
                 </Button>
                 <Button 
                   as={Link} 
                   href={selectedDemoData.route} 
-                  color="primary"
+                  className={`bg-gradient-to-r ${selectedDemoData.gradient} text-white font-semibold`}
                   onPress={onClose}
+                  endContent={<IconArrowRight className="h-4 w-4" />}
                 >
                   Open Dashboard
                 </Button>
               </ModalFooter>
             </>
-          )}
+          ) : null}
         </ModalContent>
       </Modal>
     </div>
