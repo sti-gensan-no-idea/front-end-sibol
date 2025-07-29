@@ -29,7 +29,7 @@ export const Hero = () => {
 
       {/* Headline at Top */}
       <div className="relative z-20 pt-24 px-4 text-center gap-8">
-        <h1 className="text-5xl md:text-6xl font-medium text-gray-800 drop-shadow-md">
+        <h1 className="text-5xl md:text-6xl font-bold text-gray-800 drop-shadow-md">
           Simplifying Property Search
           <br />
           Through Intelligent Technology
