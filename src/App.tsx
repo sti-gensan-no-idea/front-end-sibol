@@ -11,7 +11,11 @@ import { SignInPage } from "@/pages/sign-in";
 import { SignInAgentPage } from "@/pages/sign-in-agent";
 import { DashboardAgentPage } from "@/pages/dashboard-agent";
 import { DashboardClientPage } from "@/pages/dashboard-client";
+import { AdminDashboardPage } from "@/pages/dashboard-admin";
+import { DemoShowcasePage } from "@/pages/demo-showcase";
 import { ContactAgentPage } from "@/pages/contact-agent";
+import ChatPage from "@/pages/ChatPage";
+
 
 function App() {
   return (
@@ -22,6 +26,11 @@ function App() {
       <Route element={<SignUpPage />} path="/sign-up" />
       <Route element={<PropertiesPage />} path="/properties" />
       <Route element={<PropertyPreviewPage />} path="/properties/preview" />
+      <Route element={<ChatPage />} path="/chat" />
+
+
+      {/* Demo Showcase */}
+      <Route element={<DemoShowcasePage />} path="/demo" />
 
       {/* Protected Routes */}
       <Route element={<ProtectedRoute allowedRole="client" />}>
@@ -33,10 +42,15 @@ function App() {
       <Route element={<ProtectedRoute allowedRole="client" />}>
         <Route element={<ContactAgentPage />} path="/contact-agent" />
       </Route>
+      
+      {/* Admin Dashboard - for demo purposes, not protected */}
+      <Route element={<AdminDashboardPage />} path="/admin/dashboard" />
 
       <Route element={<UnauthorizePage />} path="/not-authorized" />
       <Route element={<NotFoundPage />} path="*" />
     </Routes>
+
+    
   );
 }
 
