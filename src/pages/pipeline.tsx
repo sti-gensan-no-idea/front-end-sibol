@@ -145,7 +145,7 @@ const AutomationWorkflow: React.FC = () => {
     <>
     <div className="container mx-auto p-6  min-h-screen">
       <Card className="w-full bg-white shadow-lg rounded-2xl">
-        <CardHeader className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-t-2xl">
+        <CardHeader className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-500 to-blue-200 rounded-t-2xl">
           <h2 className="text-lg font-bold text-white">Automation Workflow</h2>
           <Button
             color="primary"
