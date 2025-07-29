@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Input } from "@heroui/react";
 import { useNavigate } from "react-router-dom";
 
-import ImgHeroBackground from "../assets/images/img_hero_background1.jpg";
+import ImgHeroBackground from "../assets/images/img_hero_background.jpg";
 
 export const Hero = () => {
   const [query, setQuery] = useState("");
@@ -22,6 +22,12 @@ export const Hero = () => {
         className="absolute inset-0 w-full h-full object-fill z-0 object-center"
         src={ImgHeroBackground}
       />
+
+      <div className="container mx-auto flex flex-col h-screen">
+        <span className="text-6xl">
+          Simplifying Property Search Through Intelligent Technology
+        </span>
+      </div>
 
       {/* Search input */}
       <div className="container mx-auto flex justify-center px-20 absolute bottom-44">

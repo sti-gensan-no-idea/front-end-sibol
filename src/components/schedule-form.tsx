@@ -4,10 +4,11 @@ import { Button, DatePicker } from "@heroui/react";
 import { DateValue } from "@heroui/react";
 import { onAuthStateChanged } from "firebase/auth";
 import { getDoc, doc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+import { getFunctions, httpsCallable } from "firebase/functions";
 
 import { auth } from "@/firebase";
 import { db } from "@/firebase";
-import { useNavigate } from "react-router-dom";
 
 export const ScheduleForm = () => {
   const navigate = useNavigate();
@@ -77,6 +78,26 @@ export const ScheduleForm = () => {
     });
   };
 
+  const handleSubmit = async () => {
+    alert("Schedule set!");
+
+    try {
+      const functions = getFunctions();
+      const sendWelcomeEmail = httpsCallable(functions, "sendWelcomeEmail");
+
+      await sendWelcomeEmail({
+        email: formData.email,
+        name: formData.name,
+      });
+
+      console.log("Welcome email sent successfully.");
+    } catch (error) {
+      console.error("Failed to send welcome email:", error);
+    }
+
+    navigate("/properties");
+  };
+
   return (
     <div className="h-screen flex items-center justify-center">
       <div className="w-lg mx-auto bg-white shadow-medium rounded-large p-8">
@@ -130,10 +151,7 @@ export const ScheduleForm = () => {
           <Button
             className="w-full mt-8"
             color="primary"
-            onPress={() => {
-              alert("Schedule set!");
-              navigate("/properties");
-            }}
+            onPress={handleSubmit}
           >
             Submit
           </Button>
