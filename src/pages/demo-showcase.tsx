@@ -47,8 +47,6 @@ export const DemoShowcasePage = () => {
       title: 'Client Experience',
       description: 'Seamless property discovery with intelligent automation',
       icon: IconUser,
-      color: 'primary',
-      gradient: 'from-blue-400 to-purple-500',
       features: [
         'AI-powered property matching',
         'Smart filtering (pet-friendly, flood-safe)',
@@ -70,8 +68,6 @@ export const DemoShowcasePage = () => {
       title: 'Agent Dashboard',
       description: 'Intelligent lead management with performance insights',
       icon: IconUsers,
-      color: 'success',
-      gradient: 'from-green-400 to-emerald-500',
       features: [
         'Smart lead prioritization',
         'Automated follow-up sequences',
@@ -93,8 +89,6 @@ export const DemoShowcasePage = () => {
       title: 'Admin Control',
       description: 'Complete system oversight with advanced analytics',
       icon: IconShield,
-      color: 'warning',
-      gradient: 'from-orange-400 to-pink-500',
       features: [
         'Marketing automation dashboard',
         'Agent performance monitoring',
@@ -118,55 +112,49 @@ export const DemoShowcasePage = () => {
       title: 'Smart Lead Generation',
       description: 'Automated capture with Philippine market integration',
       icon: IconTarget,
-      stats: `${analytics.activeLeads} active leads`,
-      color: 'primary'
+      stats: `${analytics.activeLeads} active leads`
     },
     {
       title: 'Intelligent Scoring',
       description: 'AI-powered lead prioritization and distribution',
       icon: IconTrendingUp,
-      stats: `${analytics.conversionRate.toFixed(1)}% conversion rate`,
-      color: 'success'
+      stats: `${analytics.conversionRate.toFixed(1)}% conversion rate`
     },
     {
       title: 'Event Automation',
       description: 'Seamless scheduling with smart reminders',
       icon: IconCalendar,
-      stats: `${analytics.scheduledEvents} events scheduled`,
-      color: 'secondary'
+      stats: `${analytics.scheduledEvents} events scheduled`
     },
     {
       title: 'Multi-Channel Messaging',
       description: 'Coordinated communication with sentiment analysis',
       icon: IconMessage,
-      stats: `${analytics.totalMessages} messages sent`,
-      color: 'warning'
+      stats: `${analytics.totalMessages} messages sent`
     },
     {
       title: 'Real-time Analytics',
       description: 'Comprehensive insights and performance tracking',
       icon: IconChartBar,
-      stats: '15+ key metrics tracked',
-      color: 'danger'
+      stats: '15+ key metrics tracked'
     },
     {
       title: 'Local Market Integration',
       description: 'Philippines-specific features and data',
       icon: IconMapPin,
-      stats: '5 neighborhoods analyzed',
-      color: 'primary'
+      stats: '5 neighborhoods analyzed'
     }
   ];
 
   const integrations = [
-    { name: 'Pipedrive CRM', status: 'Connected', color: 'success' },
-    { name: 'DocuSign', status: 'Active', color: 'primary' },
-    { name: 'Avochato SMS', status: 'Running', color: 'warning' },
-    { name: 'Bryckel AI', status: 'Processing', color: 'secondary' },
-    { name: 'n8n Automation', status: 'Connected', color: 'success' },
-    { name: 'Zapier', status: 'Active', color: 'primary' },
-    { name: 'Buildium', status: 'Synced', color: 'success' },
-    { name: 'Open Real Estate', status: 'Connected', color: 'success' }
+    { name: 'Pipedrive CRM', status: 'Connected' },
+    { name: 'DocuSign', status: 'Active' },
+    { name: 'Avochato SMS', status: 'Running' },
+    { name: 'Bryckel AI', status: 'Processing' },
+    { name: 'n8n Automation', status: 'Connected' },
+    { name: 'Zapier', status: 'Active' },
+    { name: 'Buildium', status: 'Synced' },
+    { name: 'Open Real Estate', status: 'Connected' }
   ];
 
   const openDemo = (demoId: string) => {
@@ -177,16 +165,9 @@ export const DemoShowcasePage = () => {
   const selectedDemoData = demoSections.find(demo => demo.id === selectedDemo);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
-      </div>
-      
-      {/* Floating Orbs */}
-      <div className="absolute top-20 left-20 w-72 h-72 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
-      <div className="absolute bottom-40 right-20 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-      <div className="absolute top-1/2 left-1/3 w-64 h-64 bg-pink-500/20 rounded-full blur-3xl animate-pulse delay-2000"></div>
+    <div className="min-h-screen bg-blue-100/20 relative overflow-hidden">
+      {/* Subtle Background Pattern */}
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3z' fill='%23e0f2fe' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E')] opacity-70"></div>
 
       <NavBar />
       
@@ -194,43 +175,41 @@ export const DemoShowcasePage = () => {
         {/* Hero Section */}
         <div className="text-center mb-20">
           <div className="flex justify-center mb-8">
-            <div className="p-6 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 shadow-2xl">
-              <IconRocket className="h-16 w-16 text-purple-300" />
+            <div className="p-4 rounded-2xl bg-blue-200/20 backdrop-blur-xl border border-blue-100/40 shadow-lg">
+              <IconRocket className="h-12 w-12 text-blue-500" />
             </div>
           </div>
           
-          <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-purple-300 via-pink-300 to-blue-300 bg-clip-text text-transparent mb-8 leading-tight">
-            aTuna Marketing
+          <h1 className="text-5xl md:text-6xl font-semibold text-blue-950 mb-6 leading-tight">
+            Atuna Marketing
             <br />
-            <span className="text-4xl md:text-6xl">Automation</span>
+            <span className="text-4xl md:text-5xl">Automation</span>
           </h1>
           
-          <p className="text-xl text-slate-300 max-w-4xl mx-auto mb-12 leading-relaxed">
+          <p className="text-lg text-blue-800 max-w-3xl mx-auto mb-10 leading-relaxed">
             Revolutionary real estate marketing automation for General Santos City. 
             Experience intelligent automation strategies crafted for the Philippine market.
           </p>
           
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            <Badge content="New" color="primary" variant="flat" className="p-0">
-              <Chip 
-                size="lg" 
-                className="bg-white/10 backdrop-blur-lg border border-white/20 text-white px-6 py-3"
-                startContent={<IconSparkles className="h-5 w-5" />}
-              >
-                8 AI Strategies
-              </Chip>
-            </Badge>
+          <div className="flex flex-wrap justify-center gap-4">
             <Chip 
               size="lg" 
-              className="bg-white/10 backdrop-blur-lg border border-white/20 text-white px-6 py-3"
-              startContent={<IconHome className="h-5 w-5" />}
+              className="bg-blue-200/20 backdrop-blur-xl border border-blue-100/40 text-blue-950 px-6 py-3"
+              startContent={<IconSparkles className="h-5 w-5 text-blue-600" />}
+            >
+              8 AI Strategies
+            </Chip>
+            <Chip 
+              size="lg" 
+              className="bg-blue-200/20 backdrop-blur-xl border border-blue-100/40 text-blue-950 px-6 py-3"
+              startContent={<IconHome className="h-5 w-5 text-blue-600" />}
             >
               {analytics.totalProperties} Properties
             </Chip>
             <Chip 
               size="lg" 
-              className="bg-white/10 backdrop-blur-lg border border-white/20 text-white px-6 py-3"
-              startContent={<IconUsers className="h-5 w-5" />}
+              className="bg-blue-200/20 backdrop-blur-xl border border-blue-100/40 text-blue-950 px-6 py-3"
+              startContent={<IconUsers className="h-5 w-5 text-blue-600" />}
             >
               {analytics.activeLeads} Active Leads
             </Chip>
@@ -239,64 +218,64 @@ export const DemoShowcasePage = () => {
 
         {/* Demo Sections */}
         <div className="mb-20">
-          <h2 className="text-4xl font-bold text-center mb-16 text-white">
+          <h2 className="text-3xl font-semibold text-center mb-12 text-blue-950">
             Interactive Demo Dashboards
           </h2>
           
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {demoSections.map((demo) => {
               const Icon = demo.icon;
               return (
                 <Card 
                   key={demo.id} 
-                  className="bg-white/10 backdrop-blur-lg border border-white/20 hover:bg-white/20 transition-all duration-500 hover:scale-105 hover:shadow-2xl group"
+                  className="bg-blue-200/20 backdrop-blur-xl border border-blue-100/40 hover:bg-blue-200/30 transition-all duration-300 hover:shadow-lg"
                 >
-                  <CardHeader className="text-center pb-6">
-                    <div className="flex justify-center mb-6">
-                      <div className={`p-4 rounded-full bg-gradient-to-r ${demo.gradient} shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                        <Icon className="h-10 w-10 text-white" />
+                  <CardHeader className="text-center pb-4">
+                    <div className="flex justify-center mb-4">
+                      <div className="p-3 rounded-xl bg-blue-200/40">
+                        <Icon className="h-8 w-8 text-blue-600" />
                       </div>
                     </div>
-                    <h3 className="text-2xl font-bold text-white mb-3">{demo.title}</h3>
-                    <p className="text-slate-300">{demo.description}</p>
+                    <h3 className="text-xl font-semibold text-blue-950 mb-2">{demo.title}</h3>
+                    <p className="text-sm text-blue-800">{demo.description}</p>
                   </CardHeader>
                   
-                  <CardBody className="space-y-6">
-                    <div className="grid grid-cols-2 gap-4">
+                  <CardBody className="space-y-4">
+                    <div className="grid grid-cols-2 gap-3">
                       {Object.entries(demo.metrics).map(([key, value]) => (
-                        <div key={key} className="text-center bg-white/5 rounded-lg p-3 backdrop-blur-sm">
-                          <p className="text-xl font-bold text-purple-300">{value}</p>
-                          <p className="text-xs text-slate-400">{key}</p>
+                        <div key={key} className="text-center bg-blue-200/10 rounded-lg p-3 backdrop-blur-sm">
+                          <p className="text-lg font-medium text-blue-600">{value}</p>
+                          <p className="text-xs text-blue-800">{key}</p>
                         </div>
                       ))}
                     </div>
                     
-                    <Divider className="bg-white/20" />
+                    <Divider className="bg-blue-100/40" />
                     
-                    <div className="space-y-3">
+                    <div className="space-y-2">
                       {demo.features.slice(0, 3).map((feature, idx) => (
-                        <div key={idx} className="flex items-center text-sm text-slate-300">
-                          <IconCheck className="h-4 w-4 text-green-400 mr-3 flex-shrink-0" />
+                        <div key={idx} className="flex items-center text-sm text-blue-800">
+                          <IconCheck className="h-4 w-4 text-blue-600 mr-2 flex-shrink-0" />
                           {feature}
                         </div>
                       ))}
                       {demo.features.length > 3 && (
-                        <p className="text-xs text-slate-400 ml-7">+{demo.features.length - 3} more features</p>
+                        <p className="text-xs text-blue-600 ml-6">+{demo.features.length - 3} more features</p>
                       )}
                     </div>
                     
-                    <div className="flex gap-3 pt-4">
+                    <div className="flex gap-3 pt-2">
                       <Button
                         as={Link}
                         href={demo.route}
-                        className={`flex-1 bg-gradient-to-r ${demo.gradient} text-white font-semibold hover:scale-105 transition-transform`}
+                        className="flex-1 bg-white-500/90 text-white hover:bg-blue-600 transition-all duration-300"
                         endContent={<IconArrowRight className="h-4 w-4" />}
                       >
                         Open Dashboard
                       </Button>
                       <Button
                         variant="bordered"
-                        className="flex-1 border-white/30 text-white hover:bg-white/10"
+                        className="flex-1 border-blue-100/50 text-blue-950 hover:bg-blue-200/20"
                         onPress={() => openDemo(demo.id)}
                       >
                         Details
@@ -311,7 +290,7 @@ export const DemoShowcasePage = () => {
 
         {/* Automation Features */}
         <div className="mb-20">
-          <h2 className="text-4xl font-bold text-center mb-16 text-white">
+          <h2 className="text-3xl font-semibold text-center mb-12 text-blue-950">
             Automation Features
           </h2>
           
@@ -321,20 +300,20 @@ export const DemoShowcasePage = () => {
               return (
                 <Card 
                   key={index} 
-                  className="bg-white/10 backdrop-blur-lg border border-white/20 hover:bg-white/15 transition-all duration-300 group"
+                  className="bg-blue-200/20 backdrop-blur-xl border border-blue-100/40 hover:bg-blue-200/30 transition-all duration-300"
                 >
-                  <CardBody className="space-y-4">
-                    <div className="flex items-center gap-4">
-                      <div className={`p-3 rounded-xl bg-${feature.color}/20 group-hover:scale-110 transition-transform`}>
-                        <Icon className={`h-6 w-6 text-${feature.color}`} />
+                  <CardBody className="space-y-3">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 rounded-lg bg-blue-200/40">
+                        <Icon className="h-5 w-5 text-blue-600" />
                       </div>
-                      <h3 className="font-semibold text-white text-lg">{feature.title}</h3>
+                      <h3 className="font-medium text-blue-950 text-lg">{feature.title}</h3>
                     </div>
                     
-                    <p className="text-slate-300 leading-relaxed">{feature.description}</p>
+                    <p className="text-sm text-blue-800 leading-relaxed">{feature.description}</p>
                     
-                    <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 p-3 rounded-lg border border-white/10">
-                      <p className="text-sm font-medium text-purple-200">{feature.stats}</p>
+                    <div className="bg-blue-200/10 p-2 rounded-lg border border-blue-100/30">
+                      <p className="text-sm font-medium text-blue-600">{feature.stats}</p>
                     </div>
                   </CardBody>
                 </Card>
@@ -345,26 +324,25 @@ export const DemoShowcasePage = () => {
 
         {/* System Integrations */}
         <div className="mb-20">
-          <h2 className="text-4xl font-bold text-center mb-16 text-white">
+          <h2 className="text-3xl font-semibold text-center mb-12 text-blue-950">
             System Integrations
           </h2>
           
-          <Card className="bg-white/10 backdrop-blur-lg border border-white/20">
-            <CardBody className="p-8">
+          <Card className="bg-blue-200/20 backdrop-blur-xl border border-blue-100/40">
+            <CardBody className="p-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {integrations.map((integration, index) => (
                   <div 
                     key={index} 
-                    className="flex items-center justify-between p-4 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-all duration-300"
+                    className="flex items-center justify-between p-3 bg-blue-200/10 border border-blue-100/30 rounded-lg hover:bg-blue-200/20 transition-all duration-300"
                   >
                     <div className="flex-1">
-                      <p className="font-medium text-white text-sm">{integration.name}</p>
+                      <p className="font-medium text-blue-950 text-sm">{integration.name}</p>
                     </div>
                     <Chip 
                       size="sm" 
-                      color={integration.color as any}
+                      className="bg-blue-200/20 text-blue-600"
                       variant="flat"
-                      className="ml-2"
                     >
                       {integration.status}
                     </Chip>
@@ -378,39 +356,39 @@ export const DemoShowcasePage = () => {
         {/* Stats Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
           {[
-            { icon: IconMessage, value: analytics.totalMessages, label: 'Messages', color: 'from-blue-400 to-purple-500' },
-            { icon: IconCalendar, value: analytics.scheduledEvents, label: 'Events', color: 'from-green-400 to-emerald-500' },
-            { icon: IconMap, value: `${((analytics.automatedMessages / analytics.totalMessages) * 100).toFixed(0)}%`, label: 'Automated', color: 'from-orange-400 to-pink-500' },
-            { icon: IconStar, value: analytics.averageAgentRating.toFixed(1), label: 'Rating', color: 'from-purple-400 to-indigo-500' }
+            { icon: IconMessage, value: analytics.totalMessages, label: 'Messages' },
+            { icon: IconCalendar, value: analytics.scheduledEvents, label: 'Events' },
+            { icon: IconMap, value: `${((analytics.automatedMessages / analytics.totalMessages) * 100).toFixed(0)}%`, label: 'Automated' },
+            { icon: IconStar, value: analytics.averageAgentRating.toFixed(1), label: 'Rating' }
           ].map((stat, index) => (
-            <Card key={index} className="bg-white/10 backdrop-blur-lg border border-white/20 hover:scale-105 transition-transform duration-300">
-              <CardBody className="text-center p-6">
-                <div className={`inline-flex p-3 rounded-full bg-gradient-to-r ${stat.color} mb-4`}>
-                  <stat.icon className="h-6 w-6 text-white" />
+            <Card key={index} className="bg-blue-200/20 backdrop-blur-xl border border-blue-100/40 hover:bg-blue-200/30 transition-all duration-300">
+              <CardBody className="text-center p-4">
+                <div className="inline-flex p-2 rounded-lg bg-blue-200/40 mb-3">
+                  <stat.icon className="h-5 w-5 text-blue-600" />
                 </div>
-                <p className="text-3xl font-bold text-white mb-2">{stat.value}</p>
-                <p className="text-slate-400 text-sm">{stat.label}</p>
+                <p className="text-2xl font-medium text-blue-950 mb-1">{stat.value}</p>
+                <p className="text-sm text-blue-800">{stat.label}</p>
               </CardBody>
             </Card>
           ))}
         </div>
 
         {/* Call to Action */}
-        <Card className="bg-gradient-to-r from-purple-600/20 via-pink-600/20 to-blue-600/20 backdrop-blur-lg border border-white/20 shadow-2xl">
-          <CardBody className="text-center py-16">
-            <h2 className="text-4xl font-bold mb-6 text-white">
+        <Card className="bg-blue-200/20 backdrop-blur-xl border border-blue-100/40">
+          <CardBody className="text-center py-12">
+            <h2 className="text-3xl font-semibold mb-6 text-blue-950">
               Ready to Transform Your Business?
             </h2>
-            <p className="text-xl mb-12 text-slate-300 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg mb-8 text-blue-800 max-w-3xl mx-auto leading-relaxed">
               Experience the future of real estate marketing automation designed specifically for the Philippine market.
             </p>
             
-            <div className="flex flex-wrap justify-center gap-6">
+            <div className="flex flex-wrap justify-center gap-4">
               <Button 
                 as={Link} 
                 href="/admin/dashboard" 
                 size="lg" 
-                className="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold px-8 py-4 hover:scale-105 transition-transform"
+                className="bg-blue-500/90 text-white hover:bg-blue-600 px-6 py-3 transition-all duration-300"
                 startContent={<IconChartBar className="h-5 w-5" />}
               >
                 Admin Dashboard
@@ -420,7 +398,7 @@ export const DemoShowcasePage = () => {
                 href="/profile/agent" 
                 size="lg"
                 variant="bordered"
-                className="border-white/30 text-white hover:bg-white/10 px-8 py-4"
+                className="border-blue-100/50 text-blue-950 hover:bg-blue-200/20 px-6 py-3"
                 startContent={<IconUsers className="h-5 w-5" />}
               >
                 Agent Dashboard
@@ -430,7 +408,7 @@ export const DemoShowcasePage = () => {
                 href="/profile/client" 
                 size="lg"
                 variant="light"
-                className="text-white hover:bg-white/10 px-8 py-4"
+                className="text-blue-950 hover:bg-blue-200/20 px-6 py-3"
                 startContent={<IconUser className="h-5 w-5" />}
               >
                 Browse Properties
@@ -446,46 +424,46 @@ export const DemoShowcasePage = () => {
         onClose={onClose} 
         size="3xl"
         classNames={{
-          backdrop: "bg-black/80 backdrop-blur-sm",
-          base: "bg-white/10 backdrop-blur-lg border border-white/20",
-          header: "border-b border-white/20",
+          backdrop: "bg-blue-900/80 backdrop-blur-sm",
+          base: "bg-blue-200/20 backdrop-blur-xl border border-blue-100/40",
+          header: "border-b border-blue-100/40",
           body: "py-6",
-          footer: "border-t border-white/20"
+          footer: "border-t border-blue-100/40"
         }}
       >
         <ModalContent>
           {selectedDemoData ? (
             <>
-              <ModalHeader className="flex items-center gap-3 text-white">
-                <div className={`p-2 rounded-lg bg-gradient-to-r ${selectedDemoData.gradient}`}>
-                  <selectedDemoData.icon className="h-6 w-6 text-white" />
+              <ModalHeader className="flex items-center gap-3 text-blue-950">
+                <div className="p-2 rounded-lg bg-blue-200/40">
+                  <selectedDemoData.icon className="h-5 w-5 text-blue-600" />
                 </div>
-                <span className="text-xl">{selectedDemoData.title}</span>
+                <span className="text-lg font-semibold">{selectedDemoData.title}</span>
               </ModalHeader>
               
-              <ModalBody className="text-white">
+              <ModalBody className="text-blue-950">
                 <div className="space-y-6">
-                  <p className="text-slate-300 text-lg leading-relaxed">{selectedDemoData.description}</p>
+                  <p className="text-blue-800 text-base leading-relaxed">{selectedDemoData.description}</p>
                   
                   <div>
-                    <h4 className="font-semibold mb-4 text-xl">Performance Metrics</h4>
-                    <div className="grid grid-cols-2 gap-4">
+                    <h4 className="font-medium mb-3 text-lg">Performance Metrics</h4>
+                    <div className="grid grid-cols-2 gap-3">
                       {Object.entries(selectedDemoData.metrics).map(([key, value]) => (
-                        <div key={key} className="bg-white/10 p-4 rounded-lg text-center backdrop-blur-sm border border-white/10">
-                          <p className="text-2xl font-bold text-purple-300">{value}</p>
-                          <p className="text-sm text-slate-400">{key}</p>
+                        <div key={key} className="bg-blue-200/10 p-3 rounded-lg text-center backdrop-blur-sm border border-blue-100/30">
+                          <p className="text-lg font-medium text-blue-600">{value}</p>
+                          <p className="text-xs text-blue-800">{key}</p>
                         </div>
                       ))}
                     </div>
                   </div>
                   
                   <div>
-                    <h4 className="font-semibold mb-4 text-xl">Complete Features</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <h4 className="font-medium mb-3 text-lg">Complete Features</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                       {selectedDemoData.features.map((feature, index) => (
-                        <div key={index} className="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
-                          <IconCheck className="h-4 w-4 text-green-400 flex-shrink-0" />
-                          <span className="text-slate-300">{feature}</span>
+                        <div key={index} className="flex items-center gap-2 p-2 bg-blue-200/10 rounded-lg">
+                          <IconCheck className="h-4 w-4 text-blue-600 flex-shrink-0" />
+                          <span className="text-sm text-blue-800">{feature}</span>
                         </div>
                       ))}
                     </div>
@@ -497,14 +475,14 @@ export const DemoShowcasePage = () => {
                 <Button 
                   variant="light" 
                   onPress={onClose}
-                  className="text-white hover:bg-white/10"
+                  className="text-blue-950 hover:bg-blue-200/20"
                 >
                   Close
                 </Button>
                 <Button 
                   as={Link} 
                   href={selectedDemoData.route} 
-                  className={`bg-gradient-to-r ${selectedDemoData.gradient} text-white font-semibold`}
+                  className="bg-blue-500/90 text-white hover:bg-blue-600"
                   onPress={onClose}
                   endContent={<IconArrowRight className="h-4 w-4" />}
                 >

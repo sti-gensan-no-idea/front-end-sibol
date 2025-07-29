@@ -100,8 +100,14 @@ export const NavBar = () => {
                   href="/properties?tab=search_properties"
                   title="Properties"
                 />
-                <Tab key="/about-us" href="/about-us" title="About Us" />
+
+                <Tab key="/demo" href="/demo" title="Demo" />
+
               </Tabs>
+
+
+              
+              
             </div>
           )}
         </div>

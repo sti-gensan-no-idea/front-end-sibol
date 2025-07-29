@@ -59,6 +59,8 @@ export const Footer = () => {
                 About Us
               </Link>
             </li>
+
+            
           </ul>
         </div>
         <div className="h-screen" />
