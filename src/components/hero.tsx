@@ -37,7 +37,7 @@ export const Hero = () => {
         <div className="h-8" />
         <span>
           Automate repetitive tasks, boost productivity, enhance
-          decision-making, and streamline proccesses with powerfull AI tools
+          decision-making, and streamline proccesses with powerful AI tools
         </span>
       </div>
 
