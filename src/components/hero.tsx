@@ -16,22 +16,34 @@ export const Hero = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen relative">
+    <div className="relative h-screen w-full overflow-hidden">
+      {/* Background Image */}
       <img
         alt="Hero Background"
-        className="absolute inset-0 w-full h-full object-fill z-0 object-center"
+        className="absolute inset-0 w-full h-full object-cover z-0"
         src={ImgHeroBackground}
       />
 
-      <div className="container mx-auto flex flex-col h-screen">
-        <span className="text-6xl">
-          Simplifying Property Search Through Intelligent Technology
+      {/* Top Gradient Overlay */}
+      <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white to-transparent z-10" />
+
+      {/* Headline at Top */}
+      <div className="relative z-20 pt-24 px-4 text-center gap-8">
+        <h1 className="text-5xl md:text-6xl font-medium text-gray-800 drop-shadow-md">
+          Simplifying Property Search
+          <br />
+          Through Intelligent Technology
+        </h1>
+        <div className="h-8" />
+        <span>
+          Automate repetitive tasks, boost productivity, enhance
+          decision-making, and streamline proccesses with powerfull AI tools
         </span>
       </div>
 
-      {/* Search input */}
-      <div className="container mx-auto flex justify-center px-20 absolute bottom-44">
-        <div className="w-full mt-26 bg-white rounded-full shadow-large shadow-gray-300 p-2 flex flex-col z-10">
+      {/* Search Input at Bottom */}
+      <div className="absolute bottom-44 w-full px-6 z-30">
+        <div className="max-w-3xl mx-auto bg-white rounded-full shadow-lg p-2">
           <div className="flex items-center gap-3">
             <Input
               className="w-full"
@@ -42,9 +54,7 @@ export const Hero = () => {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handleSearch();
-                }
+                if (e.key === "Enter") handleSearch();
               }}
             />
             <Button color="primary" radius="full" onPress={handleSearch}>

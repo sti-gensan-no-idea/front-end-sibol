@@ -49,17 +49,6 @@ export const ClientSideBar = () => {
         </Button>
       </Tooltip>
 
-      <Tooltip color="primary" content="Property listing" placement="right">
-        <Button
-          isIconOnly
-          className={isActive("property")}
-          variant={isSolid("property")}
-          onPress={() => goToTab("property")}
-        >
-          <IconBuildingCommunity />
-        </Button>
-      </Tooltip>
-
       <Tooltip color="primary" content="Calendar" placement="right">
         <Button
           isIconOnly
