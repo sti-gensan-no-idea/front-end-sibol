@@ -6,7 +6,7 @@ import { ClientDashboardContent } from "@/components/client-dashboard-content";
 
 export const DashboardClientPage = () => {
   useEffect(() => {
-    document.title = "Client Dashboard | Sibol";
+    document.title = "Client Dashboard | Atuna";
   }, []);
 
   return (

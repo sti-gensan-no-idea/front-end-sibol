@@ -6,7 +6,7 @@ import { NavBar } from "@/components/navbar";
 
 export const DashboardAgentPage = () => {
   useEffect(() => {
-    document.title = "Agent Dashboard | Sibol";
+    document.title = "Agent Dashboard | Atuna";
   }, []);
 
   return (

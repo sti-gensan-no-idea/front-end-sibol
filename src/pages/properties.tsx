@@ -7,7 +7,7 @@ import { PropertiesTab } from "@/components/properties-tab";
 
 export const PropertiesPage = () => {
   useEffect(() => {
-    document.title = "Properties | Sibol";
+    document.title = "Properties | Atuna";
   }, []);
 
   return (

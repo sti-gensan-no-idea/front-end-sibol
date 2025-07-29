@@ -77,12 +77,12 @@ export const NavBar = () => {
         <div>
           <a className="flex items-center" href="/">
             <img
-              alt="Sibol Homes Logo"
+              alt="Atuna Homes Logo"
               className="h-10 w-10 ml-4"
               src={ImgLogo}
             />
             <h1 className="text-3xl ml-4 font-bold text-foreground-700 tracking-tighter">
-              Sibol Homes
+              Atuna
             </h1>
           </a>
           {user.role !== "agent" && (

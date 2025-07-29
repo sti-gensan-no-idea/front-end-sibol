@@ -61,7 +61,7 @@ export const AboutUs = () => {
       </h1>
       <div className="w-30 h-2 mt-4 bg-gray-300 rounded-full" />
       <p className="text-xl text-center mt-8 max-w-1/2 text-foreground-700">
-        Meet the team behind the Sibol Homes
+        Meet the team behind the Atuna
       </p>
 
       <div className="mt-14 grid grid-cols-4 gap-8">

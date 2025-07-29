@@ -6,7 +6,7 @@ import { SignInCardForm } from "@/components/sign-in-form";
 
 export const SignInPage = () => {
   useEffect(() => {
-    document.title = "Sign In | Sibol";
+    document.title = "Sign In | Atuna";
   }, []);
 
   return (

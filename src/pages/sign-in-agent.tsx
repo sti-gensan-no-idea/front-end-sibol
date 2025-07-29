@@ -6,7 +6,7 @@ import { SignInAgentCardForm } from "@/components/sign-in-agent-form";
 
 export const SignInAgentPage = () => {
   useEffect(() => {
-    document.title = "Sign In Agent | Sibol";
+    document.title = "Sign In Agent | Atuna";
   }, []);
 
   return (

@@ -6,7 +6,7 @@ import { NavBar } from "@/components/navbar";
 
 export const AboutUsPage = () => {
   useEffect(() => {
-    document.title = "About Us | Sibol";
+    document.title = "About Us | Atuna";
   }, []);
 
   return (
