@@ -37,7 +37,7 @@ export const ClientSideBar = () => {
   const isSolid = (key: string) => (tab === key ? "solid" : "light");
 
   return (
-    <div className="w-16 fixed left-8 top-36 shadow-medium flex flex-col justify-center items-center py-4 rounded-large gap-2 bg-white">
+    <div className="w-16 fixed left-(10) top-36 shadow-medium flex flex-col justify-center items-center py-4 rounded-large gap-2 bg-white">
       <Tooltip color="primary" content="Dashboard" placement="right">
         <Button
           isIconOnly
