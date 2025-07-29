@@ -5,8 +5,11 @@ import {
   IconFileCheck,
   IconArrowNarrowRight,
 } from "@tabler/icons-react";
+import { useNavigate } from "react-router-dom";
 
 export const Features = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="h-screen p-8 flex flex-col items-center justify-center bg-white">
       <h1 className="text-6xl text-center font-bold text-foreground-700">
@@ -75,6 +78,7 @@ export const Features = () => {
         endContent={<IconArrowNarrowRight />}
         size="lg"
         variant="shadow"
+        onPress={() => {navigate("/sign-up")}}
       >
         Browse Properties
       </Button>

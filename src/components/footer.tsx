@@ -45,22 +45,17 @@ export const Footer = () => {
           <span className="font-bold text-xl">Quick Menu</span>
           <ul className="flex gap-4 mt-4">
             <li>
-              <Link className="text-white" href="#" underline="hover">
+              <Link className="text-white" href="/" underline="hover">
                 Home
               </Link>
             </li>
             <li>
-              <Link className="text-white" href="#" underline="hover">
+              <Link className="text-white" href="/properties" underline="hover">
                 Properties
               </Link>
             </li>
             <li>
-              <Link className="text-white" href="#" underline="hover">
-                Contacts
-              </Link>
-            </li>
-            <li>
-              <Link className="text-white" href="#" underline="hover">
+              <Link className="text-white" href="/about-us" underline="hover">
                 About Us
               </Link>
             </li>
