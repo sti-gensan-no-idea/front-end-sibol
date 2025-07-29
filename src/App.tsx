@@ -20,7 +20,12 @@ import { ContactAgentPage } from "@/pages/contact-agent";
 import ChatPage from "@/pages/ChatPage";
 
 
+
+
 import { ScheduleViewingPage } from "./pages/schedule-viewing";
+
+
+import Pipeline from "@/pages/pipeline"; 
 
 function App() {
   return (
@@ -37,6 +42,7 @@ function App() {
 
       {/* Demo Showcase */}
       <Route element={<DemoShowcasePage />} path="/demo" />
+       <Route element={<Pipeline />} path="/pipeline" />
 
       <Route element={<AboutUsPage />} path="/about-us" />
 
@@ -46,6 +52,7 @@ function App() {
         <Route element={<DashboardClientPage />} path="/profile/client" />
       </Route>
       <Route element={<ProtectedRoute allowedRole="agent" />}>
+     
         <Route element={<DashboardAgentPage />} path="/profile/agent" />
       </Route>
       <Route element={<ProtectedRoute allowedRole="client" />}>
