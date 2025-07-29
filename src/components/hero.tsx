@@ -29,13 +29,11 @@ export const Hero = () => {
           <div className="flex items-center gap-3">
             <Input
               className="w-full"
-              color="primary"
               placeholder="Find a property..."
               radius="full"
               size="lg"
               type="text"
               value={query}
-              variant="bordered"
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {

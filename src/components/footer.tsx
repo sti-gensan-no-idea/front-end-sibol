@@ -20,7 +20,7 @@ export const Footer = () => {
 
       <div className="container mx-auto flex flex-col">
         {/* I want this div to be at the top. */}
-        <div className="mt-20 bg-white rounded-2xl z-50 shadow-large shadow-gray-300 p-14 flex">
+        <div className="mt-20 bg-white rounded-2xl z-10 shadow-large shadow-gray-300 p-14 flex">
           <div className="flex flex-col w-full">
             <span className="text-4xl font-bold">SibolHomes</span>
             <p className="max-w-sm mt-4">
