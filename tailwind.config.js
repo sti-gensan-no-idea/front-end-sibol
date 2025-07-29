@@ -26,7 +26,7 @@ export default {
           layout: {},
           colors: {
             primary: {
-              DEFAULT: "#17C964",
+              DEFAULT: "#004c86",
               foreground: "#FFFFFF",
             },
           },
@@ -35,7 +35,7 @@ export default {
           layout: {},
           colors: {
             primary: {
-              DEFAULT: "#17C964",
+              DEFAULT: "#004c86",
               foreground: "#000000",
             },
           },

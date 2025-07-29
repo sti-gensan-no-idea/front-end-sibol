@@ -68,39 +68,42 @@ export const NavBar = () => {
 
   return (
     <Navbar
-      className="border-t-4 border-solid border-t-primary h-30"
+      className={`border-t-4 border-solid border-t-primary ${
+        user.role === "agent" ? "" : "h-30"
+      }`}
       maxWidth="full"
     >
       <div className="flex flex-col justify-between">
         <div>
           <a className="flex items-center" href="/">
             <img
-              alt="Sibol Homes Logo"
+              alt="Atuna Homes Logo"
               className="h-10 w-10 ml-4"
               src={ImgLogo}
             />
             <h1 className="text-3xl ml-4 font-bold text-foreground-700 tracking-tighter">
-              Sibol Homes
+              Atuna
             </h1>
           </a>
-          <div className="flex flex-wrap gap-4">
-            <Tabs
-              aria-label="Tabs variants"
-              color="primary"
-              selectedKey={pathname}
-              size="lg"
-              variant="underlined"
-            >
-              <Tab key="/" href="/" title="Home" />
-              <Tab
-                key="/properties"
-                href="/properties?tab=search_properties"
-                title="Properties"
-              />
-              <Tab key="/contact" href="/contact" title="Contact" />
-              <Tab key="/about-us" href="/about-us" title="About Us" />
-            </Tabs>
-          </div>
+          {user.role !== "agent" && (
+            <div className="flex flex-wrap gap-4">
+              <Tabs
+                aria-label="Tabs variants"
+                color="primary"
+                selectedKey={pathname}
+                size="lg"
+                variant="underlined"
+              >
+                <Tab key="/" href="/" title="Home" />
+                <Tab
+                  key="/properties"
+                  href="/properties?tab=search_properties"
+                  title="Properties"
+                />
+                <Tab key="/about-us" href="/about-us" title="About Us" />
+              </Tabs>
+            </div>
+          )}
         </div>
       </div>
 

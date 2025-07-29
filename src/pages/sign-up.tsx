@@ -6,7 +6,7 @@ import { SignUpCardForm } from "@/components/signup-card-form";
 
 export const SignUpPage = () => {
   useEffect(() => {
-    document.title = "Sign Up | Sibol";
+    document.title = "Sign Up | Atuna";
   }, []);
 
   return (

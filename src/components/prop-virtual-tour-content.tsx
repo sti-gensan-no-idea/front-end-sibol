@@ -30,9 +30,8 @@ export const PropTourContent = () => {
     { key: "date", label: "Date" },
   ];
   const filterOptions = [
-    { key: "name", label: "Name" },
-    { key: "price", label: "Price" },
-    { key: "date", label: "Date" },
+    { key: "apartment", label: "Apartment" },
+    { key: "house", label: "House" },
   ];
 
   const totalPages = Math.ceil(properties_data.length / itemsPerPage);
@@ -52,7 +51,7 @@ export const PropTourContent = () => {
       {/* Search Property */}
       <div className="flex items-center">
         <Input
-          className="max-w-4xl"
+          className="max-w-4xl bg-white rounded-large"
           color="primary"
           placeholder="Search by location, property type..."
           size="lg"

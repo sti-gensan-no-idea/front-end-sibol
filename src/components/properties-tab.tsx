@@ -1,10 +1,9 @@
 import { Tabs, Tab } from "@heroui/react";
-import { IconChartLine, IconCardboards, IconSearch } from "@tabler/icons-react";
+import { IconCardboards, IconSearch } from "@tabler/icons-react";
 import { useSearchParams } from "react-router-dom";
 
 import { PropSearchContent } from "./prop-search-content";
 import { PropTourContent } from "./prop-virtual-tour-content";
-import { PropInsightsContent } from "./prop-ai-chat-content";
 
 export const PropertiesTab = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -41,16 +40,6 @@ export const PropertiesTab = () => {
           }
         >
           <PropTourContent />
-        </Tab>
-        <Tab
-          key="insights"
-          title={
-            <div className="flex items-center space-x-2">
-              <IconChartLine /> <span>Market Insights and Analytics</span>
-            </div>
-          }
-        >
-          <PropInsightsContent />
         </Tab>
       </Tabs>
     </div>

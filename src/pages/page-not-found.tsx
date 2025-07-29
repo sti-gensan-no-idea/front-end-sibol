@@ -9,7 +9,7 @@ export const NotFoundPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = "Page Not Found | Sibol";
+    document.title = "Page Not Found | Atuna";
   }, []);
 
   return (

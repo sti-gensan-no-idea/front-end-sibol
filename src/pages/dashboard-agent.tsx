@@ -1,8 +1,14 @@
+import { useEffect } from "react";
+
 import { AgentDashboardContent } from "@/components/agent-dashboard-content";
 import { AgentSideBar } from "@/components/agent-side-bar";
 import { NavBar } from "@/components/navbar";
 
 export const DashboardAgentPage = () => {
+  useEffect(() => {
+    document.title = "Agent Dashboard | Atuna";
+  }, []);
+
   return (
     <div>
       <NavBar />

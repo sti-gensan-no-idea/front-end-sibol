@@ -40,6 +40,8 @@ import {
   IconUsers,
   IconHome,
   IconClipboard
+  IconCoins,
+  IconChartBar,
 } from "@tabler/icons-react";
 import { useAutomation } from "@/contexts/automation-context";
 
@@ -203,10 +205,18 @@ export const AgentDashboardContent = () => {
           </CardBody>
         </Card>
 
+
         <Card>
           <CardBody className="flex flex-row items-center space-x-4">
             <div className="bg-green-100 p-3 rounded-full">
               <IconUsers className="h-6 w-6 text-green-600" />
+
+        {/* Card */}
+        <div className="p-8 rounded-large shadow-small bg-white">
+          <div className="flex items-center gap-4">
+            <div className="bg-gray-200 w-12 h-12 flex items-center justify-center rounded-full">
+              <IconChartBar className="text-foreground-700" />
+
             </div>
             <div>
               <p className="text-sm text-foreground-600">Active Leads</p>
@@ -219,10 +229,18 @@ export const AgentDashboardContent = () => {
           </CardBody>
         </Card>
 
+
         <Card>
           <CardBody className="flex flex-row items-center space-x-4">
             <div className="bg-yellow-100 p-3 rounded-full">
               <IconChartBar className="h-6 w-6 text-yellow-600" />
+
+        {/* Card */}
+        <div className="p-8 rounded-large shadow-small bg-white">
+          <div className="flex items-center gap-4">
+            <div className="bg-gray-200 w-12 h-12 flex items-center justify-center rounded-full">
+              <IconCoins className="text-foreground-700" />
+
             </div>
             <div>
               <p className="text-sm text-foreground-600">Conversion Rate</p>

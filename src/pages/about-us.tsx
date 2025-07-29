@@ -1,18 +1,18 @@
 import { useEffect } from "react";
 
+import { AboutUs } from "@/components/about-us";
 import { Footer } from "@/components/footer";
 import { NavBar } from "@/components/navbar";
-import { SignInAgentCardForm } from "@/components/sign-in-agent-form";
 
-export const SignInAgentPage = () => {
+export const AboutUsPage = () => {
   useEffect(() => {
-    document.title = "Sign In Agent | Atuna";
+    document.title = "About Us | Atuna";
   }, []);
 
   return (
     <div>
       <NavBar />
-      <SignInAgentCardForm />
+      <AboutUs />
       <Footer />
     </div>
   );

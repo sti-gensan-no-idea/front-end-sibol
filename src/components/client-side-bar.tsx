@@ -11,7 +11,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { auth } from "@/firebase";
 
-export const AgentSideBar = () => {
+export const ClientSideBar = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -37,7 +37,7 @@ export const AgentSideBar = () => {
   const isSolid = (key: string) => (tab === key ? "solid" : "light");
 
   return (
-    <div className="w-16 fixed left-8 top-24 shadow-medium flex flex-col justify-center items-center py-4 rounded-large gap-2 bg-white">
+    <div className="w-16 fixed left-8 top-36 shadow-medium flex flex-col justify-center items-center py-4 rounded-large gap-2 bg-white">
       <Tooltip color="primary" content="Dashboard" placement="right">
         <Button
           isIconOnly
@@ -49,17 +49,6 @@ export const AgentSideBar = () => {
         </Button>
       </Tooltip>
 
-      <Tooltip color="primary" content="Property listing" placement="right">
-        <Button
-          isIconOnly
-          className={isActive("property")}
-          variant={isSolid("property")}
-          onPress={() => goToTab("property")}
-        >
-          <IconBuildingCommunity />
-        </Button>
-      </Tooltip>
-
       <Tooltip color="primary" content="Calendar" placement="right">
         <Button
           isIconOnly
@@ -68,12 +57,6 @@ export const AgentSideBar = () => {
           onPress={() => goToTab("calendar")}
         >
           <IconCalendar />
-        </Button>
-      </Tooltip>
-
-      <Tooltip color="primary" content="Add Property" placement="right">
-        <Button isIconOnly className={isActive("add")} variant="light">
-          <IconPlus />
         </Button>
       </Tooltip>
 

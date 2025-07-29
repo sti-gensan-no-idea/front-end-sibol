@@ -17,7 +17,11 @@ import {
   Tabs,
   Divider,
 } from "@heroui/react";
-import { IconMapPinFilled, IconUserFilled } from "@tabler/icons-react";
+import {
+  IconMapPinFilled,
+  IconUserFilled,
+  IconBookmark,
+} from "@tabler/icons-react";
 import { ReactPhotoSphereViewer } from "react-photo-sphere-viewer";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 
@@ -166,6 +170,36 @@ export const PropSearchContent = () => {
                           src={property.img!}
                         />
                       </div>
+                      <div className="p-8 w-full">
+                        <div className="flex justify-between w-full">
+                          <div className="flex flex-col w-full">
+                            <span className="flex text-3xl text-foreground-700 font-bold">
+                              {property.title}
+                            </span>
+                            <span className="flex font-normal mt-2 text-foreground-700">
+                              {property.address}
+                            </span>
+                          </div>
+                          <Button
+                            isIconOnly
+                            className=""
+                            radius="full"
+                            variant="light"
+                          >
+                            <IconBookmark />
+                          </Button>
+                        </div>
+                        <span className="flex font-medium text-4xl mt-8">
+                          {property.price}
+                        </span>
+                        <div className="flex items-center mt-4 text-xl text-foreground-500 font-normal gap-3">
+                          <Chip>{property.bed} beds</Chip>
+                          <Chip>{property.bathroom} bathrooms</Chip>
+                          <Chip>
+                            {property.size[0]}x{property.size[1]} meters
+                          </Chip>
+                        </div>
+                      </div>
                     </div>
                   </Card>
                 ))
@@ -184,8 +218,8 @@ export const PropSearchContent = () => {
             )}
           </>
         ) : (
-          <p className="mt-4 flex items-center justify-center text-center text-foreground-700 h-96 text-xl bg-gray-100 rounded-large">
-            Enter a search term and click &quot;Search&quot; to see results.
+          <p className="mt-4 flex items-center justify-center text-center text-foreground-700 h-96 text-xl bg-white rounded-large">
+            Search to see results.
           </p>
         )}
       </div>
@@ -242,7 +276,7 @@ export const PropSearchContent = () => {
                           className="w-full"
                           color="primary"
                           variant="shadow"
-                          onPress={() => alert("Done")}
+                          onPress={() => navigate("/schedule-viewing")}
                         >
                           Schedule Viewing
                         </Button>
