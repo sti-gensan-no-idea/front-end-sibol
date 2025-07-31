@@ -1,5 +1,6 @@
-import { apiClients, ApiResponse } from './api-config';
-import { Property } from '@/data/automation_data';
+import { apiClients, ApiResponse } from "./api-config";
+
+import { Property } from "@/data/automation_data";
 
 /**
  * Strategy 3: Social Media Posting Automation
@@ -8,13 +9,13 @@ import { Property } from '@/data/automation_data';
 
 export interface SocialMediaPost {
   id: string;
-  platform: 'Facebook' | 'Twitter' | 'Instagram' | 'LinkedIn';
+  platform: "Facebook" | "Twitter" | "Instagram" | "LinkedIn";
   content: string;
   images: string[];
   hashtags: string[];
   scheduledTime: string;
   propertyId?: string;
-  status: 'Draft' | 'Scheduled' | 'Published' | 'Failed';
+  status: "Draft" | "Scheduled" | "Published" | "Failed";
   engagement?: {
     likes: number;
     shares: number;
@@ -26,11 +27,16 @@ export interface SocialMediaPost {
 export interface SocialMediaCampaign {
   id: string;
   name: string;
-  type: 'Property Showcase' | 'Market Update' | 'Agent Spotlight' | 'Community Event' | 'Educational';
+  type:
+    | "Property Showcase"
+    | "Market Update"
+    | "Agent Spotlight"
+    | "Community Event"
+    | "Educational";
   platforms: string[];
   posts: SocialMediaPost[];
   schedule: {
-    frequency: 'Daily' | 'Weekly' | 'Bi-weekly' | 'Monthly';
+    frequency: "Daily" | "Weekly" | "Bi-weekly" | "Monthly";
     times: string[];
     timezone: string;
   };
@@ -49,37 +55,45 @@ export interface SocialMediaCampaign {
 }
 
 // Generate property showcase posts for social media
-export const createPropertyShowcasePosts = async (property: Property): Promise<SocialMediaPost[]> => {
+export const createPropertyShowcasePosts = async (
+  property: Property
+): Promise<SocialMediaPost[]> => {
   try {
     const posts: SocialMediaPost[] = [];
-    
+
     // Facebook post - detailed with multiple images
     const facebookPost = await generateFacebookPost(property);
+
     posts.push(facebookPost);
-    
+
     // Instagram post - visual-focused
     const instagramPost = await generateInstagramPost(property);
+
     posts.push(instagramPost);
-    
+
     // Twitter post - concise with key details
     const twitterPost = await generateTwitterPost(property);
+
     posts.push(twitterPost);
-    
+
     // Schedule posts via Open Real Estate API
     await schedulePostsViaAPI(posts);
-    
+
     return posts;
   } catch (error) {
-    console.error('Social media post creation error:', error);
-    throw new Error('Failed to create social media posts');
+    console.error("Social media post creation error:", error);
+    throw new Error("Failed to create social media posts");
   }
 };
 
 // Generate Facebook post content
-const generateFacebookPost = async (property: Property): Promise<SocialMediaPost> => {
+const generateFacebookPost = async (
+  property: Property
+): Promise<SocialMediaPost> => {
   const priceFormatted = `₱${(property.price / 1000000).toFixed(1)}M`;
-  const neighborhood = property.address.split(',')[1]?.trim() || 'General Santos City';
-  
+  const neighborhood =
+    property.address.split(",")[1]?.trim() || "General Santos City";
+
   const content = `🏠 NEW LISTING ALERT! ${property.title}
 
 📍 Location: ${property.address}
@@ -89,9 +103,9 @@ const generateFacebookPost = async (property: Property): Promise<SocialMediaPost
 📐 ${property.sqm} sqm
 
 ✨ Features:
-${property.petFriendly ? '🐕 Pet-Friendly' : ''}
-${property.floodRisk === 'Low' ? '🌊 Low Flood Risk' : ''}
-${!property.haunted ? '👻 Clean History' : ''}
+${property.petFriendly ? "🐕 Pet-Friendly" : ""}
+${property.floodRisk === "Low" ? "🌊 Low Flood Risk" : ""}
+${!property.haunted ? "👻 Clean History" : ""}
 
 Perfect for families looking for a quality home in General Santos City! 
 
@@ -100,27 +114,35 @@ Schedule your viewing today! Call or message us for more details.
 #aTunaRealEstate #GeneralSantosCity #PropertyForSale #RealEstate #Philippines #HomeSweetHome #Investment`;
 
   const hashtags = [
-    '#aTunaRealEstate', '#GeneralSantosCity', '#PropertyForSale', 
-    '#RealEstate', '#Philippines', '#HomeSweetHome', '#Investment',
-    `#${neighborhood.replace(/\s+/g, '')}`, `#${property.type}Property`
+    "#aTunaRealEstate",
+    "#GeneralSantosCity",
+    "#PropertyForSale",
+    "#RealEstate",
+    "#Philippines",
+    "#HomeSweetHome",
+    "#Investment",
+    `#${neighborhood.replace(/\s+/g, "")}`,
+    `#${property.type}Property`,
   ];
 
   return {
     id: `fb-${Date.now()}`,
-    platform: 'Facebook',
+    platform: "Facebook",
     content,
     images: [property.image],
     hashtags,
-    scheduledTime: getOptimalPostTime('Facebook'),
+    scheduledTime: getOptimalPostTime("Facebook"),
     propertyId: property.id,
-    status: 'Scheduled'
+    status: "Scheduled",
   };
 };
 
 // Generate Instagram post content
-const generateInstagramPost = async (property: Property): Promise<SocialMediaPost> => {
+const generateInstagramPost = async (
+  property: Property
+): Promise<SocialMediaPost> => {
   const priceFormatted = `₱${(property.price / 1000000).toFixed(1)}M`;
-  
+
   const content = `✨ DREAM HOME ALERT ✨
 
 ${property.title} in General Santos City
@@ -132,51 +154,63 @@ DM us for viewing schedule 📱
 #aTunaRealEstate #GeneralSantosCity #DreamHome #PropertyHunting #RealEstate #Philippines #HomeSweetHome #Investment #PropertyForSale #GenSan`;
 
   const hashtags = [
-    '#aTunaRealEstate', '#GeneralSantosCity', '#DreamHome', 
-    '#PropertyHunting', '#RealEstate', '#Philippines', 
-    '#HomeSweetHome', '#Investment', '#PropertyForSale', '#GenSan'
+    "#aTunaRealEstate",
+    "#GeneralSantosCity",
+    "#DreamHome",
+    "#PropertyHunting",
+    "#RealEstate",
+    "#Philippines",
+    "#HomeSweetHome",
+    "#Investment",
+    "#PropertyForSale",
+    "#GenSan",
   ];
 
   return {
     id: `ig-${Date.now()}`,
-    platform: 'Instagram',
+    platform: "Instagram",
     content,
     images: [property.image],
     hashtags,
-    scheduledTime: getOptimalPostTime('Instagram'),
+    scheduledTime: getOptimalPostTime("Instagram"),
     propertyId: property.id,
-    status: 'Scheduled'
+    status: "Scheduled",
   };
 };
 
 // Generate Twitter post content
-const generateTwitterPost = async (property: Property): Promise<SocialMediaPost> => {
+const generateTwitterPost = async (
+  property: Property
+): Promise<SocialMediaPost> => {
   const priceFormatted = `₱${(property.price / 1000000).toFixed(1)}M`;
-  const neighborhood = property.address.split(',')[1]?.trim() || 'GenSan';
-  
+  const neighborhood = property.address.split(",")[1]?.trim() || "GenSan";
+
   const content = `🏠 NEW: ${property.bedrooms}BR/${property.bathrooms}BA ${property.type} in ${neighborhood}
 💰 ${priceFormatted}
 📐 ${property.sqm}sqm
-${property.petFriendly ? '🐕' : ''} ${property.floodRisk === 'Low' ? '🌊' : ''} ${!property.haunted ? '👻' : ''}
+${property.petFriendly ? "🐕" : ""} ${property.floodRisk === "Low" ? "🌊" : ""} ${!property.haunted ? "👻" : ""}
 
 Book viewing: atuna.com
 
 #GeneralSantosCity #RealEstate #PropertyForSale`;
 
   const hashtags = [
-    '#GeneralSantosCity', '#RealEstate', '#PropertyForSale', 
-    '#aTunaRealEstate', '#Philippines'
+    "#GeneralSantosCity",
+    "#RealEstate",
+    "#PropertyForSale",
+    "#aTunaRealEstate",
+    "#Philippines",
   ];
 
   return {
     id: `tw-${Date.now()}`,
-    platform: 'Twitter',
+    platform: "Twitter",
     content,
     images: [property.image],
     hashtags,
-    scheduledTime: getOptimalPostTime('Twitter'),
+    scheduledTime: getOptimalPostTime("Twitter"),
     propertyId: property.id,
-    status: 'Scheduled'
+    status: "Scheduled",
   };
 };
 
@@ -184,73 +218,81 @@ Book viewing: atuna.com
 const getOptimalPostTime = (platform: string): string => {
   const now = new Date();
   const optimal = new Date(now);
-  
+
   // Set optimal times for Philippines timezone (UTC+8)
   switch (platform) {
-    case 'Facebook':
+    case "Facebook":
       optimal.setHours(18, 0, 0, 0); // 6 PM - prime engagement time
       break;
-    case 'Instagram':
+    case "Instagram":
       optimal.setHours(19, 30, 0, 0); // 7:30 PM - visual content peak
       break;
-    case 'Twitter':
+    case "Twitter":
       optimal.setHours(12, 0, 0, 0); // 12 PM - lunch break engagement
       break;
     default:
       optimal.setHours(15, 0, 0, 0); // 3 PM default
   }
-  
+
   // If time has passed today, schedule for tomorrow
   if (optimal <= now) {
     optimal.setDate(optimal.getDate() + 1);
   }
-  
+
   return optimal.toISOString();
 };
 
 // Schedule posts via Open Real Estate API
-const schedulePostsViaAPI = async (posts: SocialMediaPost[]): Promise<ApiResponse> => {
+const schedulePostsViaAPI = async (
+  posts: SocialMediaPost[]
+): Promise<ApiResponse> => {
   try {
-    const response = await apiClients.openRealEstate.post('/social-media/schedule', {
-      posts: posts.map(post => ({
-        platform: post.platform,
-        content: post.content,
-        images: post.images,
-        hashtags: post.hashtags,
-        scheduledTime: post.scheduledTime,
-        propertyId: post.propertyId
-      })),
-      market: 'General Santos City',
-      timezone: 'Asia/Manila'
-    });
+    const response = await apiClients.openRealEstate.post(
+      "/social-media/schedule",
+      {
+        posts: posts.map((post) => ({
+          platform: post.platform,
+          content: post.content,
+          images: post.images,
+          hashtags: post.hashtags,
+          scheduledTime: post.scheduledTime,
+          propertyId: post.propertyId,
+        })),
+        market: "General Santos City",
+        timezone: "Asia/Manila",
+      }
+    );
 
-    console.log('Social media posts scheduled:', response.data);
+    console.log("Social media posts scheduled:", response.data);
 
     return {
       success: true,
       data: { scheduledPosts: posts.length },
-      message: 'Social media posts scheduled successfully',
-      timestamp: new Date().toISOString()
+      message: "Social media posts scheduled successfully",
+      timestamp: new Date().toISOString(),
     };
   } catch (error) {
-    console.error('Social media scheduling error:', error);
+    console.error("Social media scheduling error:", error);
+
     return {
       success: false,
-      message: 'Failed to schedule social media posts',
-      timestamp: new Date().toISOString()
+      message: "Failed to schedule social media posts",
+      timestamp: new Date().toISOString(),
     };
   }
 };
 
 // Create market update campaign
-export const createMarketUpdateCampaign = async (marketData: any): Promise<SocialMediaCampaign> => {
+export const createMarketUpdateCampaign = async (
+  marketData: any
+): Promise<SocialMediaCampaign> => {
   try {
     const posts: SocialMediaPost[] = [];
-    
+
     // Facebook market update
     const facebookMarketPost: SocialMediaPost = {
       id: `fb-market-${Date.now()}`,
-      platform: 'Facebook',
+      platform: "Facebook",
       content: `📊 GENERAL SANTOS CITY REAL ESTATE UPDATE
 
 🏠 Median Property Price: ₱${(marketData.medianPrice / 1000000).toFixed(1)}M
@@ -267,17 +309,17 @@ Looking to buy or sell? Our agents are here to help!
 
 #GeneralSantosCity #RealEstate #MarketUpdate #PropertyInvestment #aTunaRealEstate`,
       images: [],
-      hashtags: ['#GeneralSantosCity', '#RealEstate', '#MarketUpdate'],
-      scheduledTime: getOptimalPostTime('Facebook'),
-      status: 'Scheduled'
+      hashtags: ["#GeneralSantosCity", "#RealEstate", "#MarketUpdate"],
+      scheduledTime: getOptimalPostTime("Facebook"),
+      status: "Scheduled",
     };
-    
+
     posts.push(facebookMarketPost);
 
     // Twitter market snapshot
     const twitterMarketPost: SocialMediaPost = {
       id: `tw-market-${Date.now()}`,
-      platform: 'Twitter',
+      platform: "Twitter",
       content: `📊 GenSan Real Estate Snapshot:
 🏠 Median: ₱${(marketData.medianPrice / 1000000).toFixed(1)}M
 📈 ${marketData.totalProperties} active listings
@@ -286,36 +328,36 @@ Looking to buy or sell? Our agents are here to help!
 
 #GeneralSantosCity #RealEstate #MarketData`,
       images: [],
-      hashtags: ['#GeneralSantosCity', '#RealEstate', '#MarketData'],
-      scheduledTime: getOptimalPostTime('Twitter'),
-      status: 'Scheduled'
+      hashtags: ["#GeneralSantosCity", "#RealEstate", "#MarketData"],
+      scheduledTime: getOptimalPostTime("Twitter"),
+      status: "Scheduled",
     };
-    
+
     posts.push(twitterMarketPost);
 
     const campaign: SocialMediaCampaign = {
       id: `campaign-market-${Date.now()}`,
-      name: 'General Santos City Market Update',
-      type: 'Market Update',
-      platforms: ['Facebook', 'Twitter'],
+      name: "General Santos City Market Update",
+      type: "Market Update",
+      platforms: ["Facebook", "Twitter"],
       posts,
       schedule: {
-        frequency: 'Weekly',
-        times: ['18:00', '12:00'],
-        timezone: 'Asia/Manila'
+        frequency: "Weekly",
+        times: ["18:00", "12:00"],
+        timezone: "Asia/Manila",
       },
       targetAudience: {
-        location: ['General Santos City', 'South Cotabato'],
+        location: ["General Santos City", "South Cotabato"],
         ageRange: [25, 55],
-        interests: ['Real Estate', 'Investment', 'Property'],
-        budget: [1500000, 10000000]
+        interests: ["Real Estate", "Investment", "Property"],
+        budget: [1500000, 10000000],
       },
       performance: {
         totalReach: 0,
         totalEngagement: 0,
         leadGenerated: 0,
-        conversionRate: 0
-      }
+        conversionRate: 0,
+      },
     };
 
     // Schedule campaign posts
@@ -323,13 +365,15 @@ Looking to buy or sell? Our agents are here to help!
 
     return campaign;
   } catch (error) {
-    console.error('Market update campaign error:', error);
-    throw new Error('Failed to create market update campaign');
+    console.error("Market update campaign error:", error);
+    throw new Error("Failed to create market update campaign");
   }
 };
 
 // Create educational content posts
-export const createEducationalContent = async (): Promise<SocialMediaPost[]> => {
+export const createEducationalContent = async (): Promise<
+  SocialMediaPost[]
+> => {
   const educationalTopics = [
     {
       title: "First-Time Home Buyer Tips in the Philippines",
@@ -355,7 +399,12 @@ export const createEducationalContent = async (): Promise<SocialMediaPost[]> => 
 Need guidance? Our agents specialize in first-time buyers!
 
 #FirstTimeHomeBuyer #Philippines #RealEstate #HomeBuyingTips`,
-      hashtags: ['#FirstTimeHomeBuyer', '#Philippines', '#RealEstate', '#HomeBuyingTips']
+      hashtags: [
+        "#FirstTimeHomeBuyer",
+        "#Philippines",
+        "#RealEstate",
+        "#HomeBuyingTips",
+      ],
     },
     {
       title: "Understanding Philippine Property Taxes",
@@ -381,8 +430,13 @@ Need guidance? Our agents specialize in first-time buyers!
 Questions? We help with all property tax matters!
 
 #PropertyTax #Philippines #RealEstate #GeneralSantosCity`,
-      hashtags: ['#PropertyTax', '#Philippines', '#RealEstate', '#GeneralSantosCity']
-    }
+      hashtags: [
+        "#PropertyTax",
+        "#Philippines",
+        "#RealEstate",
+        "#GeneralSantosCity",
+      ],
+    },
   ];
 
   const posts: SocialMediaPost[] = [];
@@ -391,86 +445,97 @@ Questions? We help with all property tax matters!
     // Facebook version (detailed)
     posts.push({
       id: `fb-edu-${Date.now()}-${index}`,
-      platform: 'Facebook',
+      platform: "Facebook",
       content: topic.content,
       images: [],
       hashtags: topic.hashtags,
-      scheduledTime: getScheduledTime(index * 2, 'Facebook'),
-      status: 'Scheduled'
+      scheduledTime: getScheduledTime(index * 2, "Facebook"),
+      status: "Scheduled",
     });
 
     // Twitter version (condensed)
-    const twitterContent = topic.content.substring(0, 250) + '...\n\nRead more: atuna.com/blog\n\n' + topic.hashtags.slice(0, 3).join(' ');
+    const twitterContent =
+      topic.content.substring(0, 250) +
+      "...\n\nRead more: atuna.com/blog\n\n" +
+      topic.hashtags.slice(0, 3).join(" ");
+
     posts.push({
       id: `tw-edu-${Date.now()}-${index}`,
-      platform: 'Twitter',
+      platform: "Twitter",
       content: twitterContent,
       images: [],
       hashtags: topic.hashtags.slice(0, 3),
-      scheduledTime: getScheduledTime(index * 2 + 1, 'Twitter'),
-      status: 'Scheduled'
+      scheduledTime: getScheduledTime(index * 2 + 1, "Twitter"),
+      status: "Scheduled",
     });
   });
 
   await schedulePostsViaAPI(posts);
+
   return posts;
 };
 
 // Get scheduled time with offset
 const getScheduledTime = (dayOffset: number, platform: string): string => {
   const date = new Date();
+
   date.setDate(date.getDate() + dayOffset);
-  
-  if (platform === 'Facebook') {
+
+  if (platform === "Facebook") {
     date.setHours(18, 0, 0, 0);
   } else {
     date.setHours(12, 0, 0, 0);
   }
-  
+
   return date.toISOString();
 };
 
 // Track social media performance
-export const trackSocialMediaPerformance = async (campaignId: string): Promise<SocialMediaCampaign> => {
+export const trackSocialMediaPerformance = async (
+  campaignId: string
+): Promise<SocialMediaCampaign> => {
   try {
     // Mock performance data - would integrate with actual social media APIs
     const performanceData = {
       totalReach: Math.floor(Math.random() * 5000) + 1000,
       totalEngagement: Math.floor(Math.random() * 500) + 100,
       leadGenerated: Math.floor(Math.random() * 20) + 5,
-      conversionRate: Math.random() * 5 + 1
+      conversionRate: Math.random() * 5 + 1,
     };
 
-    await apiClients.openRealEstate.post('/social-media/analytics', {
+    await apiClients.openRealEstate.post("/social-media/analytics", {
       campaignId,
       performance: performanceData,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
 
-    console.log(`Performance tracked for campaign ${campaignId}:`, performanceData);
+    console.log(
+      `Performance tracked for campaign ${campaignId}:`,
+      performanceData
+    );
 
     // Return updated campaign data
     return {
       id: campaignId,
-      name: 'Sample Campaign',
-      type: 'Property Showcase',
-      platforms: ['Facebook', 'Instagram', 'Twitter'],
+      name: "Sample Campaign",
+      type: "Property Showcase",
+      platforms: ["Facebook", "Instagram", "Twitter"],
       posts: [],
       schedule: {
-        frequency: 'Daily',
-        times: ['18:00'],
-        timezone: 'Asia/Manila'
+        frequency: "Daily",
+        times: ["18:00"],
+        timezone: "Asia/Manila",
       },
       targetAudience: {
-        location: ['General Santos City'],
+        location: ["General Santos City"],
         ageRange: [25, 55],
-        interests: ['Real Estate'],
-        budget: [2000000, 5000000]
+        interests: ["Real Estate"],
+        budget: [2000000, 5000000],
       },
-      performance: performanceData
+      performance: performanceData,
     };
   } catch (error) {
-    console.error('Performance tracking error:', error);
-    throw new Error('Failed to track social media performance');
+    console.error("Performance tracking error:", error);
+    throw new Error("Failed to track social media performance");
   }
 };

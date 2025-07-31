@@ -9,42 +9,38 @@ export const Hero = () => {
   const navigate = useNavigate();
 
   const handleSearch = () => {
-    if (!query.trim()) return;
+    const trimmed = query.trim();
+
+    if (!trimmed) return;
     navigate(
-      `/properties?page=1&tab=search_properties&query=${encodeURIComponent(query)}`
+      `/properties?page=1&tab=search_properties&query=${encodeURIComponent(trimmed)}`
     );
   };
 
   return (
-    <div className="relative h-screen w-full overflow-hidden">
-      {/* Background Image */}
+    <section className="relative h-screen w-full overflow-hidden">
       <img
         alt="Hero Background"
         className="absolute inset-0 w-full h-full object-cover z-0"
         src={ImgHeroBackground}
       />
 
-      {/* Top Gradient Overlay */}
-      <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white to-transparent z-10" />
+      <div className="absolute inset-0 bg-gradient-to-b from-white via-white/80 to-transparent z-10" />
 
-      {/* Headline at Top */}
-      <div className="relative z-20 pt-24 px-4 text-center gap-8">
-        <h1 className="text-5xl md:text-6xl font-bold text-gray-800 drop-shadow-md">
-          Simplifying Property Search
-          <br />
+      <div className="relative z-20 flex flex-col justify-center items-center h-full text-center px-8 sm:px-6">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-800 drop-shadow-md max-w-5xl">
+          Simplifying Property Search&nbsp;
+          <br className="hidden sm:block" />
           Through Intelligent Technology
         </h1>
-        <div className="h-8" />
-        <span>
-          Automate repetitive tasks, boost productivity, enhance
-          decision-making, and streamline proccesses with powerfull AI tools
-        </span>
-      </div>
 
-      {/* Search Input at Bottom */}
-      <div className="absolute bottom-44 w-full px-6 z-30">
-        <div className="max-w-3xl mx-auto bg-white rounded-full shadow-lg p-2">
-          <div className="flex items-center gap-3">
+        <p className="mt-6 text-base sm:text-lg text-gray-700 max-w-xl">
+          Automate repetitive tasks, boost productivity, enhance
+          decision-making, and streamline processes with powerful AI tools.
+        </p>
+
+        <div className="mt-12 w-full max-w-2xl px-4">
+          <div className="flex items-center gap-2 bg-white rounded-full shadow-lg p-2">
             <Input
               className="w-full"
               placeholder="Find a property..."
@@ -53,16 +49,19 @@ export const Hero = () => {
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") handleSearch();
-              }}
+              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
             />
-            <Button color="primary" radius="full" onPress={handleSearch}>
+            <Button
+              className="shrink-0"
+              color="primary"
+              radius="full"
+              onPress={handleSearch}
+            >
               Search
             </Button>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };

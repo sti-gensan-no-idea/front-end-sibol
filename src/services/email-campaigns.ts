@@ -1,5 +1,6 @@
-import { apiClients, ApiResponse } from './api-config';
-import { Lead, Property } from '@/data/automation_data';
+import { apiClients, ApiResponse } from "./api-config";
+
+import { Lead, Property } from "@/data/automation_data";
 
 /**
  * Strategy 4: Email Campaigns
@@ -9,7 +10,12 @@ import { Lead, Property } from '@/data/automation_data';
 export interface EmailCampaign {
   id: string;
   name: string;
-  type: 'Welcome' | 'Property Update' | 'Market Report' | 'Follow-up' | 'Nurture';
+  type:
+    | "Welcome"
+    | "Property Update"
+    | "Market Report"
+    | "Follow-up"
+    | "Nurture";
   subject: string;
   template: string;
   triggers: {
@@ -24,11 +30,11 @@ export interface EmailCampaign {
     source?: string[];
   };
   schedule?: {
-    frequency: 'Once' | 'Daily' | 'Weekly' | 'Monthly';
+    frequency: "Once" | "Daily" | "Weekly" | "Monthly";
     time: string;
     timezone: string;
   };
-  status: 'Draft' | 'Active' | 'Paused' | 'Completed';
+  status: "Draft" | "Active" | "Paused" | "Completed";
   metrics: {
     sent: number;
     opened: number;
@@ -44,85 +50,92 @@ export interface EmailCampaign {
 export interface EmailTemplate {
   id: string;
   name: string;
-  type: 'Welcome' | 'Property Alert' | 'Market Update' | 'Follow-up' | 'Survey';
+  type: "Welcome" | "Property Alert" | "Market Update" | "Follow-up" | "Survey";
   subject: string;
   htmlContent: string;
   plainTextContent: string;
   variables: string[];
   philippineSpecific: {
-    greeting: 'Mabuhay' | 'Kumusta' | 'Hello';
-    currency: 'PHP';
-    addressFormat: 'Philippine';
-    timezone: 'Asia/Manila';
+    greeting: "Mabuhay" | "Kumusta" | "Hello";
+    currency: "PHP";
+    addressFormat: "Philippine";
+    timezone: "Asia/Manila";
   };
 }
 
 // Automated email campaign triggers
-export const createWelcomeEmailCampaign = async (leadId: string, leadData: Lead): Promise<ApiResponse> => {
+export const createWelcomeEmailCampaign = async (
+  leadId: string,
+  leadData: Lead
+): Promise<ApiResponse> => {
   try {
     const welcomeCampaign: EmailCampaign = {
       id: `welcome-${Date.now()}`,
       name: `Welcome Series - ${leadData.name}`,
-      type: 'Welcome',
-      subject: 'Mabuhay! Welcome to aTuna Real Estate',
-      template: 'welcome-template-1',
+      type: "Welcome",
+      subject: "Mabuhay! Welcome to aTuna Real Estate",
+      template: "welcome-template-1",
       triggers: [
         {
-          event: 'lead_captured',
+          event: "lead_captured",
           conditions: { source: leadData.source },
-          delay: 0 // Immediate
+          delay: 0, // Immediate
         },
         {
-          event: 'no_response',
+          event: "no_response",
           conditions: { days: 3 },
-          delay: 72 // 3 days
+          delay: 72, // 3 days
         },
         {
-          event: 'property_viewed',
+          event: "property_viewed",
           conditions: { count: 3 },
-          delay: 24 // 1 day after viewing 3 properties
-        }
+          delay: 24, // 1 day after viewing 3 properties
+        },
       ],
       targetSegment: {
-        leadStatus: ['New'],
-        budget: [leadData.budget * 0.8, leadData.budget * 1.2]
+        leadStatus: ["New"],
+        budget: [leadData.budget * 0.8, leadData.budget * 1.2],
       },
-      status: 'Active',
+      status: "Active",
       metrics: {
         sent: 0,
         opened: 0,
         clicked: 0,
         replied: 0,
         unsubscribed: 0,
-        bounced: 0
+        bounced: 0,
       },
-      createdDate: new Date().toISOString()
+      createdDate: new Date().toISOString(),
     };
 
     // Submit to Podio CRM
-    const podioResponse = await apiClients.openRealEstate.post('/email-campaigns', {
-      campaign: welcomeCampaign,
-      leadId,
-      market: 'General Santos City'
-    });
+    const podioResponse = await apiClients.openRealEstate.post(
+      "/email-campaigns",
+      {
+        campaign: welcomeCampaign,
+        leadId,
+        market: "General Santos City",
+      }
+    );
 
     // Send immediate welcome email
     await sendWelcomeEmail(leadData);
 
-    console.log('Welcome email campaign created:', podioResponse.data);
+    console.log("Welcome email campaign created:", podioResponse.data);
 
     return {
       success: true,
       data: { campaignId: welcomeCampaign.id },
-      message: 'Welcome email campaign created and triggered',
-      timestamp: new Date().toISOString()
+      message: "Welcome email campaign created and triggered",
+      timestamp: new Date().toISOString(),
     };
   } catch (error) {
-    console.error('Welcome campaign error:', error);
+    console.error("Welcome campaign error:", error);
+
     return {
       success: false,
-      message: 'Failed to create welcome email campaign',
-      timestamp: new Date().toISOString()
+      message: "Failed to create welcome email campaign",
+      timestamp: new Date().toISOString(),
     };
   }
 };
@@ -130,18 +143,20 @@ export const createWelcomeEmailCampaign = async (leadId: string, leadData: Lead)
 // Send personalized welcome email
 const sendWelcomeEmail = async (leadData: Lead): Promise<void> => {
   const emailContent = generateWelcomeEmailHTML(leadData);
-  
-  console.log('Sending welcome email to:', leadData.email);
-  console.log('Email content preview:', emailContent.substring(0, 200) + '...');
-  
+
+  console.log("Sending welcome email to:", leadData.email);
+  console.log("Email content preview:", emailContent.substring(0, 200) + "...");
+
   // This would integrate with an email service provider
 };
 
 // Generate welcome email HTML content
 const generateWelcomeEmailHTML = (leadData: Lead): string => {
-  const budget = leadData.budget ? `₱${(leadData.budget / 1000000).toFixed(1)}M` : 'your budget';
-  const timeline = leadData.timeline || '3-6 months';
-  
+  const budget = leadData.budget
+    ? `₱${(leadData.budget / 1000000).toFixed(1)}M`
+    : "your budget";
+  const timeline = leadData.timeline || "3-6 months";
+
   return `
     <!DOCTYPE html>
     <html>
@@ -238,47 +253,55 @@ const generateWelcomeEmailHTML = (leadData: Lead): string => {
 // Helper function to format preferences
 const getPreferencesText = (preferences: any): string => {
   const prefs = [];
-  if (preferences?.petFriendly) prefs.push('Pet-friendly');
-  if (preferences?.nonHaunted) prefs.push('Clean history');
-  if (preferences?.floodSafe) prefs.push('Flood-safe location');
-  return prefs.length > 0 ? prefs.join(', ') : 'Standard preferences';
+
+  if (preferences?.petFriendly) prefs.push("Pet-friendly");
+  if (preferences?.nonHaunted) prefs.push("Clean history");
+  if (preferences?.floodSafe) prefs.push("Flood-safe location");
+
+  return prefs.length > 0 ? prefs.join(", ") : "Standard preferences";
 };
 
 // Create property alert campaign
-export const createPropertyAlertCampaign = async (leadId: string, preferences: any): Promise<EmailCampaign> => {
+export const createPropertyAlertCampaign = async (
+  leadId: string,
+  preferences: any
+): Promise<EmailCampaign> => {
   const campaign: EmailCampaign = {
     id: `alert-${Date.now()}`,
-    name: 'Property Alert Campaign',
-    type: 'Property Update',
-    subject: 'New Properties Matching Your Criteria in General Santos City',
-    template: 'property-alert-template',
+    name: "Property Alert Campaign",
+    type: "Property Update",
+    subject: "New Properties Matching Your Criteria in General Santos City",
+    template: "property-alert-template",
     triggers: [
       {
-        event: 'new_property_listed',
-        conditions: { matchesPreferences: true }
+        event: "new_property_listed",
+        conditions: { matchesPreferences: true },
       },
       {
-        event: 'price_drop',
-        conditions: { percentage: 5 }
-      }
+        event: "price_drop",
+        conditions: { percentage: 5 },
+      },
     ],
     targetSegment: {
-      leadStatus: ['New', 'Contacted', 'Qualified'],
-      budget: preferences.budget ? [preferences.budget * 0.8, preferences.budget * 1.2] : undefined
+      leadStatus: ["New", "Contacted", "Qualified"],
+      budget: preferences.budget
+        ? [preferences.budget * 0.8, preferences.budget * 1.2]
+        : undefined,
     },
-    status: 'Active',
+    status: "Active",
     metrics: {
       sent: 0,
       opened: 0,
       clicked: 0,
       replied: 0,
       unsubscribed: 0,
-      bounced: 0
+      bounced: 0,
     },
-    createdDate: new Date().toISOString()
+    createdDate: new Date().toISOString(),
   };
 
-  console.log('Property alert campaign created for lead:', leadId);
+  console.log("Property alert campaign created for lead:", leadId);
+
   return campaign;
 };
 
@@ -286,75 +309,86 @@ export const createPropertyAlertCampaign = async (leadId: string, preferences: a
 export const createMarketUpdateCampaign = async (): Promise<EmailCampaign> => {
   const campaign: EmailCampaign = {
     id: `market-${Date.now()}`,
-    name: 'Weekly Market Update - General Santos City',
-    type: 'Market Report',
-    subject: 'GenSan Real Estate Weekly Update - Market Trends & New Listings',
-    template: 'market-update-template',
+    name: "Weekly Market Update - General Santos City",
+    type: "Market Report",
+    subject: "GenSan Real Estate Weekly Update - Market Trends & New Listings",
+    template: "market-update-template",
     triggers: [
       {
-        event: 'scheduled',
-        conditions: { day: 'Monday', time: '08:00' }
-      }
+        event: "scheduled",
+        conditions: { day: "Monday", time: "08:00" },
+      },
     ],
     targetSegment: {
-      leadStatus: ['New', 'Contacted', 'Qualified']
+      leadStatus: ["New", "Contacted", "Qualified"],
     },
     schedule: {
-      frequency: 'Weekly',
-      time: '08:00',
-      timezone: 'Asia/Manila'
+      frequency: "Weekly",
+      time: "08:00",
+      timezone: "Asia/Manila",
     },
-    status: 'Active',
+    status: "Active",
     metrics: {
       sent: 0,
       opened: 0,
       clicked: 0,
       replied: 0,
       unsubscribed: 0,
-      bounced: 0
+      bounced: 0,
     },
-    createdDate: new Date().toISOString()
+    createdDate: new Date().toISOString(),
   };
 
   return campaign;
 };
 
 // Send property match notification
-export const sendPropertyMatchEmail = async (leadData: Lead, properties: Property[]): Promise<ApiResponse> => {
+export const sendPropertyMatchEmail = async (
+  leadData: Lead,
+  properties: Property[]
+): Promise<ApiResponse> => {
   try {
     const emailContent = generatePropertyMatchHTML(leadData, properties);
-    
-    console.log(`Sending property match email to ${leadData.email} with ${properties.length} properties`);
-    
+
+    console.log(
+      `Sending property match email to ${leadData.email} with ${properties.length} properties`
+    );
+
     // Update campaign metrics
-    await updateCampaignMetrics('property-alert', {
+    await updateCampaignMetrics("property-alert", {
       sent: 1,
-      event: 'property_match_sent'
+      event: "property_match_sent",
     });
 
     return {
       success: true,
-      data: { 
+      data: {
         recipient: leadData.email,
         propertyCount: properties.length,
-        emailId: `match-${Date.now()}`
+        emailId: `match-${Date.now()}`,
       },
-      message: 'Property match email sent successfully',
-      timestamp: new Date().toISOString()
+      message: "Property match email sent successfully",
+      timestamp: new Date().toISOString(),
     };
   } catch (error) {
-    console.error('Property match email error:', error);
+    console.error("Property match email error:", error);
+
     return {
       success: false,
-      message: 'Failed to send property match email',
-      timestamp: new Date().toISOString()
+      message: "Failed to send property match email",
+      timestamp: new Date().toISOString(),
     };
   }
 };
 
 // Generate property match email HTML
-const generatePropertyMatchHTML = (leadData: Lead, properties: Property[]): string => {
-  const propertyCards = properties.map(property => `
+const generatePropertyMatchHTML = (
+  leadData: Lead,
+  properties: Property[]
+): string => {
+  const propertyCards = properties
+    .map(
+      (property) => `
     <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin: 10px 0; background: white;">
       <div style="display: flex; align-items: center;">
         <img src="${property.image}" alt="${property.title}" style="width: 120px; height: 80px; object-fit: cover; border-radius: 5px; margin-right: 15px;">
@@ -364,14 +398,16 @@ const generatePropertyMatchHTML = (leadData: Lead, properties: Property[]): stri
           <p style="margin: 5px 0; font-weight: bold; color: #667eea; font-size: 18px;">₱${(property.price / 1000000).toFixed(1)}M</p>
           <div style="font-size: 12px; color: #888;">
             ${property.bedrooms} BR • ${property.bathrooms} BA • ${property.sqm} sqm
-            ${property.petFriendly ? ' • Pet-Friendly' : ''}
-            ${property.floodRisk === 'Low' ? ' • Low Flood Risk' : ''}
+            ${property.petFriendly ? " • Pet-Friendly" : ""}
+            ${property.floodRisk === "Low" ? " • Low Flood Risk" : ""}
           </div>
         </div>
         <a href="https://atuna.com/properties/preview?id=${property.id}" style="background-color: #667eea; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-size: 14px;">View Details</a>
       </div>
     </div>
-  `).join('');
+  `
+    )
+    .join("");
 
   return `
     <!DOCTYPE html>
@@ -416,42 +452,51 @@ const generatePropertyMatchHTML = (leadData: Lead, properties: Property[]): stri
 };
 
 // Update campaign metrics
-const updateCampaignMetrics = async (campaignId: string, metrics: any): Promise<void> => {
+const updateCampaignMetrics = async (
+  campaignId: string,
+  metrics: any
+): Promise<void> => {
   try {
-    await apiClients.openRealEstate.patch(`/email-campaigns/${campaignId}/metrics`, metrics);
-    console.log('Campaign metrics updated:', campaignId, metrics);
+    await apiClients.openRealEstate.patch(
+      `/email-campaigns/${campaignId}/metrics`,
+      metrics
+    );
+    console.log("Campaign metrics updated:", campaignId, metrics);
   } catch (error) {
-    console.error('Metrics update error:', error);
+    console.error("Metrics update error:", error);
   }
 };
 
 // Create nurture email sequence
-export const createNurtureSequence = async (leadId: string, leadData: Lead): Promise<EmailCampaign[]> => {
+export const createNurtureSequence = async (
+  leadId: string,
+  leadData: Lead
+): Promise<EmailCampaign[]> => {
   const sequences = [
     {
       delay: 24, // 1 day
-      subject: 'Your Property Search Guide for General Santos City',
-      template: 'guide-template',
-      type: 'Nurture' as const
+      subject: "Your Property Search Guide for General Santos City",
+      template: "guide-template",
+      type: "Nurture" as const,
     },
     {
       delay: 168, // 1 week
-      subject: 'Market Insights: What\'s Hot in GenSan Real Estate',
-      template: 'insights-template',
-      type: 'Nurture' as const
+      subject: "Market Insights: What's Hot in GenSan Real Estate",
+      template: "insights-template",
+      type: "Nurture" as const,
     },
     {
       delay: 336, // 2 weeks
-      subject: 'Financing Options for Your Property Purchase',
-      template: 'financing-template',
-      type: 'Nurture' as const
+      subject: "Financing Options for Your Property Purchase",
+      template: "financing-template",
+      type: "Nurture" as const,
     },
     {
       delay: 720, // 1 month
-      subject: 'Still Looking? Here\'s What\'s New in the Market',
-      template: 'reengagement-template',
-      type: 'Nurture' as const
-    }
+      subject: "Still Looking? Here's What's New in the Market",
+      template: "reengagement-template",
+      type: "Nurture" as const,
+    },
   ];
 
   return sequences.map((seq, index) => ({
@@ -462,38 +507,42 @@ export const createNurtureSequence = async (leadId: string, leadData: Lead): Pro
     template: seq.template,
     triggers: [
       {
-        event: 'delayed_send',
-        conditions: { hours: seq.delay }
-      }
+        event: "delayed_send",
+        conditions: { hours: seq.delay },
+      },
     ],
     targetSegment: {
-      leadStatus: ['New', 'Contacted']
+      leadStatus: ["New", "Contacted"],
     },
-    status: 'Active',
+    status: "Active",
     metrics: {
       sent: 0,
       opened: 0,
       clicked: 0,
       replied: 0,
       unsubscribed: 0,
-      bounced: 0
+      bounced: 0,
     },
-    createdDate: new Date().toISOString()
+    createdDate: new Date().toISOString(),
   }));
 };
 
 // Track email engagement
-export const trackEmailEngagement = async (emailId: string, event: string, metadata?: any): Promise<void> => {
+export const trackEmailEngagement = async (
+  emailId: string,
+  event: string,
+  metadata?: any
+): Promise<void> => {
   try {
-    await apiClients.openRealEstate.post('/email-engagement', {
+    await apiClients.openRealEstate.post("/email-engagement", {
       emailId,
       event, // 'opened', 'clicked', 'replied', 'unsubscribed'
       timestamp: new Date().toISOString(),
-      metadata
+      metadata,
     });
 
     console.log(`Email engagement tracked: ${event} for email ${emailId}`);
   } catch (error) {
-    console.error('Email engagement tracking error:', error);
+    console.error("Email engagement tracking error:", error);
   }
 };

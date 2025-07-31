@@ -8,3 +8,4 @@ Allow: /about-us
 Disallow: /sign-in-agent
 Disallow: /contact
 Disallow: /profile
+Disallow: /admin
