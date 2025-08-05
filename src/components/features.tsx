@@ -37,7 +37,7 @@ export const Features = () => {
         How It Works
       </h1>
       <div className="w-20 sm:w-30 h-2 mt-4 bg-gray-300 rounded-full" />
-      <p className="text-base sm:text-xl text-center mt-8 max-w-xl text-foreground-700">
+      <p className="text-base sm:text-xl text-center mt-8 max-w-xl text-foreground-700 font-medium">
         Finding your perfect property is easy with our AI-powered three-step
         process
       </p>

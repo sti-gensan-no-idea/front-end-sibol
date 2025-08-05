@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 
 import { AboutUsPage } from "./pages/about-us";
+import { ScheduleViewingPage } from "./pages/schedule-viewing";
 
 import { UnauthorizePage } from "@/pages/unauthorize";
 import ProtectedRoute from "@/hooks/protected-route";
@@ -13,19 +14,11 @@ import { SignInPage } from "@/pages/sign-in";
 import { SignInAgentPage } from "@/pages/sign-in-agent";
 import { DashboardAgentPage } from "@/pages/dashboard-agent";
 import { DashboardClientPage } from "@/pages/dashboard-client";
-import { AdminDashboardPage } from "@/pages/dashboard-admin";
 import { DemoShowcasePage } from "@/pages/demo-showcase";
 import { ContactAgentPage } from "@/pages/contact-agent";
-
 import ChatPage from "@/pages/ChatPage";
-
-
-
-
-import { ScheduleViewingPage } from "./pages/schedule-viewing";
-
-
-import Pipeline from "@/pages/pipeline"; 
+import Pipeline from "@/pages/pipeline";
+import { AdminDashboardPage } from "./pages/admin/dashboard";
 
 function App() {
   return (
@@ -39,37 +32,34 @@ function App() {
 
       <Route element={<ChatPage />} path="/chat" />
 
-
       {/* Demo Showcase */}
       <Route element={<DemoShowcasePage />} path="/demo" />
-       <Route element={<Pipeline />} path="/pipeline" />
+      <Route element={<Pipeline />} path="/pipeline" />
 
       <Route element={<AboutUsPage />} path="/about-us" />
-
 
       {/* Protected Routes */}
       <Route element={<ProtectedRoute allowedRole="client" />}>
         <Route element={<DashboardClientPage />} path="/profile/client" />
       </Route>
       <Route element={<ProtectedRoute allowedRole="agent" />}>
-     
         <Route element={<DashboardAgentPage />} path="/profile/agent" />
       </Route>
       <Route element={<ProtectedRoute allowedRole="client" />}>
         <Route element={<ContactAgentPage />} path="/contact-agent" />
       </Route>
 
-      
-      {/* Admin Dashboard - for demo purposes, not protected */}
-      {/* <Route element={} path="/agent/dashboard" /> */}
       <Route element={<ProtectedRoute allowedRole="client" />}>
         <Route element={<ScheduleViewingPage />} path="/schedule-viewing" />
       </Route>
       <Route element={<UnauthorizePage />} path="/not-authorized" />
+
+      {/* Admin */}
+      <Route element={<AdminDashboardPage />} path="/profile/admin" />
+
+      {/* Not Found Page */}
       <Route element={<NotFoundPage />} path="*" />
     </Routes>
-
-    
   );
 }
 

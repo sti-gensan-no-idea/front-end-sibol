@@ -13,7 +13,7 @@ export const Hero = () => {
 
     if (!trimmed) return;
     navigate(
-      `/properties?page=1&tab=search_properties&query=${encodeURIComponent(trimmed)}`
+      `/properties?page=1&tab=search_properties&query=${encodeURIComponent(trimmed)}`,
     );
   };
 
@@ -28,13 +28,13 @@ export const Hero = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-white via-white/80 to-transparent z-10" />
 
       <div className="relative z-20 flex flex-col justify-center items-center h-full text-center px-8 sm:px-6">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-800 drop-shadow-md max-w-5xl">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold drop-shadow-md max-w-5xl">
           Simplifying Property Search&nbsp;
           <br className="hidden sm:block" />
           Through Intelligent Technology
         </h1>
 
-        <p className="mt-6 text-base sm:text-lg text-gray-700 max-w-xl">
+        <p className="mt-6 text-base sm:text-lg max-w-xl font-medium">
           Automate repetitive tasks, boost productivity, enhance
           decision-making, and streamline processes with powerful AI tools.
         </p>
@@ -55,6 +55,7 @@ export const Hero = () => {
               className="shrink-0"
               color="primary"
               radius="full"
+              size="lg"
               onPress={handleSearch}
             >
               Search

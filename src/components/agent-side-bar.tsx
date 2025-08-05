@@ -5,6 +5,8 @@ import {
   IconBuildingCommunity,
   IconLogout,
   IconPlus,
+  IconUsers,
+  IconActivityHeartbeat,
 } from "@tabler/icons-react";
 import { signOut } from "firebase/auth";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -49,17 +51,6 @@ export const AgentSideBar = () => {
         </Button>
       </Tooltip>
 
-      <Tooltip color="primary" content="Property listing" placement="right">
-        <Button
-          isIconOnly
-          className={isActive("property")}
-          variant={isSolid("property")}
-          onPress={() => goToTab("property")}
-        >
-          <IconBuildingCommunity />
-        </Button>
-      </Tooltip>
-
       <Tooltip color="primary" content="Calendar" placement="right">
         <Button
           isIconOnly
@@ -68,6 +59,39 @@ export const AgentSideBar = () => {
           onPress={() => goToTab("calendar")}
         >
           <IconCalendar />
+        </Button>
+      </Tooltip>
+
+      <Tooltip color="primary" content="Agents Performance" placement="right">
+        <Button
+          isIconOnly
+          className={isActive("agents")}
+          variant={isSolid("agents")}
+          onPress={() => goToTab("agents")}
+        >
+          <IconUsers />
+        </Button>
+      </Tooltip>
+
+      <Tooltip color="primary" content="Property Analytics" placement="right">
+        <Button
+          isIconOnly
+          className={isActive("property_analytics")}
+          variant={isSolid("property_analytics")}
+          onPress={() => goToTab("property_analytics")}
+        >
+          <IconBuildingCommunity />
+        </Button>
+      </Tooltip>
+
+      <Tooltip color="primary" content="Automation Center" placement="right">
+        <Button
+          isIconOnly
+          className={isActive("automation_center")}
+          variant={isSolid("automation_center")}
+          onPress={() => goToTab("automation_center")}
+        >
+          <IconActivityHeartbeat />
         </Button>
       </Tooltip>
 
