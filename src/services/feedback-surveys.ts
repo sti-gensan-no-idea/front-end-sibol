@@ -1,4 +1,4 @@
-import { apiClients, ApiResponse } from './api-config';
+import { apiClients, ApiResponse } from "./api-config";
 
 /**
  * Strategy 7: Feedback Surveys
@@ -7,11 +7,16 @@ import { apiClients, ApiResponse } from './api-config';
 
 export interface Survey {
   id: string;
-  type: 'Post-Deal' | 'Service Quality' | 'Agent Performance' | 'Website Experience' | 'Property Viewing';
+  type:
+    | "Post-Deal"
+    | "Service Quality"
+    | "Agent Performance"
+    | "Website Experience"
+    | "Property Viewing";
   clientEmail: string;
   propertyId?: string;
   agentId?: string;
-  status: 'Sent' | 'In Progress' | 'Completed' | 'Expired';
+  status: "Sent" | "In Progress" | "Completed" | "Expired";
   createdDate: string;
   completedDate?: string;
   responses: SurveyResponse[];
@@ -22,7 +27,7 @@ export interface Survey {
 
 export interface SurveyQuestion {
   id: string;
-  type: 'rating' | 'multiple_choice' | 'text' | 'yes_no' | 'nps';
+  type: "rating" | "multiple_choice" | "text" | "yes_no" | "nps";
   question: string;
   options?: string[];
   required: boolean;
@@ -42,7 +47,7 @@ export interface SurveyResponse {
 export interface SurveyTemplate {
   id: string;
   name: string;
-  type: Survey['type'];
+  type: Survey["type"];
   questions: SurveyQuestion[];
   triggerConditions: {
     event: string;
@@ -57,31 +62,36 @@ export interface SurveyTemplate {
 }
 
 // Create and send post-deal survey
-export const createPostDealSurvey = async (dealId: string, clientEmail: string, agentId: string, propertyId: string): Promise<ApiResponse> => {
+export const createPostDealSurvey = async (
+  dealId: string,
+  clientEmail: string,
+  agentId: string,
+  propertyId: string
+): Promise<ApiResponse> => {
   try {
     const survey: Survey = {
       id: `survey-${Date.now()}`,
-      type: 'Post-Deal',
+      type: "Post-Deal",
       clientEmail,
       propertyId,
       agentId,
-      status: 'Sent',
+      status: "Sent",
       createdDate: new Date().toISOString(),
       responses: [],
-      followUpRequired: false
+      followUpRequired: false,
     };
 
     // Generate personalized survey
     const surveyContent = generatePostDealSurveyContent(survey);
-    
+
     // Send via email
     await sendSurveyEmail(survey, surveyContent);
-    
+
     // Log to Podio CRM
-    await apiClients.openRealEstate.post('/surveys', {
+    await apiClients.openRealEstate.post("/surveys", {
       survey,
       dealId,
-      market: 'General Santos City'
+      market: "General Santos City",
     });
 
     // Schedule follow-up reminder
@@ -90,15 +100,16 @@ export const createPostDealSurvey = async (dealId: string, clientEmail: string, 
     return {
       success: true,
       data: { surveyId: survey.id },
-      message: 'Post-deal survey created and sent successfully',
-      timestamp: new Date().toISOString()
+      message: "Post-deal survey created and sent successfully",
+      timestamp: new Date().toISOString(),
     };
   } catch (error) {
-    console.error('Post-deal survey error:', error);
+    console.error("Post-deal survey error:", error);
+
     return {
       success: false,
-      message: 'Failed to create post-deal survey',
-      timestamp: new Date().toISOString()
+      message: "Failed to create post-deal survey",
+      timestamp: new Date().toISOString(),
     };
   }
 };
@@ -140,12 +151,16 @@ const generatePostDealSurveyContent = (survey: Survey): string => {
                         <h3>1. Overall Satisfaction</h3>
                         <p>How satisfied are you with your overall experience with aTuna Real Estate?</p>
                         <div class="rating-scale">
-                            ${[1,2,3,4,5].map(i => `
+                            ${[1, 2, 3, 4, 5]
+                              .map(
+                                (i) => `
                                 <label class="rating-option">
                                     <input type="radio" name="overall_satisfaction" value="${i}" required>
                                     ${i}
                                 </label>
-                            `).join('')}
+                            `
+                              )
+                              .join("")}
                         </div>
                         <small>1 = Very Dissatisfied, 5 = Very Satisfied</small>
                     </div>
@@ -154,12 +169,16 @@ const generatePostDealSurveyContent = (survey: Survey): string => {
                         <h3>2. Agent Performance</h3>
                         <p>How would you rate your agent's performance?</p>
                         <div class="rating-scale">
-                            ${[1,2,3,4,5].map(i => `
+                            ${[1, 2, 3, 4, 5]
+                              .map(
+                                (i) => `
                                 <label class="rating-option">
                                     <input type="radio" name="agent_performance" value="${i}" required>
                                     ${i}
                                 </label>
-                            `).join('')}
+                            `
+                              )
+                              .join("")}
                         </div>
                         <small>1 = Poor, 5 = Excellent</small>
                     </div>
@@ -168,12 +187,16 @@ const generatePostDealSurveyContent = (survey: Survey): string => {
                         <h3>3. Property Search Process</h3>
                         <p>How easy was it to find and view properties?</p>
                         <div class="rating-scale">
-                            ${[1,2,3,4,5].map(i => `
+                            ${[1, 2, 3, 4, 5]
+                              .map(
+                                (i) => `
                                 <label class="rating-option">
                                     <input type="radio" name="search_process" value="${i}" required>
                                     ${i}
                                 </label>
-                            `).join('')}
+                            `
+                              )
+                              .join("")}
                         </div>
                         <small>1 = Very Difficult, 5 = Very Easy</small>
                     </div>
@@ -182,12 +205,16 @@ const generatePostDealSurveyContent = (survey: Survey): string => {
                         <h3>4. Communication Quality</h3>
                         <p>How would you rate our communication throughout the process?</p>
                         <div class="rating-scale">
-                            ${[1,2,3,4,5].map(i => `
+                            ${[1, 2, 3, 4, 5]
+                              .map(
+                                (i) => `
                                 <label class="rating-option">
                                     <input type="radio" name="communication" value="${i}" required>
                                     ${i}
                                 </label>
-                            `).join('')}
+                            `
+                              )
+                              .join("")}
                         </div>
                         <small>1 = Poor, 5 = Excellent</small>
                     </div>
@@ -196,12 +223,16 @@ const generatePostDealSurveyContent = (survey: Survey): string => {
                         <h3>5. Philippine-Specific Features</h3>
                         <p>How helpful were our local features (flood risk, property history, etc.)?</p>
                         <div class="rating-scale">
-                            ${[1,2,3,4,5].map(i => `
+                            ${[1, 2, 3, 4, 5]
+                              .map(
+                                (i) => `
                                 <label class="rating-option">
                                     <input type="radio" name="local_features" value="${i}" required>
                                     ${i}
                                 </label>
-                            `).join('')}
+                            `
+                              )
+                              .join("")}
                         </div>
                         <small>1 = Not Helpful, 5 = Very Helpful</small>
                     </div>
@@ -210,12 +241,16 @@ const generatePostDealSurveyContent = (survey: Survey): string => {
                         <h3>6. Net Promoter Score</h3>
                         <p>How likely are you to recommend aTuna Real Estate to friends and family?</p>
                         <div class="rating-scale">
-                            ${[0,1,2,3,4,5,6,7,8,9,10].map(i => `
+                            ${[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                              .map(
+                                (i) => `
                                 <label class="rating-option">
                                     <input type="radio" name="nps_score" value="${i}" required>
                                     ${i}
                                 </label>
-                            `).join('')}
+                            `
+                              )
+                              .join("")}
                         </div>
                         <small>0 = Not likely at all, 10 = Extremely likely</small>
                     </div>
@@ -253,39 +288,48 @@ const generatePostDealSurveyContent = (survey: Survey): string => {
 };
 
 // Send survey email
-const sendSurveyEmail = async (survey: Survey, content: string): Promise<void> => {
+const sendSurveyEmail = async (
+  survey: Survey,
+  content: string
+): Promise<void> => {
   try {
     console.log(`Sending survey email to: ${survey.clientEmail}`);
-    console.log('Survey content preview:', content.substring(0, 200) + '...');
-    
+    console.log("Survey content preview:", content.substring(0, 200) + "...");
+
     // Would integrate with email service provider
     // await emailService.send({
     //   to: survey.clientEmail,
     //   subject: 'Your Experience with aTuna Real Estate - Quick Survey',
     //   html: content
     // });
-    
   } catch (error) {
-    console.error('Survey email error:', error);
+    console.error("Survey email error:", error);
   }
 };
 
 // Process survey response
-export const processSurveyResponse = async (surveyId: string, responses: { [questionId: string]: any }): Promise<ApiResponse> => {
+export const processSurveyResponse = async (
+  surveyId: string,
+  responses: { [questionId: string]: any }
+): Promise<ApiResponse> => {
   try {
-    const surveyResponses: SurveyResponse[] = Object.entries(responses).map(([questionId, answer]) => ({
-      questionId,
-      answer,
-      timestamp: new Date().toISOString()
-    }));
+    const surveyResponses: SurveyResponse[] = Object.entries(responses).map(
+      ([questionId, answer]) => ({
+        questionId,
+        answer,
+        timestamp: new Date().toISOString(),
+      })
+    );
 
     // Calculate overall rating and NPS
     const overallRating = responses.overall_satisfaction || 0;
     const npsScore = responses.nps_score || 0;
-    
+
     // Determine if follow-up is needed
-    const followUpRequired = overallRating <= 3 || npsScore <= 6 || 
-                           responses.improvement_suggestions?.length > 10;
+    const followUpRequired =
+      overallRating <= 3 ||
+      npsScore <= 6 ||
+      responses.improvement_suggestions?.length > 10;
 
     // Update survey in database
     await apiClients.openRealEstate.patch(`/surveys/${surveyId}`, {
@@ -293,8 +337,8 @@ export const processSurveyResponse = async (surveyId: string, responses: { [ques
       overallRating,
       npsScore,
       followUpRequired,
-      status: 'Completed',
-      completedDate: new Date().toISOString()
+      status: "Completed",
+      completedDate: new Date().toISOString(),
     });
 
     // Trigger follow-up actions if needed
@@ -307,41 +351,49 @@ export const processSurveyResponse = async (surveyId: string, responses: { [ques
 
     return {
       success: true,
-      data: { 
-        surveyId, 
-        overallRating, 
-        npsScore, 
-        followUpRequired 
+      data: {
+        surveyId,
+        overallRating,
+        npsScore,
+        followUpRequired,
       },
-      message: 'Survey response processed successfully',
-      timestamp: new Date().toISOString()
+      message: "Survey response processed successfully",
+      timestamp: new Date().toISOString(),
     };
   } catch (error) {
-    console.error('Survey response processing error:', error);
+    console.error("Survey response processing error:", error);
+
     return {
       success: false,
-      message: 'Failed to process survey response',
-      timestamp: new Date().toISOString()
+      message: "Failed to process survey response",
+      timestamp: new Date().toISOString(),
     };
   }
 };
 
 // Schedule survey reminder
-const scheduleSurveyReminder = async (surveyId: string, clientEmail: string, daysDelay: number): Promise<void> => {
+const scheduleSurveyReminder = async (
+  surveyId: string,
+  clientEmail: string,
+  daysDelay: number
+): Promise<void> => {
   try {
     const reminderDate = new Date();
+
     reminderDate.setDate(reminderDate.getDate() + daysDelay);
 
-    await apiClients.openRealEstate.post('/survey-reminders', {
+    await apiClients.openRealEstate.post("/survey-reminders", {
       surveyId,
       clientEmail,
       scheduledDate: reminderDate.toISOString(),
-      message: generateReminderMessage()
+      message: generateReminderMessage(),
     });
 
-    console.log(`Survey reminder scheduled for ${reminderDate.toLocaleDateString()}`);
+    console.log(
+      `Survey reminder scheduled for ${reminderDate.toLocaleDateString()}`
+    );
   } catch (error) {
-    console.error('Reminder scheduling error:', error);
+    console.error("Reminder scheduling error:", error);
   }
 };
 
@@ -360,121 +412,140 @@ aTuna Real Estate Team`;
 };
 
 // Trigger follow-up actions for negative feedback
-const triggerFollowUpActions = async (surveyId: string, responses: any): Promise<void> => {
+const triggerFollowUpActions = async (
+  surveyId: string,
+  responses: any
+): Promise<void> => {
   try {
     // Create support ticket for negative feedback
     if (responses.overall_satisfaction <= 3) {
-      await apiClients.openRealEstate.post('/support-tickets', {
+      await apiClients.openRealEstate.post("/support-tickets", {
         surveyId,
-        subject: 'Low Satisfaction Score Follow-up',
-        priority: 'High',
-        category: 'Service Quality',
-        description: `Client gave low satisfaction score (${responses.overall_satisfaction}/5). Improvement suggestions: ${responses.improvement_suggestions || 'None provided'}`
+        subject: "Low Satisfaction Score Follow-up",
+        priority: "High",
+        category: "Service Quality",
+        description: `Client gave low satisfaction score (${responses.overall_satisfaction}/5). Improvement suggestions: ${responses.improvement_suggestions || "None provided"}`,
       });
     }
 
     // Alert management for very low NPS
     if (responses.nps_score <= 6) {
-      await apiClients.openRealEstate.post('/management-alerts', {
-        type: 'Low NPS Alert',
+      await apiClients.openRealEstate.post("/management-alerts", {
+        type: "Low NPS Alert",
         surveyId,
         npsScore: responses.nps_score,
-        urgency: 'High'
+        urgency: "High",
       });
     }
 
-    console.log('Follow-up actions triggered for survey:', surveyId);
+    console.log("Follow-up actions triggered for survey:", surveyId);
   } catch (error) {
-    console.error('Follow-up actions error:', error);
+    console.error("Follow-up actions error:", error);
   }
 };
 
 // Update agent performance metrics
-const updateAgentMetrics = async (surveyId: string, responses: any): Promise<void> => {
+const updateAgentMetrics = async (
+  surveyId: string,
+  responses: any
+): Promise<void> => {
   try {
     const agentPerformanceData = {
       surveyId,
       agentRating: responses.agent_performance || 0,
       communicationRating: responses.communication || 0,
       overallSatisfaction: responses.overall_satisfaction || 0,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
-    await apiClients.openRealEstate.post('/agent-performance', agentPerformanceData);
-    
-    console.log('Agent metrics updated from survey:', surveyId);
+    await apiClients.openRealEstate.post(
+      "/agent-performance",
+      agentPerformanceData
+    );
+
+    console.log("Agent metrics updated from survey:", surveyId);
   } catch (error) {
-    console.error('Agent metrics update error:', error);
+    console.error("Agent metrics update error:", error);
   }
 };
 
 // Create service quality survey
-export const createServiceQualitySurvey = async (interactionId: string, clientEmail: string): Promise<Survey> => {
+export const createServiceQualitySurvey = async (
+  interactionId: string,
+  clientEmail: string
+): Promise<Survey> => {
   const survey: Survey = {
     id: `quality-${Date.now()}`,
-    type: 'Service Quality',
+    type: "Service Quality",
     clientEmail,
-    status: 'Sent',
+    status: "Sent",
     createdDate: new Date().toISOString(),
     responses: [],
-    followUpRequired: false
+    followUpRequired: false,
   };
 
   const questions: SurveyQuestion[] = [
     {
-      id: 'response_time',
-      type: 'rating',
-      question: 'How satisfied were you with our response time?',
+      id: "response_time",
+      type: "rating",
+      question: "How satisfied were you with our response time?",
       required: true,
-      scale: { min: 1, max: 5 }
+      scale: { min: 1, max: 5 },
     },
     {
-      id: 'helpfulness',
-      type: 'rating',
-      question: 'How helpful was our team?',
+      id: "helpfulness",
+      type: "rating",
+      question: "How helpful was our team?",
       required: true,
-      scale: { min: 1, max: 5 }
+      scale: { min: 1, max: 5 },
     },
     {
-      id: 'problem_resolution',
-      type: 'yes_no',
-      question: 'Was your issue completely resolved?',
-      required: true
+      id: "problem_resolution",
+      type: "yes_no",
+      question: "Was your issue completely resolved?",
+      required: true,
     },
     {
-      id: 'additional_feedback',
-      type: 'text',
-      question: 'Any additional feedback?',
-      required: false
-    }
+      id: "additional_feedback",
+      type: "text",
+      question: "Any additional feedback?",
+      required: false,
+    },
   ];
 
-  console.log('Service quality survey created:', survey.id);
+  console.log("Service quality survey created:", survey.id);
+
   return survey;
 };
 
 // Create agent performance survey
-export const createAgentPerformanceSurvey = async (agentId: string, clientEmail: string): Promise<Survey> => {
+export const createAgentPerformanceSurvey = async (
+  agentId: string,
+  clientEmail: string
+): Promise<Survey> => {
   const survey: Survey = {
     id: `agent-${Date.now()}`,
-    type: 'Agent Performance',
+    type: "Agent Performance",
     clientEmail,
     agentId,
-    status: 'Sent',
+    status: "Sent",
     createdDate: new Date().toISOString(),
     responses: [],
-    followUpRequired: false
+    followUpRequired: false,
   };
 
-  console.log('Agent performance survey created for agent:', agentId);
+  console.log("Agent performance survey created for agent:", agentId);
+
   return survey;
 };
 
 // Analyze survey trends
-export const analyzeSurveyTrends = async (period: '7d' | '30d' | '90d'): Promise<any> => {
+export const analyzeSurveyTrends = async (
+  period: "7d" | "30d" | "90d"
+): Promise<any> => {
   try {
-    const response = await apiClients.openRealEstate.get('/survey-analytics', {
-      params: { period }
+    const response = await apiClients.openRealEstate.get("/survey-analytics", {
+      params: { period },
     });
 
     const analytics = {
@@ -483,24 +554,25 @@ export const analyzeSurveyTrends = async (period: '7d' | '30d' | '90d'): Promise
       averageRating: response.data.averageRating || 4.2,
       npsScore: response.data.npsScore || 42,
       topIssues: response.data.topIssues || [
-        'Communication timing',
-        'Property availability updates',
-        'Viewing scheduling'
+        "Communication timing",
+        "Property availability updates",
+        "Viewing scheduling",
       ],
       agentPerformance: response.data.agentPerformance || {
-        highest: { name: 'Maria Santos', rating: 4.8 },
-        lowest: { name: 'Juan Cruz', rating: 3.9 }
+        highest: { name: "Maria Santos", rating: 4.8 },
+        lowest: { name: "Juan Cruz", rating: 3.9 },
       },
       improvementAreas: response.data.improvementAreas || [
-        'Faster response times',
-        'Better property descriptions',
-        'More viewing slots'
-      ]
+        "Faster response times",
+        "Better property descriptions",
+        "More viewing slots",
+      ],
     };
 
     return analytics;
   } catch (error) {
-    console.error('Survey analytics error:', error);
+    console.error("Survey analytics error:", error);
+
     return {
       totalSurveys: 0,
       responseRate: 0,
@@ -508,15 +580,15 @@ export const analyzeSurveyTrends = async (period: '7d' | '30d' | '90d'): Promise
       npsScore: 0,
       topIssues: [],
       agentPerformance: {},
-      improvementAreas: []
+      improvementAreas: [],
     };
   }
 };
 
 // Generate survey insights report
 export const generateSurveyInsights = async (): Promise<string> => {
-  const analytics = await analyzeSurveyTrends('30d');
-  
+  const analytics = await analyzeSurveyTrends("30d");
+
   return `
     📊 SURVEY INSIGHTS REPORT - GENERAL SANTOS CITY
     Period: Last 30 Days
@@ -531,10 +603,10 @@ export const generateSurveyInsights = async (): Promise<string> => {
     ${analytics.agentPerformance.highest?.name} - ${analytics.agentPerformance.highest?.rating}/5.0
     
     ⚠️ IMPROVEMENT AREAS:
-    ${analytics.improvementAreas.map((area: string) => `• ${area}`).join('\n')}
+    ${analytics.improvementAreas.map((area: string) => `• ${area}`).join("\n")}
     
     🔍 COMMON ISSUES:
-    ${analytics.topIssues.map((issue: string) => `• ${issue}`).join('\n')}
+    ${analytics.topIssues.map((issue: string) => `• ${issue}`).join("\n")}
     
     💡 RECOMMENDATIONS:
     • Focus on communication improvements

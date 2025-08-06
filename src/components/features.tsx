@@ -1,84 +1,70 @@
 import { Button } from "@heroui/react";
-import {
-  IconSearch,
-  IconCalendar,
-  IconFileCheck,
-  IconArrowNarrowRight,
-} from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
+import { IconArrowNarrowRight } from "@tabler/icons-react";
+
+import { featureSteps } from "@/data/feature-steps";
+
+interface StepCardInterface {
+  step: number;
+  title: string;
+  description: string;
+  Icon: React.ElementType;
+}
+
+const StepCard = ({ step, title, description, Icon }: StepCardInterface) => (
+  <div className="flex flex-col items-center relative">
+    <div className="p-4 bg-white rounded-2xl shadow-medium shadow-gray-300">
+      <Icon className="text-primary" size={40} />
+    </div>
+    <span className="w-8 h-8 flex items-center justify-center rounded-full absolute -top-12 select-none shadow-small text-white bg-primary">
+      {step}
+    </span>
+    <span className="mt-8 text-lg sm:text-xl font-bold text-foreground-700">
+      {title}
+    </span>
+    <p className="mt-4 text-center max-w-sm text-sm sm:text-base text-foreground-700">
+      {description}
+    </p>
+  </div>
+);
 
 export const Features = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="h-screen p-8 flex flex-col items-center justify-center bg-white">
-      <h1 className="text-6xl text-center font-bold text-foreground-700">
+    <div className="min-h-screen p-8 sm:p-8 flex flex-col items-center justify-center bg-white">
+      <h1 className="text-4xl sm:text-6xl text-center font-bold text-foreground-700">
         How It Works
       </h1>
-      <div className="w-30 h-2 mt-4 bg-gray-300 rounded-full" />
-      <p className="text-xl text-center mt-8 max-w-1/2 text-foreground-700">
+      <div className="w-20 sm:w-30 h-2 mt-4 bg-gray-300 rounded-full" />
+      <p className="text-base sm:text-xl text-center mt-8 max-w-xl text-foreground-700 font-medium">
         Finding your perfect property is easy with our AI-powered three-step
         process
       </p>
 
-      <div className="mt-20 container mx-auto p-8 grid grid-cols-3 gap-8 relative">
-        <div className="w-full top-16 flex items-center justify-center absolute">
+      <div className="mt-16 w-full container mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 relative">
+        <div className="hidden lg:flex w-full top-8 items-center justify-center absolute">
           <div className="w-full max-w-2/3 h-1 bg-primary" />
         </div>
-        <div className="flex flex-col items-center relative">
-          <div className="p-4 bg-white rounded-2xl shadow-medium shadow-gray-300">
-            <IconSearch className="text-primary" size={40} />
-          </div>
-          <span className="w-8 h-8 flex items-center justify-center rounded-full absolute -top-12 select-none shadow-small text-white bg-primary">
-            1
-          </span>
-          <span className="mt-8 text-xl font-bold text-foreground-700">
-            Find Your Property
-          </span>
-          <p className="mt-4 text-center max-w-sm text-foreground-700">
-            Use our AI-powered search to discover properties matching your exact
-            needs. Filter by location, price and more.
-          </p>
-        </div>
-        <div className="flex flex-col items-center relative">
-          <div className="p-4 bg-white rounded-2xl shadow-medium shadow-gray-300">
-            <IconCalendar className="text-primary" size={40} />
-          </div>
-          <span className="w-8 h-8 flex items-center justify-center rounded-full absolute -top-12 select-none shadow-small text-white bg-primary">
-            2
-          </span>
-          <span className="mt-8 text-xl font-bold text-foreground-700">
-            Schedule a Visit
-          </span>
-          <p className="mt-4 text-center max-w-sm text-foreground-700">
-            Book an in-person viewing or take a virtual 3D tour of your selected
-            properties at your convenience.
-          </p>
-        </div>
-        <div className="flex flex-col items-center relative">
-          <div className="p-4 bg-white rounded-2xl shadow-medium shadow-gray-300">
-            <IconFileCheck className="text-primary" size={40} />
-          </div>
-          <span className="w-8 h-8 flex items-center justify-center rounded-full absolute -top-12 select-none shadow-small text-white bg-primary">
-            3
-          </span>
-          <span className="mt-8 text-xl font-bold text-foreground-700">
-            Close the Deal
-          </span>
-          <p className="mt-4 text-center max-w-sm text-foreground-700">
-            Complete paperwork digitally, get expert guidance from our agents,
-            and secure your dream property with ease.
-          </p>
-        </div>
+
+        {featureSteps.map(({ step, title, description, Icon }) => (
+          <StepCard
+            key={step}
+            Icon={Icon}
+            description={description}
+            step={step}
+            title={title}
+          />
+        ))}
       </div>
 
       <Button
-        className="mt-20"
+        className="mt-16"
         color="primary"
         endContent={<IconArrowNarrowRight />}
         size="lg"
         variant="shadow"
-        onPress={() => {navigate("/sign-up")}}
+        onPress={() => navigate("/sign-up")}
       >
         Browse Properties
       </Button>

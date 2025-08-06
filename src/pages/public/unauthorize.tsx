@@ -1,6 +1,6 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "@heroui/react";
 import { IconArrowNarrowRight } from "@tabler/icons-react";
-import { useNavigate } from "react-router-dom";
 
 import { NavBar } from "@/components/navbar";
 
