@@ -4,7 +4,11 @@ import {
   IconCalendar,
   IconBuildingCommunity,
   IconLogout,
+  IconMessage2,
   IconPlus,
+  IconUsers,
+  IconActivityHeartbeat,
+  IconHeart,
 } from "@tabler/icons-react";
 import { signOut } from "firebase/auth";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -37,26 +41,37 @@ export const ClientSideBar = () => {
   const isSolid = (key: string) => (tab === key ? "solid" : "light");
 
   return (
-    <div className="w-16 fixed left-(10) top-36 shadow-medium flex flex-col justify-center items-center py-4 rounded-large gap-2 bg-white">
+    <div className="w-16 fixed left-8 top-24 shadow-medium flex flex-col justify-center items-center py-4 rounded-large gap-2 bg-white">
       <Tooltip color="primary" content="Dashboard" placement="right">
         <Button
           isIconOnly
-          className={isActive("dashboard")}
-          variant={isSolid("dashboard")}
-          onPress={() => goToTab("dashboard")}
+          className={isActive("browse_properties")}
+          variant={isSolid("browse_properties")}
+          onPress={() => goToTab("browse_properties")}
         >
-          <IconLayout />
+          <IconBuildingCommunity />
         </Button>
       </Tooltip>
 
       <Tooltip color="primary" content="Calendar" placement="right">
         <Button
           isIconOnly
-          className={isActive("calendar")}
-          variant={isSolid("calendar")}
-          onPress={() => goToTab("calendar")}
+          className={isActive("inquiries")}
+          variant={isSolid("inquiries")}
+          onPress={() => goToTab("inquiries")}
         >
-          <IconCalendar />
+          <IconMessage2 />
+        </Button>
+      </Tooltip>
+
+      <Tooltip color="primary" content="Agents Performance" placement="right">
+        <Button
+          isIconOnly
+          className={isActive("favorites")}
+          variant={isSolid("favorites")}
+          onPress={() => goToTab("favorites")}
+        >
+          <IconHeart />
         </Button>
       </Tooltip>
 

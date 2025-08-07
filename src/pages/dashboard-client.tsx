@@ -16,7 +16,7 @@ import {
   useDisclosure,
   Image,
   Slider,
-  Checkbox
+  Checkbox,
 } from "@heroui/react";
 import {
   IconSearch,
@@ -30,16 +30,17 @@ import {
   IconMessage,
   IconHome,
   IconUser,
-  IconEye
+  IconEye,
 } from "@tabler/icons-react";
+
 import { useAutomation } from "@/contexts/automation-context";
 import { NavBar } from "@/components/navbar";
 import { ClientSideBar } from "@/components/client-side-bar";
 
 interface PropertyFilters {
-  type: 'All' | 'Residential' | 'Commercial';
+  type: "All" | "Residential" | "Commercial";
   priceRange: [number, number];
-  floodRisk: 'All' | 'Low' | 'Medium' | 'High';
+  floodRisk: "All" | "Low" | "Medium" | "High";
   petFriendly: boolean;
   haunted: boolean;
 }
@@ -49,7 +50,7 @@ interface InquiryForm {
   email: string;
   phone: string;
   budget: string;
-  timeline: '1-3 months' | '3-6 months' | '6+ months';
+  timeline: "1-3 months" | "3-6 months" | "6+ months";
   message: string;
   preferences: {
     petFriendly: boolean;
@@ -61,7 +62,12 @@ interface InquiryForm {
 interface ViewingForm {
   date: string;
   time: string;
-  type: 'Viewing' | 'Inspection' | 'Open House' | 'Lease Review' | 'Document Signing';
+  type:
+    | "Viewing"
+    | "Inspection"
+    | "Open House"
+    | "Lease Review"
+    | "Document Signing";
   notes: string;
 }
 
@@ -76,43 +82,54 @@ export const DashboardClientPage = () => {
     selectedProperty,
     setSelectedProperty,
     chatMessages,
-    addChatMessage
+    addChatMessage,
   } = useAutomation();
 
-  const [activeTab, setActiveTab] = useState('browse');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [filters, setFilters] = useState<PropertyFilters>({
-    type: 'All',
+    type: "All",
     priceRange: [2000000, 10000000],
-    floodRisk: 'All',
+    floodRisk: "All",
     petFriendly: false,
-    haunted: false
+    haunted: false,
   });
   const [favorites, setFavorites] = useState<string[]>([]);
 
-  const { isOpen: isInquiryModalOpen, onOpen: onInquiryModalOpen, onClose: onInquiryModalClose } = useDisclosure();
-  const { isOpen: isViewingModalOpen, onOpen: onViewingModalOpen, onClose: onViewingModalClose } = useDisclosure();
+  const {
+    isOpen: isInquiryModalOpen,
+    onOpen: onInquiryModalOpen,
+    onClose: onInquiryModalClose,
+  } = useDisclosure();
+  const {
+    isOpen: isViewingModalOpen,
+    onOpen: onViewingModalOpen,
+    onClose: onViewingModalClose,
+  } = useDisclosure();
 
   const [inquiryForm, setInquiryForm] = useState<InquiryForm>({
-    name: '',
-    email: '',
-    phone: '',
-    budget: '',
-    timeline: '1-3 months',
-    message: '',
+    name: "",
+    email: "",
+    phone: "",
+    budget: "",
+    timeline: "1-3 months",
+    message: "",
     preferences: {
       petFriendly: false,
       nonHaunted: true,
-      floodSafe: true
-    }
+      floodSafe: true,
+    },
   });
 
   const [viewingForm, setViewingForm] = useState<ViewingForm>({
-    date: '',
-    time: '09:00',
-    type: 'Viewing',
-    notes: ''
+    date: "",
+    time: "09:00",
+    type: "Viewing",
+    notes: "",
   });
+
+  // Get tab from URL parameter
+  const urlParams = new URLSearchParams(window.location.search);
+  const activeTab = urlParams.get("tab") || "browse_properties";
 
   useEffect(() => {
     document.title = "Client Dashboard | Atuna";
@@ -120,23 +137,24 @@ export const DashboardClientPage = () => {
 
   const applyFilters = () => {
     setPropertyFilters({
-      type: filters.type === 'All' ? undefined : filters.type,
+      type: filters.type === "All" ? undefined : filters.type,
       priceRange: filters.priceRange,
-      floodRisk: filters.floodRisk === 'All' ? undefined : filters.floodRisk,
+      floodRisk: filters.floodRisk === "All" ? undefined : filters.floodRisk,
       petFriendly: filters.petFriendly || undefined,
-      haunted: filters.haunted || undefined
+      haunted: filters.haunted || undefined,
     });
   };
 
-  const searchFilteredProperties = filteredProperties.filter(property =>
-    property.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    property.title.toLowerCase().includes(searchQuery.toLowerCase())
+  const searchFilteredProperties = filteredProperties.filter(
+    (property) =>
+      property.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      property.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const toggleFavorite = (propertyId: string) => {
-    setFavorites(prev =>
+    setFavorites((prev) =>
       prev.includes(propertyId)
-        ? prev.filter(id => id !== propertyId)
+        ? prev.filter((id) => id !== propertyId)
         : [...prev, propertyId]
     );
   };
@@ -149,25 +167,25 @@ export const DashboardClientPage = () => {
         phone: inquiryForm.phone,
         budget: parseInt(inquiryForm.budget) || selectedProperty.price,
         timeline: inquiryForm.timeline,
-        source: 'Website',
+        source: "Website",
         seriousness: 75,
         preferences: inquiryForm.preferences,
-        status: 'New',
-        lastContact: new Date().toISOString().split('T')[0]
+        status: "New",
+        lastContact: new Date().toISOString().split("T")[0],
       });
 
       setInquiryForm({
-        name: '',
-        email: '',
-        phone: '',
-        budget: '',
-        timeline: '1-3 months',
-        message: '',
+        name: "",
+        email: "",
+        phone: "",
+        budget: "",
+        timeline: "1-3 months",
+        message: "",
         preferences: {
           petFriendly: false,
           nonHaunted: true,
-          floodSafe: true
-        }
+          floodSafe: true,
+        },
       });
       onInquiryModalClose();
     }
@@ -180,19 +198,19 @@ export const DashboardClientPage = () => {
         type: viewingForm.type,
         date: viewingForm.date,
         time: viewingForm.time,
-        client: inquiryForm.email || 'client@example.com',
-        agent: 'agent1@atuna.com',
+        client: inquiryForm.email || "client@example.com",
+        agent: "agent1@atuna.com",
         propertyId: selectedProperty.id,
-        status: 'Scheduled',
+        status: "Scheduled",
         duration: 60,
-        notes: viewingForm.notes
+        notes: viewingForm.notes,
       });
 
       setViewingForm({
-        date: '',
-        time: '09:00',
-        type: 'Viewing',
-        notes: ''
+        date: "",
+        time: "09:00",
+        type: "Viewing",
+        notes: "",
       });
       onViewingModalClose();
     }
@@ -205,15 +223,15 @@ export const DashboardClientPage = () => {
           <div className="space-y-4">
             <div className="flex space-x-4">
               <Input
+                className="flex-1"
                 placeholder="Search by location or property name..."
+                startContent={<IconSearch className="h-4 w-4" />}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                startContent={<IconSearch className="h-4 w-4" />}
-                className="flex-1"
               />
               <Button
-                variant="bordered"
                 startContent={<IconFilter className="h-4 w-4" />}
+                variant="bordered"
                 onPress={applyFilters}
               >
                 Apply Filters
@@ -224,8 +242,12 @@ export const DashboardClientPage = () => {
                 label="Property Type"
                 selectedKeys={[filters.type]}
                 onSelectionChange={(keys) => {
-                  const key = Array.from(keys)[0] as 'All' | 'Residential' | 'Commercial';
-                  setFilters({...filters, type: key || 'All'});
+                  const key = Array.from(keys)[0] as
+                    | "All"
+                    | "Residential"
+                    | "Commercial";
+
+                  setFilters({ ...filters, type: key || "All" });
                 }}
               >
                 <SelectItem key="All">All Types</SelectItem>
@@ -235,20 +257,30 @@ export const DashboardClientPage = () => {
               <div className="space-y-2">
                 <label className="text-sm font-medium">Price Range (PHP)</label>
                 <Slider
-                  step={100000}
-                  minValue={1000000}
+                  formatOptions={{ style: "currency", currency: "PHP" }}
                   maxValue={15000000}
+                  minValue={1000000}
+                  step={100000}
                   value={filters.priceRange}
-                  onChange={(value) => setFilters({...filters, priceRange: value as [number, number]})}
-                  formatOptions={{style: "currency", currency: "PHP"}}
+                  onChange={(value) =>
+                    setFilters({
+                      ...filters,
+                      priceRange: value as [number, number],
+                    })
+                  }
                 />
               </div>
               <Select
                 label="Flood Risk"
                 selectedKeys={[filters.floodRisk]}
                 onSelectionChange={(keys) => {
-                  const key = Array.from(keys)[0] as 'All' | 'Low' | 'Medium' | 'High';
-                  setFilters({...filters, floodRisk: key || 'All'});
+                  const key = Array.from(keys)[0] as
+                    | "All"
+                    | "Low"
+                    | "Medium"
+                    | "High";
+
+                  setFilters({ ...filters, floodRisk: key || "All" });
                 }}
               >
                 <SelectItem key="All">All Levels</SelectItem>
@@ -259,13 +291,17 @@ export const DashboardClientPage = () => {
               <div className="space-y-2">
                 <Checkbox
                   isSelected={filters.petFriendly}
-                  onValueChange={(checked) => setFilters({...filters, petFriendly: checked})}
+                  onValueChange={(checked) =>
+                    setFilters({ ...filters, petFriendly: checked })
+                  }
                 >
                   Pet Friendly
                 </Checkbox>
                 <Checkbox
                   isSelected={!filters.haunted}
-                  onValueChange={(checked) => setFilters({...filters, haunted: !checked})}
+                  onValueChange={(checked) =>
+                    setFilters({ ...filters, haunted: !checked })
+                  }
                 >
                   Non-Haunted Only
                 </Checkbox>
@@ -278,27 +314,33 @@ export const DashboardClientPage = () => {
         {searchFilteredProperties.slice(0, 12).map((property) => (
           <Card key={property.id} className="hover:shadow-lg transition-shadow">
             <CardBody className="p-0">
-              <div className="relative">
+              <div className="relative w-full">
                 <Image
-                  src={property.image}
                   alt={property.title}
                   className="w-full h-48 object-cover"
+                  src={property.image}
                 />
                 <Button
                   isIconOnly
-                  variant="light"
                   className="absolute top-2 right-2 bg-white/80"
+                  variant="light"
                   onPress={() => toggleFavorite(property.id)}
                 >
                   <IconHeart
-                    className={`h-4 w-4 ${favorites.includes(property.id) ? 'text-red-500 fill-current' : 'text-gray-600'}`}
+                    className={`h-4 w-4 ${favorites.includes(property.id) ? "text-red-500 fill-current" : "text-gray-600"}`}
                   />
                 </Button>
                 <div className="absolute bottom-2 left-2">
                   <Chip
+                    color={
+                      property.status === "Available"
+                        ? "success"
+                        : property.status === "Pending"
+                          ? "warning"
+                          : "danger"
+                    }
                     size="sm"
                     variant="solid"
-                    color={property.status === 'Available' ? 'success' : property.status === 'Pending' ? 'warning' : 'danger'}
                   >
                     {property.status}
                   </Chip>
@@ -333,25 +375,34 @@ export const DashboardClientPage = () => {
                 </div>
                 <div className="flex flex-wrap gap-1">
                   {property.petFriendly && (
-                    <Chip size="sm" variant="flat" color="success">Pet Friendly</Chip>
+                    <Chip color="success" size="sm" variant="flat">
+                      Pet Friendly
+                    </Chip>
                   )}
                   {property.haunted && (
-                    <Chip size="sm" variant="flat" color="warning">Haunted</Chip>
+                    <Chip color="warning" size="sm" variant="flat">
+                      Haunted
+                    </Chip>
                   )}
                   <Chip
+                    color={
+                      property.floodRisk === "Low"
+                        ? "success"
+                        : property.floodRisk === "Medium"
+                          ? "warning"
+                          : "danger"
+                    }
                     size="sm"
                     variant="flat"
-                    color={property.floodRisk === 'Low' ? 'success' : property.floodRisk === 'Medium' ? 'warning' : 'danger'}
                   >
                     {property.floodRisk} Flood Risk
                   </Chip>
                 </div>
                 <div className="flex space-x-2">
                   <Button
+                    className="flex-1"
                     color="primary"
                     variant="solid"
-                    size="sm"
-                    className="flex-1"
                     onPress={() => {
                       setSelectedProperty(property);
                       onInquiryModalOpen();
@@ -360,9 +411,8 @@ export const DashboardClientPage = () => {
                     Inquire Now
                   </Button>
                   <Button
-                    variant="bordered"
-                    size="sm"
                     className="flex-1"
+                    variant="bordered"
                     onPress={() => {
                       setSelectedProperty(property);
                       onViewingModalOpen();
@@ -380,7 +430,10 @@ export const DashboardClientPage = () => {
   );
 
   const renderMyInquiries = () => {
-    const clientMessages = messages.filter(msg => msg.recipient.includes('client') || msg.sender?.includes('client'));
+    const clientMessages = messages.filter(
+      (msg) =>
+        msg.recipient.includes("client") || msg.sender?.includes("client")
+    );
 
     return (
       <div className="space-y-6">
@@ -393,20 +446,35 @@ export const DashboardClientPage = () => {
             <CardBody>
               <div className="space-y-4 max-h-96 overflow-y-auto">
                 {clientMessages.slice(0, 10).map((message) => (
-                  <div key={message.id} className="p-3 border border-divider rounded-lg">
+                  <div
+                    key={message.id}
+                    className="p-3 border border-divider rounded-lg"
+                  >
                     <div className="flex items-start justify-between mb-2">
                       <div className="flex items-center space-x-2">
                         <Chip
+                          color={
+                            message.channel === "Email"
+                              ? "primary"
+                              : message.channel === "SMS"
+                                ? "success"
+                                : "secondary"
+                          }
                           size="sm"
                           variant="flat"
-                          color={message.channel === 'Email' ? 'primary' : message.channel === 'SMS' ? 'success' : 'secondary'}
                         >
                           {message.channel}
                         </Chip>
                         <Chip
+                          color={
+                            message.sentiment === "Positive"
+                              ? "success"
+                              : message.sentiment === "Neutral"
+                                ? "default"
+                                : "danger"
+                          }
                           size="sm"
                           variant="flat"
-                          color={message.sentiment === 'Positive' ? 'success' : message.sentiment === 'Neutral' ? 'default' : 'danger'}
                         >
                           {message.sentiment}
                         </Chip>
@@ -427,26 +495,38 @@ export const DashboardClientPage = () => {
             </CardHeader>
             <CardBody>
               <div className="space-y-4">
-                {filteredEvents.filter(event => event.client.includes('client')).slice(0, 5).map((event) => (
-                  <div key={event.id} className="p-3 border border-divider rounded-lg">
-                    <div className="flex justify-between items-start mb-2">
-                      <h4 className="font-medium">{event.title}</h4>
-                      <Chip size="sm" color={event.status === 'Scheduled' ? 'success' : 'default'}>
-                        {event.status}
-                      </Chip>
+                {filteredEvents
+                  .filter((event) => event.client.includes("client"))
+                  .slice(0, 5)
+                  .map((event) => (
+                    <div
+                      key={event.id}
+                      className="p-3 border border-divider rounded-lg"
+                    >
+                      <div className="flex justify-between items-start mb-2">
+                        <h4 className="font-medium">{event.title}</h4>
+                        <Chip
+                          color={
+                            event.status === "Scheduled" ? "success" : "default"
+                          }
+                          size="sm"
+                        >
+                          {event.status}
+                        </Chip>
+                      </div>
+                      <div className="space-y-1 text-sm text-foreground-600">
+                        <p className="flex items-center">
+                          <IconCalendar className="h-4 w-4 mr-2" />
+                          {new Date(event.date).toLocaleDateString()} at{" "}
+                          {event.time}
+                        </p>
+                        <p className="flex items-center">
+                          <IconUser className="h-4 w-4 mr-2" />
+                          Agent: {event.agent}
+                        </p>
+                      </div>
                     </div>
-                    <div className="space-y-1 text-sm text-foreground-600">
-                      <p className="flex items-center">
-                        <IconCalendar className="h-4 w-4 mr-2" />
-                        {new Date(event.date).toLocaleDateString()} at {event.time}
-                      </p>
-                      <p className="flex items-center">
-                        <IconUser className="h-4 w-4 mr-2" />
-                        Agent: {event.agent}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+                  ))}
               </div>
             </CardBody>
           </Card>
@@ -456,7 +536,9 @@ export const DashboardClientPage = () => {
   };
 
   const renderFavorites = () => {
-    const favoriteProperties = filteredProperties.filter(property => favorites.includes(property.id));
+    const favoriteProperties = filteredProperties.filter((property) =>
+      favorites.includes(property.id)
+    );
 
     return (
       <div className="space-y-6">
@@ -466,8 +548,15 @@ export const DashboardClientPage = () => {
             <CardBody className="text-center py-12">
               <IconHeart className="h-12 w-12 mx-auto text-foreground-300 mb-4" />
               <h3 className="text-lg font-medium mb-2">No favorites yet</h3>
-              <p className="text-foreground-600 mb-4">Start browsing properties and add them to your favorites!</p>
-              <Button color="primary" onPress={() => setActiveTab('browse')}>
+              <p className="text-foreground-600 mb-4">
+                Start browsing properties and add them to your favorites!
+              </p>
+              <Button
+                color="primary"
+                onPress={() => {
+                  window.location.search = "tab=browse_properties";
+                }}
+              >
                 Browse Properties
               </Button>
             </CardBody>
@@ -475,18 +564,21 @@ export const DashboardClientPage = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {favoriteProperties.map((property) => (
-              <Card key={property.id} className="hover:shadow-lg transition-shadow">
+              <Card
+                key={property.id}
+                className="hover:shadow-lg transition-shadow"
+              >
                 <CardBody className="p-0">
                   <div className="relative">
                     <Image
-                      src={property.image}
                       alt={property.title}
                       className="w-full h-48 object-cover"
+                      src={property.image}
                     />
                     <Button
                       isIconOnly
-                      variant="light"
                       className="absolute top-2 right-2 bg-white/80"
+                      variant="light"
                       onPress={() => toggleFavorite(property.id)}
                     >
                       <IconHeart className="h-4 w-4 text-red-500 fill-current" />
@@ -494,7 +586,9 @@ export const DashboardClientPage = () => {
                   </div>
                   <div className="p-4 space-y-3">
                     <div>
-                      <h3 className="font-semibold text-lg">{property.title}</h3>
+                      <h3 className="font-semibold text-lg">
+                        {property.title}
+                      </h3>
                       <p className="text-sm text-foreground-600 flex items-center">
                         <IconMapPin className="h-4 w-4 mr-1" />
                         {property.address}
@@ -505,10 +599,10 @@ export const DashboardClientPage = () => {
                     </p>
                     <div className="flex space-x-2">
                       <Button
-                        color="primary"
-                        variant="solid"
-                        size="sm"
                         className="flex-1"
+                        color="primary"
+                        size="sm"
+                        variant="solid"
                         onPress={() => {
                           setSelectedProperty(property);
                           onInquiryModalOpen();
@@ -517,8 +611,8 @@ export const DashboardClientPage = () => {
                         Inquire Now
                       </Button>
                       <Button
-                        variant="bordered"
                         size="sm"
+                        variant="bordered"
                         onPress={() => {
                           setSelectedProperty(property);
                           onViewingModalOpen();
@@ -538,182 +632,217 @@ export const DashboardClientPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div>
       <NavBar />
-      <div className="flex">
-        <ClientSideBar />
-        <div className="flex-1 container mx-auto px-4 py-8">
-          <div className="flex space-x-1 mb-8">
-            {[
-              { id: 'browse', label: 'Browse Properties', icon: IconHome },
-              { id: 'inquiries', label: 'My Inquiries', icon: IconMessage },
-              { id: 'favorites', label: 'Favorites', icon: IconHeart }
-            ].map((tab) => {
-              const Icon = tab.icon;
-              return (
-                <Button
-                  key={tab.id}
-                  variant={activeTab === tab.id ? 'solid' : 'light'}
-                  color={activeTab === tab.id ? 'primary' : 'default'}
-                  onPress={() => setActiveTab(tab.id)}
-                  startContent={<Icon className="h-4 w-4" />}
+      <ClientSideBar />
+      <div className="flex-1 container mx-auto px-4 py-8 ml-30">
+        {activeTab === "browse_properties" && renderBrowseProperties()}
+        {activeTab === "inquiries" && renderMyInquiries()}
+        {activeTab === "favorites" && renderFavorites()}
+        <Modal
+          isOpen={isInquiryModalOpen}
+          size="2xl"
+          onClose={onInquiryModalClose}
+        >
+          <ModalContent>
+            <ModalHeader>
+              Inquire About Property
+              {selectedProperty && (
+                <p className="text-sm font-normal text-foreground-600 mt-1">
+                  {selectedProperty.address}
+                </p>
+              )}
+            </ModalHeader>
+            <ModalBody>
+              <div className="grid grid-cols-2 gap-4">
+                <Input
+                  isRequired
+                  label="Full Name"
+                  value={inquiryForm.name}
+                  onChange={(e) =>
+                    setInquiryForm({ ...inquiryForm, name: e.target.value })
+                  }
+                />
+                <Input
+                  isRequired
+                  label="Email"
+                  type="email"
+                  value={inquiryForm.email}
+                  onChange={(e) =>
+                    setInquiryForm({ ...inquiryForm, email: e.target.value })
+                  }
+                />
+                <Input
+                  label="Phone"
+                  placeholder="+639123456789"
+                  value={inquiryForm.phone}
+                  onChange={(e) =>
+                    setInquiryForm({ ...inquiryForm, phone: e.target.value })
+                  }
+                />
+                <Input
+                  label="Budget (PHP)"
+                  placeholder={
+                    selectedProperty
+                      ? selectedProperty.price.toString()
+                      : "2500000"
+                  }
+                  type="number"
+                  value={inquiryForm.budget}
+                  onChange={(e) =>
+                    setInquiryForm({ ...inquiryForm, budget: e.target.value })
+                  }
+                />
+                <Select
+                  label="Timeline"
+                  selectedKeys={[inquiryForm.timeline]}
+                  onSelectionChange={(keys) =>
+                    setInquiryForm({
+                      ...inquiryForm,
+                      timeline: Array.from(keys)[0] as
+                        | "1-3 months"
+                        | "3-6 months"
+                        | "6+ months",
+                    })
+                  }
                 >
-                  {tab.label}
-                </Button>
-              );
-            })}
-          </div>
-          {activeTab === 'browse' && renderBrowseProperties()}
-          {activeTab === 'inquiries' && renderMyInquiries()}
-          {activeTab === 'favorites' && renderFavorites()}
-          <Modal isOpen={isInquiryModalOpen} onClose={onInquiryModalClose} size="2xl">
-            <ModalContent>
-              <ModalHeader>
-                Inquire About Property
-                {selectedProperty && (
-                  <p className="text-sm font-normal text-foreground-600 mt-1">
-                    {selectedProperty.address}
-                  </p>
-                )}
-              </ModalHeader>
-              <ModalBody>
+                  <SelectItem key="1-3 months">1-3 months</SelectItem>
+                  <SelectItem key="3-6 months">3-6 months</SelectItem>
+                  <SelectItem key="6+ months">6+ months</SelectItem>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Preferences</label>
+                <div className="flex space-x-4">
+                  <Checkbox
+                    isSelected={inquiryForm.preferences.petFriendly}
+                    onValueChange={(checked) =>
+                      setInquiryForm({
+                        ...inquiryForm,
+                        preferences: {
+                          ...inquiryForm.preferences,
+                          petFriendly: checked,
+                        },
+                      })
+                    }
+                  >
+                    Pet Friendly
+                  </Checkbox>
+                  <Checkbox
+                    isSelected={inquiryForm.preferences.nonHaunted}
+                    onValueChange={(checked) =>
+                      setInquiryForm({
+                        ...inquiryForm,
+                        preferences: {
+                          ...inquiryForm.preferences,
+                          nonHaunted: checked,
+                        },
+                      })
+                    }
+                  >
+                    Non-Haunted
+                  </Checkbox>
+                  <Checkbox
+                    isSelected={inquiryForm.preferences.floodSafe}
+                    onValueChange={(checked) =>
+                      setInquiryForm({
+                        ...inquiryForm,
+                        preferences: {
+                          ...inquiryForm.preferences,
+                          floodSafe: checked,
+                        },
+                      })
+                    }
+                  >
+                    Flood Safe
+                  </Checkbox>
+                </div>
+              </div>
+            </ModalBody>
+            <ModalFooter>
+              <Button variant="light" onPress={onInquiryModalClose}>
+                Cancel
+              </Button>
+              <Button color="primary" onPress={handleInquiry}>
+                Submit Inquiry
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+        <Modal isOpen={isViewingModalOpen} onClose={onViewingModalClose}>
+          <ModalContent>
+            <ModalHeader>
+              Schedule Property Viewing
+              {selectedProperty && (
+                <p className="text-sm font-normal text-foreground-600 mt-1">
+                  {selectedProperty.address}
+                </p>
+              )}
+            </ModalHeader>
+            <ModalBody>
+              <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <Input
-                    label="Full Name"
-                    value={inquiryForm.name}
-                    onChange={(e) => setInquiryForm({...inquiryForm, name: e.target.value})}
                     isRequired
+                    label="Preferred Date"
+                    type="date"
+                    value={viewingForm.date}
+                    onChange={(e) =>
+                      setViewingForm({ ...viewingForm, date: e.target.value })
+                    }
                   />
                   <Input
-                    label="Email"
-                    type="email"
-                    value={inquiryForm.email}
-                    onChange={(e) => setInquiryForm({...inquiryForm, email: e.target.value})}
-                    isRequired
-                  />
-                  <Input
-                    label="Phone"
-                    value={inquiryForm.phone}
-                    onChange={(e) => setInquiryForm({...inquiryForm, phone: e.target.value})}
-                    placeholder="+639123456789"
-                  />
-                  <Input
-                    label="Budget (PHP)"
-                    type="number"
-                    value={inquiryForm.budget}
-                    onChange={(e) => setInquiryForm({...inquiryForm, budget: e.target.value})}
-                    placeholder={selectedProperty ? selectedProperty.price.toString() : "2500000"}
-                  />
-                  <Select
-                    label="Timeline"
-                    selectedKeys={[inquiryForm.timeline]}
-                    onSelectionChange={(keys) => setInquiryForm({...inquiryForm, timeline: Array.from(keys)[0] as '1-3 months' | '3-6 months' | '6+ months'})}
-                  >
-                    <SelectItem key="1-3 months">1-3 months</SelectItem>
-                    <SelectItem key="3-6 months">3-6 months</SelectItem>
-                    <SelectItem key="6+ months">6+ months</SelectItem>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Preferences</label>
-                  <div className="flex space-x-4">
-                    <Checkbox
-                      isSelected={inquiryForm.preferences.petFriendly}
-                      onValueChange={(checked) => setInquiryForm({
-                        ...inquiryForm,
-                        preferences: {...inquiryForm.preferences, petFriendly: checked}
-                      })}
-                    >
-                      Pet Friendly
-                    </Checkbox>
-                    <Checkbox
-                      isSelected={inquiryForm.preferences.nonHaunted}
-                      onValueChange={(checked) => setInquiryForm({
-                        ...inquiryForm,
-                        preferences: {...inquiryForm.preferences, nonHaunted: checked}
-                      })}
-                    >
-                      Non-Haunted
-                    </Checkbox>
-                    <Checkbox
-                      isSelected={inquiryForm.preferences.floodSafe}
-                      onValueChange={(checked) => setInquiryForm({
-                        ...inquiryForm,
-                        preferences: {...inquiryForm.preferences, floodSafe: checked}
-                      })}
-                    >
-                      Flood Safe
-                    </Checkbox>
-                  </div>
-                </div>
-              </ModalBody>
-              <ModalFooter>
-                <Button variant="light" onPress={onInquiryModalClose}>
-                  Cancel
-                </Button>
-                <Button color="primary" onPress={handleInquiry}>
-                  Submit Inquiry
-                </Button>
-              </ModalFooter>
-            </ModalContent>
-          </Modal>
-          <Modal isOpen={isViewingModalOpen} onClose={onViewingModalClose}>
-            <ModalContent>
-              <ModalHeader>
-                Schedule Property Viewing
-                {selectedProperty && (
-                  <p className="text-sm font-normal text-foreground-600 mt-1">
-                    {selectedProperty.address}
-                  </p>
-                )}
-              </ModalHeader>
-              <ModalBody>
-                <div className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <Input
-                      label="Preferred Date"
-                      type="date"
-                      value={viewingForm.date}
-                      onChange={(e) => setViewingForm({...viewingForm, date: e.target.value})}
-                      isRequired
-                    />
-                    <Input
-                      label="Preferred Time"
-                      type="time"
-                      value={viewingForm.time}
-                      onChange={(e) => setViewingForm({...viewingForm, time: e.target.value})}
-                    />
-                  </div>
-                  <Select
-                    label="Viewing Type"
-                    selectedKeys={[viewingForm.type]}
-                    onSelectionChange={(keys) => setViewingForm({...viewingForm, type: Array.from(keys)[0] as 'Viewing' | 'Inspection' | 'Open House' | 'Lease Review' | 'Document Signing'})}
-                  >
-                    <SelectItem key="Viewing">Standard Viewing</SelectItem>
-                    <SelectItem key="Inspection">Detailed Inspection</SelectItem>
-                    <SelectItem key="Open House">Open House Visit</SelectItem>
-                    <SelectItem key="Lease Review">Lease Review</SelectItem>
-                    <SelectItem key="Document Signing">Document Signing</SelectItem>
-                  </Select>
-                  <Input
-                    label="Special Notes"
-                    value={viewingForm.notes}
-                    onChange={(e) => setViewingForm({...viewingForm, notes: e.target.value})}
-                    placeholder="Any special requirements or questions..."
+                    label="Preferred Time"
+                    type="time"
+                    value={viewingForm.time}
+                    onChange={(e) =>
+                      setViewingForm({ ...viewingForm, time: e.target.value })
+                    }
                   />
                 </div>
-              </ModalBody>
-              <ModalFooter>
-                <Button variant="light" onPress={onViewingModalClose}>
-                  Cancel
-                </Button>
-                <Button color="primary" onPress={handleScheduleViewing}>
-                  Schedule Viewing
-                </Button>
-              </ModalFooter>
-            </ModalContent>
-          </Modal>
-        </div>
+                <Select
+                  label="Viewing Type"
+                  selectedKeys={[viewingForm.type]}
+                  onSelectionChange={(keys) =>
+                    setViewingForm({
+                      ...viewingForm,
+                      type: Array.from(keys)[0] as
+                        | "Viewing"
+                        | "Inspection"
+                        | "Open House"
+                        | "Lease Review"
+                        | "Document Signing",
+                    })
+                  }
+                >
+                  <SelectItem key="Viewing">Standard Viewing</SelectItem>
+                  <SelectItem key="Inspection">Detailed Inspection</SelectItem>
+                  <SelectItem key="Open House">Open House Visit</SelectItem>
+                  <SelectItem key="Lease Review">Lease Review</SelectItem>
+                  <SelectItem key="Document Signing">
+                    Document Signing
+                  </SelectItem>
+                </Select>
+                <Input
+                  label="Special Notes"
+                  placeholder="Any special requirements or questions..."
+                  value={viewingForm.notes}
+                  onChange={(e) =>
+                    setViewingForm({ ...viewingForm, notes: e.target.value })
+                  }
+                />
+              </div>
+            </ModalBody>
+            <ModalFooter>
+              <Button variant="light" onPress={onViewingModalClose}>
+                Cancel
+              </Button>
+              <Button color="primary" onPress={handleScheduleViewing}>
+                Schedule Viewing
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
       </div>
     </div>
   );

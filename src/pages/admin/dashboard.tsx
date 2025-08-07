@@ -14,6 +14,7 @@ import {
   CardBody,
   CardHeader,
   Input,
+  Chip,
 } from "@heroui/react";
 import { IconSearch } from "@tabler/icons-react";
 import { addToast } from "@heroui/react";
@@ -141,7 +142,6 @@ export const AdminDashboardPage = () => {
         size="lg"
         // variant="underlined"
         onSelectionChange={(key: any) => handleTabChange(key.toString())}
-        placement="start"
       >
         {TABS.map((t) => (
           <Tab key={t.key} title={t.label}>
@@ -212,7 +212,9 @@ const UserTable = ({ users }: { users: User[] }) => (
           <TableCell>{user.name}</TableCell>
           <TableCell>{user.email}</TableCell>
           <TableCell className="capitalize">{user.role}</TableCell>
-          <TableCell className="capitalize">{user.status ?? "-"}</TableCell>
+          <TableCell className="capitalize">
+            <Chip>{user.status ?? "--"}</Chip>
+          </TableCell>
         </TableRow>
       ))}
     </TableBody>

@@ -195,7 +195,7 @@ export const PropSearchContent = () => {
         isDismissable={false}
         isOpen={isOpen}
         scrollBehavior="inside"
-        size="full"
+        size="5xl"
         onOpenChange={onOpenChange}
       >
         <ModalContent>
