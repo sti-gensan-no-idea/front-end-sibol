@@ -1,7 +1,7 @@
-export const AgentWelcome = () => {
+export const BrokerWelcome = () => {
   return (
     <div className="rounded-large p-8 bg-white shadow-medium">
-      <h2 className="text-3xl font-bold">Good Morning, Agent Anna!</h2>
+      <h2 className="text-3xl font-bold">Good Morning, Broker Anna!</h2>
       <span className="mt-2 flex">Heres your team performance overview</span>
       <div className="grid grid-cols-4 gap-4 mt-8">
         <div className="bg-gray-200 rounded-medium flex flex-col p-4">
