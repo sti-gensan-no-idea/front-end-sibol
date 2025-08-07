@@ -1,29 +1,50 @@
-# Atuna
+# Vite & HeroUI Template
 
-Discover exceptional properties in prime locations.
+This is a template for creating applications using Vite and HeroUI (v2).
+
+[Try it on CodeSandbox](https://githubbox.com/frontio-ai/vite-template)
 
 ## Technologies Used
 
 - [Vite](https://vitejs.dev/guide/)
 - [HeroUI](https://heroui.com)
+- [Tailwind CSS](https://tailwindcss.com)
+- [Tailwind Variants](https://tailwind-variants.org)
 - [TypeScript](https://www.typescriptlang.org)
+- [Framer Motion](https://www.framer.com/motion)
 
-## Getting Started
+## How to Use
 
-1. Install the dependencies:
+To clone the project, run the following command:
 
-   ```bash
-   npm install
-   ```
+```bash
+git clone https://github.com/frontio-ai/vite-template.git
+```
 
-2. Run the development server
+### Install dependencies
 
-   ```bash
-   npm run dev
-   ```
+You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
 
-3. Open your browser and navigate to `http://localhost:5173` to view the application.
+```bash
+npm install
+```
+
+### Run the development server
+
+```bash
+npm run dev
+```
+
+### Setup pnpm (optional)
+
+If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
+
+```bash
+public-hoist-pattern[]=*@heroui/*
+```
+
+After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
 
 ## License
 
-This project is licensed under the terms described in the [LICENSE](./LICENSE) file.
+Licensed under the [MIT license](https://github.com/frontio-ai/vite-template/blob/main/LICENSE).

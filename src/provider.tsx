@@ -2,7 +2,6 @@ import type { NavigateOptions } from "react-router-dom";
 
 import { HeroUIProvider } from "@heroui/system";
 import { useHref, useNavigate } from "react-router-dom";
-import { AutomationProvider } from "@/contexts/automation-context";
 
 declare module "@react-types/shared" {
   interface RouterConfig {
@@ -15,9 +14,7 @@ export function Provider({ children }: { children: React.ReactNode }) {
 
   return (
     <HeroUIProvider navigate={navigate} useHref={useHref}>
-      <AutomationProvider>
-        {children}
-      </AutomationProvider>
+      {children}
     </HeroUIProvider>
   );
 }
