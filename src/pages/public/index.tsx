@@ -1,7 +1,10 @@
+import { Chatbot } from "@/widget/chatbot";
+
 export const IndexPage = () => {
   return (
-    <div>
+    <main>
       <h1>Landing Page</h1>
-    </div>
+      <Chatbot />
+    </main>
   );
 };
