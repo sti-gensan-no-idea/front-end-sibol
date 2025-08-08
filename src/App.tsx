@@ -5,6 +5,7 @@ import { SignInPage } from "@/pages/public/signin";
 import { SignUpPage } from "@/pages/public/signup";
 import { AgentSignInPage } from "@/pages/public/agent-signin";
 import { BrokerSignInPage } from "@/pages/public/broker-signin";
+import { DeveloperSignInPage } from "@/pages/public/developer-signin";
 import { AgentSignUpPage } from "@/pages/public/agent-signup";
 import { BrokerSignUpPage } from "@/pages/public/broker-signup";
 import { DeveloperSignUpPage } from "@/pages/public/developer-signup";
@@ -25,6 +26,7 @@ function App() {
       {/* Sign In of the 3 roles. */}
       <Route element={<AgentSignInPage />} path="/signin/agent" />
       <Route element={<BrokerSignInPage />} path="/signin/broker" />
+      <Route element={<DeveloperSignInPage />} path="/signin/developer" />
 
       {/* Sign Up of the 3 roles. */}
       <Route element={<AgentSignUpPage />} path="/signup/agent" />
