@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
 import { Avatar, Button, Input, Navbar, Tab, Tabs } from "@heroui/react";
 import {
   IconArrowNarrowRight,
@@ -11,8 +9,6 @@ import {
 } from "@tabler/icons-react";
 
 import ImgLogo from "../assets/images/ic_logo.png";
-
-import { auth, db } from "@/firebase";
 
 export const NavBar = () => {
   const navigate = useNavigate();
@@ -29,34 +25,6 @@ export const NavBar = () => {
     role: null,
     photoURL: null,
   });
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      if (firebaseUser) {
-        const docRef = doc(db, "clients", firebaseUser.uid);
-        const docSnap = await getDoc(docRef);
-
-        const role = docSnap.exists() ? docSnap.data().role : "client";
-        const fullName = docSnap.exists() ? docSnap.data().fullName : "User";
-
-        setUser({
-          isAuthenticated: true,
-          fullName,
-          role,
-          photoURL: firebaseUser.photoURL,
-        });
-      } else {
-        setUser({
-          isAuthenticated: false,
-          fullName: null,
-          role: null,
-          photoURL: null,
-        });
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
 
   const handleAvatarClick = () => {
     if (user.role === "agent") {
