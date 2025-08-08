@@ -1,8 +1,6 @@
 import { Button, Divider, Tooltip } from "@heroui/react";
 import {
   IconLayout,
-  IconCalendar,
-  IconBuildingCommunity,
   IconLogout,
   IconPlus,
   IconUsersGroup,

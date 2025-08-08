@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 
 import { BrokerSideBar } from "@/widget/broker-sidebar";
 import { BrokerWelcome } from "@/widget/broker-welcome";
+import { BrokerTeams } from "@/widget/broker-teams";
 
 export const DashboardBrokerPage = () => {
   const [searchParams] = useSearchParams();
@@ -45,5 +46,9 @@ const DashboardTabContent = () => {
 
 // Teams content
 const TeamsTabContent = () => {
-  return <></>;
+  return (
+    <>
+      <BrokerTeams />
+    </>
+  );
 };
