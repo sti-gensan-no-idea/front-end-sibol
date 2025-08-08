@@ -7,6 +7,7 @@ import {
   DropdownMenu,
   DropdownTrigger,
   Input,
+  useDisclosure,
 } from "@heroui/react";
 import {
   IconPlus,
@@ -14,73 +15,48 @@ import {
   IconBuildingCommunity,
   IconSearch,
   IconAdjustmentsHorizontal,
-  IconMenu4,
 } from "@tabler/icons-react";
+import { useState } from "react";
 
 import BgPattern from "../assets/images/pattern.png";
+
+import { TeamModal } from "./broker-team-modal";
+
+import { teams } from "@/data/teams";
 
 interface CardTeamInterface {
   name: string;
   location: string;
   totalProperties: number;
+  agents: string[];
+  onClick?: () => void;
 }
 
 export const BrokerTeams = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [selectedTeam, setSelectedTeam] = useState<CardTeamInterface | null>(
+    null
+  );
+
+  const handleCardClick = (team: CardTeamInterface) => {
+    setSelectedTeam(team);
+    onOpen();
+  };
+
   return (
     <div className="flex flex-col">
       <h2 className="text-2xl font-bold">My Teams</h2>
       <SearchBar />
+
       <div className="grid grid-cols-4 mt-8 gap-4">
-        <CardTeam
-          location="General Santos City"
-          name="Dame un Grr"
-          totalProperties={10}
-        />
-        <CardTeam
-          location="General Santos City"
-          name="Hakdog"
-          totalProperties={10}
-        />
-        <CardTeam
-          location="General Santos City"
-          name="Team 404 Not Found"
-          totalProperties={10}
-        />
-        <CardTeam
-          location="General Santos City"
-          name="Hakdog"
-          totalProperties={10}
-        />
-        <CardTeam
-          location="General Santos City"
-          name="Team 404 Not Found"
-          totalProperties={10}
-        />
-        <CardTeam
-          location="General Santos City"
-          name="Hakdog"
-          totalProperties={10}
-        />
-        <CardTeam
-          location="General Santos City"
-          name="Team 404 Not Found"
-          totalProperties={10}
-        />
-        <CardTeam
-          location="General Santos City"
-          name="Hakdog"
-          totalProperties={10}
-        />
-        <CardTeam
-          location="General Santos City"
-          name="Team 404 Not Found"
-          totalProperties={10}
-        />
-        <CardTeam
-          location="General Santos City"
-          name="Team 1"
-          totalProperties={10}
-        />
+        {teams.map((team, index) => (
+          <CardTeam
+            key={index}
+            {...team}
+            onClick={() => handleCardClick(team)}
+          />
+        ))}
+
         <div className="rounded-medium flex flex-col items-center justify-center cursor-pointer bg-white shadow-medium">
           <Button isIconOnly radius="full">
             <IconPlus />
@@ -88,6 +64,10 @@ export const BrokerTeams = () => {
           <span className="mt-2">Create Team</span>
         </div>
       </div>
+
+      {selectedTeam && (
+        <TeamModal isOpen={isOpen} team={selectedTeam} onClose={onClose} />
+      )}
     </div>
   );
 };
@@ -96,7 +76,11 @@ const SearchBar = () => {
   return (
     <div className="rounded-large bg-white shadow-small p-4 mt-8 flex items-center">
       <form action="#" className="flex items-center w-full" method="get">
-        <Input placeholder="Search team..." startContent={<IconSearch />} />
+        <Input
+          placeholder="Search team..."
+          size="lg"
+          startContent={<IconSearch />}
+        />
         <Button isIconOnly className="hidden" type="submit">
           <IconSearch />
         </Button>
@@ -107,7 +91,7 @@ const SearchBar = () => {
             <IconAdjustmentsHorizontal />
           </Button>
         </DropdownTrigger>
-        <DropdownMenu aria-label="Static Actions">
+        <DropdownMenu aria-label="Filter Options">
           <DropdownItem key="name">Name</DropdownItem>
           <DropdownItem key="location">Location</DropdownItem>
           <DropdownItem key="date">Date</DropdownItem>
@@ -117,22 +101,28 @@ const SearchBar = () => {
   );
 };
 
-const CardTeam = ({ name, location, totalProperties }: CardTeamInterface) => {
+const CardTeam = ({
+  name,
+  location,
+  totalProperties,
+  agents,
+  onClick,
+}: CardTeamInterface) => {
   return (
-    <div className="bg-white shadow-small hover:shadow-medium cursor-pointer rounded-large overflow-hidden">
+    <button
+      className="text-left bg-white shadow-small hover:shadow-medium cursor-pointer rounded-large overflow-hidden transition w-full focus:outline-none focus:ring-2 focus:ring-primary"
+      onClick={onClick}
+    >
       <div
-        className="h-24 w-full mb-4 relative"
+        className="h-24 w-full mb-4 relative bg-repeat"
         style={{
           backgroundImage: `url(${BgPattern})`,
         }}
       >
         <AvatarGroup isBordered className="absolute left-4 bottom-4">
-          <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
-          <Avatar src="https://i.pravatar.cc/150?u=a04258a2462d826712d" />
-          <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
-          <Avatar src="https://i.pravatar.cc/150?u=a04258114e29026302d" />
-          <Avatar src="https://i.pravatar.cc/150?u=a04258114e29026702d" />
-          <Avatar src="https://i.pravatar.cc/150?u=a04258114e29026708c" />
+          {agents.map((src, i) => (
+            <Avatar key={i} src={src} />
+          ))}
         </AvatarGroup>
       </div>
 
@@ -144,9 +134,9 @@ const CardTeam = ({ name, location, totalProperties }: CardTeamInterface) => {
         </p>
         <p className="text-sm text-gray-600 flex items-center mt-1">
           <IconBuildingCommunity className="mr-2" size={18} />
-          Properties {totalProperties}
+          {totalProperties} Properties
         </p>
       </div>
-    </div>
+    </button>
   );
 };
