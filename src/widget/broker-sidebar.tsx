@@ -45,12 +45,6 @@ export const BrokerSideBar = () => {
         </Tooltip>
       ))}
 
-      <Tooltip color="primary" content="Add Property" placement="right">
-        <Button isIconOnly className={isActive("add")} variant="light">
-          <IconPlus />
-        </Button>
-      </Tooltip>
-
       <Divider className="w-5 mt-3 mb-3" />
 
       <Tooltip color="primary" content="Log out" placement="right">

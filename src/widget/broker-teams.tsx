@@ -15,9 +15,9 @@ interface CardTeamInterface {
 
 export const BrokerTeams = () => {
   return (
-    <div className="flex flex-col p-8 rounded-large bg-white shadow-medium">
+    <div className="flex flex-col">
       <h2 className="text-2xl font-bold">My Teams</h2>
-      <div className="grid grid-cols-3 mt-8 gap-4">
+      <div className="grid grid-cols-4 mt-8 gap-4">
         <CardTeam
           location="General Santos City"
           name="Dame un Grr"
@@ -53,7 +53,7 @@ export const BrokerTeams = () => {
           name="Team 1"
           totalProperties={10}
         />
-        <div className="rounded-medium flex flex-col items-center justify-center cursor-pointer bg-gray-100">
+        <div className="rounded-medium flex flex-col items-center justify-center cursor-pointer bg-white shadow-medium">
           <Button isIconOnly radius="full">
             <IconPlus />
           </Button>
@@ -70,7 +70,7 @@ const CardTeam = ({ name, location, totalProperties }: CardTeamInterface) => {
   return (
     <div className="bg-white shadow-small hover:shadow-medium cursor-pointer rounded-large overflow-hidden">
       <div
-        className="h-30 w-full mb-4 relative"
+        className="h-24 w-full mb-4 relative"
         style={{
           backgroundImage: `url(${BgPattern})`,
         }}
