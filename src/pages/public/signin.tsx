@@ -8,8 +8,8 @@ export const SignInPage = () => {
   }, []);
 
   return (
-    <div>
+    <main>
       <ClientSignInCardForm />
-    </div>
+    </main>
   );
 };

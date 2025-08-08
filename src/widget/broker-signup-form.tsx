@@ -5,11 +5,8 @@ import {
   IconLockFilled,
   IconMapPinFilled,
 } from "@tabler/icons-react";
-import { useNavigate } from "react-router-dom";
 
-export const ClientSignUpCardForm = () => {
-  const navigate = useNavigate();
-
+export const BrokerSignUpCardForm = () => {
   return (
     <div className="container mx-auto p-8 h-screen flex flex-col items-center justify-center relative">
       {/* background blur blobs */}
@@ -19,7 +16,7 @@ export const ClientSignUpCardForm = () => {
 
       <div className="w-lg mx-auto bg-white rounded-2xl shadow-large shadow-gray-300 p-8 flex flex-col items-center justify-center z-10">
         <span className="text-foreground-700 text-4xl mt-4 font-bold">
-          Create your Account
+          Create Broker
         </span>
         <span className="text-foreground-700 mt-3">
           Join thousands of property enthusiasts
@@ -72,28 +69,14 @@ export const ClientSignUpCardForm = () => {
 
         <Divider className="mt-4" />
 
-        <span className="mt-8">Sign Up As:</span>
-
-        <div className="grid grid-cols-3 gap-4 mt-4">
-          <Button variant="flat" onPress={() => navigate("/signup/agent")}>
-            Agent
-          </Button>
-          <Button variant="flat" onPress={() => navigate("/signup/broker")}>
-            Broker
-          </Button>
-          <Button variant="flat" onPress={() => navigate("/signup/developer")}>
-            Developer
-          </Button>
-        </div>
-
         <div className="flex items-center justify-center w-full mt-10">
           <span className="text-foreground-700">Already have an account?</span>
           <Link
             className="ml-3 cursor-pointer"
-            href="/signin"
+            href="/signin/broker"
             underline="hover"
           >
-            Sign In
+            Sign In Broker
           </Link>
         </div>
       </div>

@@ -8,4 +8,10 @@ Disallow: /signin/developer
 Disallow: /signin/agent
 Disallow: /signin/broker
 Disallow: /signin/admin
+
+Disallow: /signup/developer
+Disallow: /signup/agent
+Disallow: /signup/broker
+Disallow: /signup/admin
+
 Disallow: /profile

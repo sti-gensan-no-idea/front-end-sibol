@@ -8,8 +8,8 @@ export const SignUpPage = () => {
   }, []);
 
   return (
-    <div>
+    <main>
       <ClientSignUpCardForm />
-    </div>
+    </main>
   );
 };

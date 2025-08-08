@@ -6,7 +6,7 @@ export const NotFoundPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex items-center justify-center flex-col h-screen w-full absolute top-0 -z-10">
+    <main className="flex items-center justify-center flex-col h-screen w-full absolute top-0 -z-10">
       <h1 className="text-foreground-700 text-9xl font-black text-center select-none">
         404
       </h1>
@@ -26,6 +26,6 @@ export const NotFoundPage = () => {
         Go to Homepage
         <IconArrowNarrowRight />
       </Button>
-    </div>
+    </main>
   );
 };
