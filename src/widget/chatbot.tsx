@@ -31,7 +31,7 @@ export const Chatbot = () => {
     <>
       <Button
         isIconOnly
-        className="fixed right-8 bottom-8"
+        className="fixed right-8 bottom-8 z-50"
         color="primary"
         radius="full"
         size="lg"
@@ -46,7 +46,7 @@ export const Chatbot = () => {
         backdrop="blur"
         isDismissable={false}
         isOpen={isOpen}
-        size="md"
+        size="xl"
         onClose={onClose}
       >
         <ModalContent>

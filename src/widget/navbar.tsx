@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Avatar, Button, Input, Navbar, Tab, Tabs } from "@heroui/react";
 import {
@@ -65,11 +65,11 @@ export const NavBar = () => {
                 <Tab key="/" href="/" title="Home" />
                 <Tab
                   key="/properties"
-                  href="/properties?tab=search_properties"
+                  href="/properties?tab=properties"
                   title="Properties"
                 />
 
-                <Tab key="/demo" href="/demo" title="Demo" />
+                <Tab key="/about" href="/about" title="About Us" />
               </Tabs>
             </div>
           )}
