@@ -9,11 +9,11 @@ export const IndexPage = () => {
   return (
     <main>
       <NavBar />
-      <Hero />
+      {/* <Hero />
       <Features />
       <AboutUs />
       <Footer />
-      <Chatbot />
+      <Chatbot /> */}
     </main>
   );
 };
