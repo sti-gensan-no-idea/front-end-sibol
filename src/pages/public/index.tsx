@@ -1,9 +1,9 @@
 import { Chatbot } from "@/widget/chatbot";
-import { Hero } from "@/components/hero";
-import { NavBar } from "@/components/navbar";
-import { Features } from "@/components/features";
-import { Footer } from "@/components/footer";
-import { AboutUs } from "@/components/about-us";
+import { Hero } from "@/widget/hero";
+import { NavBar } from "@/widget/navbar";
+import { Features } from "@/widget/features";
+import { Footer } from "@/widget/footer";
+import { AboutUs } from "@/widget/about-us";
 
 export const IndexPage = () => {
   return (
