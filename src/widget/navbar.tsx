@@ -133,7 +133,7 @@ export const NavBar = () => {
             color="primary"
             radius="full"
             variant="ghost"
-            onPress={() => navigate("/sign-in")}
+            onPress={() => navigate("/signin")}
           >
             Sign In
           </Button>
@@ -141,7 +141,7 @@ export const NavBar = () => {
             color="primary"
             radius="full"
             variant="shadow"
-            onPress={() => navigate("/sign-up")}
+            onPress={() => navigate("/signup")}
           >
             Get Started
             <IconArrowNarrowRight />

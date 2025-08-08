@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 
 import { BrokerSignInCardForm } from "@/widget/broker-signin-form";
+import { NavBar } from "@/widget/navbar";
 
 export const BrokerSignInPage = () => {
   useEffect(() => {
@@ -9,6 +10,7 @@ export const BrokerSignInPage = () => {
 
   return (
     <main>
+      <NavBar />
       <BrokerSignInCardForm />
     </main>
   );
