@@ -1,8 +1,13 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@heroui/react";
 import { IconArrowNarrowRight } from "@tabler/icons-react";
 
 export const NotFoundPage = () => {
+  useEffect(() => {
+    document.title = "Not Found | Atuna";
+  }, []);
+
   const navigate = useNavigate();
 
   return (

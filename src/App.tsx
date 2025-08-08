@@ -3,6 +3,8 @@ import { Route, Routes } from "react-router-dom";
 import { IndexPage } from "@/pages/public";
 import { SignInPage } from "@/pages/public/signin";
 import { SignUpPage } from "@/pages/public/signup";
+import { AgentSignInPage } from "@/pages/public/agent-signin";
+import { BrokerSignInPage } from "@/pages/public/broker-signin";
 import { AgentSignUpPage } from "@/pages/public/agent-signup";
 import { BrokerSignUpPage } from "@/pages/public/broker-signup";
 import { DeveloperSignUpPage } from "@/pages/public/developer-signup";
@@ -19,6 +21,10 @@ function App() {
       <Route element={<IndexPage />} path="/" />
       <Route element={<SignInPage />} path="/signin" />
       <Route element={<SignUpPage />} path="/signup" />
+
+      {/* Sign In of the 3 roles. */}
+      <Route element={<AgentSignInPage />} path="/signin/agent" />
+      <Route element={<BrokerSignInPage />} path="/signin/broker" />
 
       {/* Sign Up of the 3 roles. */}
       <Route element={<AgentSignUpPage />} path="/signup/agent" />
