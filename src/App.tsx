@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { IndexPage } from "@/pages/public";
 import { SignInPage } from "@/pages/public/signin";
 import { SignUpPage } from "@/pages/public/signup";
+import { AboutUsPage } from "@/pages/public/about-us";
 import { AgentSignInPage } from "@/pages/public/agent-signin";
 import { BrokerSignInPage } from "@/pages/public/broker-signin";
 import { DeveloperSignInPage } from "@/pages/public/developer-signin";
@@ -22,6 +23,7 @@ function App() {
       <Route element={<IndexPage />} path="/" />
       <Route element={<SignInPage />} path="/signin" />
       <Route element={<SignUpPage />} path="/signup" />
+      <Route element={<AboutUsPage />} path="/about" />
 
       {/* Sign In of the 3 roles. */}
       <Route element={<AgentSignInPage />} path="/signin/agent" />
