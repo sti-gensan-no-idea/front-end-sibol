@@ -1,10 +1,5 @@
 import { Button, Divider, Tooltip } from "@heroui/react";
-import {
-  IconLayout,
-  IconLogout,
-  IconPlus,
-  IconUsersGroup,
-} from "@tabler/icons-react";
+import { IconLayout, IconLogout, IconUsersGroup } from "@tabler/icons-react";
 import { useSearchParams } from "react-router-dom";
 
 const navItems = [

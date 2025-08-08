@@ -1,8 +1,20 @@
-import { Avatar, AvatarGroup, Button } from "@heroui/react";
+import {
+  Avatar,
+  AvatarGroup,
+  Button,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Input,
+} from "@heroui/react";
 import {
   IconPlus,
   IconMapPin,
   IconBuildingCommunity,
+  IconSearch,
+  IconAdjustmentsHorizontal,
+  IconMenu4,
 } from "@tabler/icons-react";
 
 import BgPattern from "../assets/images/pattern.png";
@@ -17,6 +29,7 @@ export const BrokerTeams = () => {
   return (
     <div className="flex flex-col">
       <h2 className="text-2xl font-bold">My Teams</h2>
+      <SearchBar />
       <div className="grid grid-cols-4 mt-8 gap-4">
         <CardTeam
           location="General Santos City"
@@ -50,6 +63,21 @@ export const BrokerTeams = () => {
         />
         <CardTeam
           location="General Santos City"
+          name="Team 404 Not Found"
+          totalProperties={10}
+        />
+        <CardTeam
+          location="General Santos City"
+          name="Hakdog"
+          totalProperties={10}
+        />
+        <CardTeam
+          location="General Santos City"
+          name="Team 404 Not Found"
+          totalProperties={10}
+        />
+        <CardTeam
+          location="General Santos City"
           name="Team 1"
           totalProperties={10}
         />
@@ -64,7 +92,30 @@ export const BrokerTeams = () => {
   );
 };
 
-// Adjust path as needed
+const SearchBar = () => {
+  return (
+    <div className="rounded-large bg-white shadow-small p-4 mt-8 flex items-center">
+      <form action="#" className="flex items-center w-full" method="get">
+        <Input placeholder="Search team..." startContent={<IconSearch />} />
+        <Button isIconOnly className="hidden" type="submit">
+          <IconSearch />
+        </Button>
+      </form>
+      <Dropdown>
+        <DropdownTrigger>
+          <Button isIconOnly className="ml-4" radius="full" variant="light">
+            <IconAdjustmentsHorizontal />
+          </Button>
+        </DropdownTrigger>
+        <DropdownMenu aria-label="Static Actions">
+          <DropdownItem key="name">Name</DropdownItem>
+          <DropdownItem key="location">Location</DropdownItem>
+          <DropdownItem key="date">Date</DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
+    </div>
+  );
+};
 
 const CardTeam = ({ name, location, totalProperties }: CardTeamInterface) => {
   return (
