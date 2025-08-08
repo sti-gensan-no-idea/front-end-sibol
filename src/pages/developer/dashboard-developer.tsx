@@ -6,8 +6,8 @@ export const DashboardDeveloperPage = () => {
   }, []);
 
   return (
-    <div>
+    <main>
       <h1>Developer&apos;s Dashboard</h1>
-    </div>
+    </main>
   );
 };

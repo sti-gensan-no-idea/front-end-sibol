@@ -6,8 +6,8 @@ export const DashboardAdminPage = () => {
   }, []);
 
   return (
-    <div>
+    <main>
       <h1>Admin Page</h1>
-    </div>
+    </main>
   );
 };
