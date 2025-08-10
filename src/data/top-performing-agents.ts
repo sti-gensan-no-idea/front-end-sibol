@@ -6,6 +6,12 @@ export const topPerformingAgents = [
     leads: 20,
     deals: 8,
     rating: 5,
+    phone: "+639171234567",
+    address:
+      "123 Sampaguita Street, Barangay Commonwealth, Quezon City, Metro Manila, 1121",
+    facebook: "https://facebook.com/mark.reyes",
+    linkedin: "https://linkedin.com/in/markreyes",
+    instagram: null,
   },
   {
     name: "Anna Cruz",
@@ -14,6 +20,12 @@ export const topPerformingAgents = [
     leads: 18,
     deals: 7,
     rating: 4.6,
+    phone: "+639181234568",
+    address:
+      "45 Mabini Avenue, Barangay Poblacion, Makati City, Metro Manila, 1210",
+    facebook: null,
+    linkedin: "https://linkedin.com/in/annacruz",
+    instagram: "https://instagram.com/annacruz",
   },
   {
     name: "Paolo Garcia",
@@ -22,6 +34,12 @@ export const topPerformingAgents = [
     leads: 22,
     deals: 10,
     rating: 5,
+    phone: "+639199876543",
+    address:
+      "89 Osmeña Boulevard, Barangay Capitol Site, Cebu City, Cebu, 6000",
+    facebook: "https://facebook.com/paolo.garcia",
+    linkedin: null,
+    instagram: "https://instagram.com/paologarcia",
   },
   {
     name: "Jessa Dizon",
@@ -30,6 +48,12 @@ export const topPerformingAgents = [
     leads: 17,
     deals: 6,
     rating: 4.3,
+    phone: "+639178765432",
+    address:
+      "32 Jacinto Extension, Barangay Bajada, Davao City, Davao del Sur, 8000",
+    facebook: null,
+    linkedin: null,
+    instagram: "https://instagram.com/jessadizon",
   },
   {
     name: "Ramon Bautista",
@@ -38,6 +62,12 @@ export const topPerformingAgents = [
     leads: 15,
     deals: 5,
     rating: 4.6,
+    phone: "+639165432198",
+    address:
+      "56 Leonard Wood Road, Barangay Gibraltar, Baguio City, Benguet, 2600",
+    facebook: "https://facebook.com/ramon.bautista",
+    linkedin: "https://linkedin.com/in/ramonbautista",
+    instagram: null,
   },
   {
     name: "Elaine Santos",
@@ -46,6 +76,11 @@ export const topPerformingAgents = [
     leads: 19,
     deals: 7,
     rating: 4.4,
+    phone: "+639187654321",
+    address: "210 Gen. Luna Street, Barangay Danao, Iloilo City, Iloilo, 5000",
+    facebook: null,
+    linkedin: "https://linkedin.com/in/elainesantos",
+    instagram: "https://instagram.com/elainesantos",
   },
   {
     name: "Kevin Mendoza",
@@ -54,6 +89,11 @@ export const topPerformingAgents = [
     leads: 21,
     deals: 9,
     rating: 5,
+    phone: "+639192345678",
+    address: "78 C-5 Road, Barangay Ususan, Taguig City, Metro Manila, 1632",
+    facebook: "https://facebook.com/kevin.mendoza",
+    linkedin: null,
+    instagram: null,
   },
   {
     name: "Christine Lim",
@@ -62,6 +102,12 @@ export const topPerformingAgents = [
     leads: 16,
     deals: 6,
     rating: 4.3,
+    phone: "+639198765432",
+    address:
+      "150 Amang Rodriguez Avenue, Barangay Manggahan, Pasig City, Metro Manila, 1611",
+    facebook: null,
+    linkedin: null,
+    instagram: "https://instagram.com/christinelim",
   },
   {
     name: "Allan Villanueva",
@@ -70,6 +116,12 @@ export const topPerformingAgents = [
     leads: 14,
     deals: 4,
     rating: 4.1,
+    phone: "+639176543210",
+    address:
+      "234 J.R. Borja Street, Barangay Carmen, Cagayan de Oro City, Misamis Oriental, 9000",
+    facebook: "https://facebook.com/allan.villanueva",
+    linkedin: "https://linkedin.com/in/allanvillanueva",
+    instagram: null,
   },
   {
     name: "Monica Tan",
@@ -78,5 +130,11 @@ export const topPerformingAgents = [
     leads: 13,
     deals: 3,
     rating: 4.0,
+    phone: "+639171112223",
+    address:
+      "67 Pendatun Avenue, Barangay Lagao, General Santos City, South Cotabato, 9500",
+    facebook: null,
+    linkedin: null,
+    instagram: null,
   },
 ];
