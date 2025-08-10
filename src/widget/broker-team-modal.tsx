@@ -74,7 +74,6 @@ export const TeamModal = ({
                       className="mt-4"
                       color="success"
                       startContent={<IconArrowUp size={18} />}
-                      variant="light"
                     >
                       2 new this month
                     </Chip>
@@ -92,7 +91,6 @@ export const TeamModal = ({
                       className="mt-4"
                       color="success"
                       startContent={<IconArrowUp size={18} />}
-                      variant="light"
                     >
                       5 new this week
                     </Chip>
@@ -110,7 +108,6 @@ export const TeamModal = ({
                       className="mt-4"
                       color="success"
                       startContent={<IconArrowUp size={18} />}
-                      variant="light"
                     >
                       12% increase
                     </Chip>
@@ -128,7 +125,6 @@ export const TeamModal = ({
                       className="mt-4"
                       color="success"
                       startContent={<IconArrowUp size={18} />}
-                      variant="light"
                     >
                       8% increase
                     </Chip>

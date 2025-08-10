@@ -4,6 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import { BrokerSideBar } from "@/widget/broker-sidebar";
 import { BrokerWelcome } from "@/widget/broker-welcome";
 import { BrokerTeams } from "@/widget/broker-teams";
+import { TopPerformingAgent } from "@/widget/top-performing-agent.s";
 
 export const DashboardBrokerPage = () => {
   const [searchParams] = useSearchParams();
@@ -40,6 +41,7 @@ const DashboardTabContent = () => {
   return (
     <>
       <BrokerWelcome />
+      <TopPerformingAgent />
     </>
   );
 };
