@@ -14,10 +14,8 @@ import {
 import {
   IconLayout,
   IconLogout,
-  IconCalendar,
-  IconActivityHeartbeat,
+  IconThumbUp,
   IconUsers,
-  IconBell,
 } from "@tabler/icons-react";
 
 import ImgLogo from "../assets/images/ic_logo.png";
@@ -26,13 +24,11 @@ import { LogoutConfirmationModal } from "./logout-modal";
 
 const navItems = [
   { key: "dashboard", icon: <IconLayout />, label: "Dashboard" },
-  { key: "calendar", icon: <IconCalendar />, label: "Calendar" },
-  { key: "agents", icon: <IconUsers />, label: "Agents" },
-  { key: "automation", icon: <IconActivityHeartbeat />, label: "Automation" },
-  { key: "notifications", icon: <IconBell />, label: "Notifications" },
+  { key: "request", icon: <IconThumbUp />, label: "Requests" },
+  { key: "accounts", icon: <IconUsers />, label: "Accounts" },
 ];
 
-export const AgentSideBar = () => {
+export const AdminSideBar = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const {
     isOpen: isProfileOpen,

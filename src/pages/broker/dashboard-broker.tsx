@@ -20,6 +20,8 @@ export const DashboardBrokerPage = () => {
         return <DashboardTabContent />;
       case "teams":
         return <TeamsTabContent />;
+      case "notifications":
+        return <NotificationTabContent />;
       default:
         return <DashboardTabContent />;
     }
@@ -39,18 +41,23 @@ export const DashboardBrokerPage = () => {
 // Dashboard content.
 const DashboardTabContent = () => {
   return (
-    <>
+    <div className="flex flex-col gap-4">
       <BrokerWelcome />
       <TopPerformingAgent />
-    </>
+    </div>
   );
 };
 
 // Teams content
 const TeamsTabContent = () => {
   return (
-    <>
+    <div className="flex flex-col gap-4">
       <BrokerTeams />
-    </>
+    </div>
   );
+};
+
+// Notification content
+const NotificationTabContent = () => {
+  return <></>;
 };

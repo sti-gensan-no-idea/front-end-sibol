@@ -16,7 +16,10 @@ import {
   IconLogout,
   IconCalendar,
   IconBookmark,
+  IconBell,
 } from "@tabler/icons-react";
+
+import ImgLogo from "../assets/images/ic_logo.png";
 
 import { LogoutConfirmationModal } from "./logout-modal";
 
@@ -24,6 +27,7 @@ const navItems = [
   { key: "dashboard", icon: <IconLayout />, label: "Dashboard" },
   { key: "bookmark", icon: <IconBookmark />, label: "Bookmark" },
   { key: "calendar", icon: <IconCalendar />, label: "Calendar" },
+  { key: "notifications", icon: <IconBell />, label: "Notifications" },
 ];
 
 export const ClientSideBar = () => {
@@ -57,6 +61,9 @@ export const ClientSideBar = () => {
   return (
     <>
       <div className="w-16 fixed shadow-medium flex flex-col justify-center items-center py-4 rounded-large gap-2 bg-white">
+        <img alt="Atuna logo" className="w-10 h-10" src={ImgLogo} />
+        <Divider className="w-5 mt-3 mb-3" />
+
         {navItems.map(({ key, icon, label }) => (
           <Tooltip key={key} color="primary" content={label} placement="right">
             <Button

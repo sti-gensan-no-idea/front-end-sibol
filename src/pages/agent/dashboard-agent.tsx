@@ -5,6 +5,7 @@ import { AgentSideBar } from "@/widget/agent-sidebar";
 import { TopPerformingAgent } from "@/widget/top-performing-agent.s";
 import { AgentCalendarEvents } from "@/widget/agent-calendar";
 import { AgentAutomation } from "@/widget/agent-automation";
+import { AgentNotification } from "@/widget/agent-notification";
 
 export const DashboardAgentPage = () => {
   const [searchParams] = useSearchParams();
@@ -24,6 +25,8 @@ export const DashboardAgentPage = () => {
         return <AgentsTabContent />;
       case "automation":
         return <AutomationTabContent />;
+      case "notifications":
+        return <NotificationTabContent />;
       default:
         return <DashboardTabContent />;
     }
@@ -68,6 +71,15 @@ const AutomationTabContent = () => {
   return (
     <>
       <AgentAutomation />
+    </>
+  );
+};
+
+// Notification content
+const NotificationTabContent = () => {
+  return (
+    <>
+      <AgentNotification />
     </>
   );
 };

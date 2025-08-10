@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { ClientSideBar } from "@/widget/client-sidebar";
+import { Chatbot } from "@/widget/chatbot";
 
 export const DashboardClientPage = () => {
   const [searchParams] = useSearchParams();
@@ -25,8 +26,12 @@ export const DashboardClientPage = () => {
       <aside className="w-30 pl-8 pt-8">
         <ClientSideBar />
       </aside>
+
       <h1>Client&apos;s Page</h1>
       <section className="flex-1 pr-8 pt-8 pb-8">{renderTab()}</section>
+
+      {/* Chatbot UI */}
+      <Chatbot />
     </main>
   );
 };

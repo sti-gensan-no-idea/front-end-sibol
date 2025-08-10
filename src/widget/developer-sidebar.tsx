@@ -15,8 +15,7 @@ import {
   IconLayout,
   IconLogout,
   IconCalendar,
-  IconActivityHeartbeat,
-  IconUsers,
+  IconBookmark,
   IconBell,
 } from "@tabler/icons-react";
 
@@ -26,13 +25,9 @@ import { LogoutConfirmationModal } from "./logout-modal";
 
 const navItems = [
   { key: "dashboard", icon: <IconLayout />, label: "Dashboard" },
-  { key: "calendar", icon: <IconCalendar />, label: "Calendar" },
-  { key: "agents", icon: <IconUsers />, label: "Agents" },
-  { key: "automation", icon: <IconActivityHeartbeat />, label: "Automation" },
-  { key: "notifications", icon: <IconBell />, label: "Notifications" },
 ];
 
-export const AgentSideBar = () => {
+export const DeveloperSideBar = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const {
     isOpen: isProfileOpen,

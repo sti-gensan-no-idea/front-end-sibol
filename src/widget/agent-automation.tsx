@@ -11,7 +11,7 @@ export const AgentAutomation = () => {
             Automation Workflow
           </span>
         </div>
-        <Button color="primary" startContent={<IconPlus />}>
+        <Button color="primary" startContent={<IconPlus />} variant="flat">
           Add Lead
         </Button>
       </div>
