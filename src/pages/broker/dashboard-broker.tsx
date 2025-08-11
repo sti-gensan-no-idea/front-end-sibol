@@ -4,6 +4,8 @@ import { useSearchParams } from "react-router-dom";
 import { BrokerSideBar } from "@/widget/broker-sidebar";
 import { BrokerWelcome } from "@/widget/broker-welcome";
 import { BrokerTeams } from "@/widget/broker-teams";
+import { TopPerformingAgent } from "@/widget/top-performing-agent.s";
+import { Notification } from "@/widget/notification";
 
 export const DashboardBrokerPage = () => {
   const [searchParams] = useSearchParams();
@@ -19,6 +21,8 @@ export const DashboardBrokerPage = () => {
         return <DashboardTabContent />;
       case "teams":
         return <TeamsTabContent />;
+      case "notifications":
+        return <NotificationTabContent />;
       default:
         return <DashboardTabContent />;
     }
@@ -38,17 +42,27 @@ export const DashboardBrokerPage = () => {
 // Dashboard content.
 const DashboardTabContent = () => {
   return (
-    <>
+    <div className="flex flex-col gap-4">
       <BrokerWelcome />
-    </>
+      <TopPerformingAgent />
+    </div>
   );
 };
 
 // Teams content
 const TeamsTabContent = () => {
   return (
-    <>
+    <div className="flex flex-col gap-4">
       <BrokerTeams />
+    </div>
+  );
+};
+
+// Notification content
+const NotificationTabContent = () => {
+  return (
+    <>
+      <Notification />
     </>
   );
 };

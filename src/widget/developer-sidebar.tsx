@@ -1,22 +1,17 @@
+import { useSearchParams } from "react-router-dom";
 import {
   Avatar,
   Button,
   Divider,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
   Tooltip,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
   useDisclosure,
 } from "@heroui/react";
-import {
-  IconBell,
-  IconLayout,
-  IconLogout,
-  IconUsersGroup,
-} from "@tabler/icons-react";
-import { useSearchParams } from "react-router-dom";
+import { IconBell, IconLayout, IconLogout } from "@tabler/icons-react";
 
 import ImgLogo from "../assets/images/ic_logo.png";
 
@@ -24,19 +19,10 @@ import { LogoutConfirmationModal } from "./logout-modal";
 
 const navItems = [
   { key: "dashboard", icon: <IconLayout />, label: "Dashboard" },
-  {
-    key: "teams",
-    icon: <IconUsersGroup />,
-    label: "Teams",
-  },
-  {
-    key: "notifications",
-    icon: <IconBell />,
-    label: "Notifications",
-  },
+  { key: "notifications", icon: <IconBell />, label: "Notifications" },
 ];
 
-export const BrokerSideBar = () => {
+export const DeveloperSideBar = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const {
     isOpen: isProfileOpen,
@@ -49,6 +35,7 @@ export const BrokerSideBar = () => {
     onOpen: onLogoutOpen,
     onOpenChange: onLogoutOpenChange,
   } = useDisclosure();
+
   const tab = searchParams.get("tab") || "dashboard";
 
   const goToTab = (tabName: string) => {
@@ -101,6 +88,7 @@ export const BrokerSideBar = () => {
           onClick={onProfileOpen}
         />
       </div>
+
       {/* Profile Modal */}
       <Modal
         backdrop="blur"

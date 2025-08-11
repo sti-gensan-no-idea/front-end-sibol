@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { AboutUs } from "@/widget/about-us";
 import { Footer } from "@/widget/footer";
 import { NavBar } from "@/widget/navbar";
+import { Chatbot } from "@/widget/chatbot";
 
 export const AboutUsPage = () => {
   useEffect(() => {
@@ -14,6 +15,7 @@ export const AboutUsPage = () => {
       <NavBar />
       <AboutUs />
       <Footer />
+      <Chatbot />
     </div>
   );
 };

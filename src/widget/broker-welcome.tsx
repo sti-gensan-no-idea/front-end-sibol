@@ -1,8 +1,12 @@
 export const BrokerWelcome = () => {
   return (
     <div className="rounded-large p-8 bg-white shadow-medium">
-      <h2 className="text-3xl font-bold">Good Morning, Broker Anna!</h2>
-      <span className="mt-2 flex">Heres your team performance overview</span>
+      <h2 className="text-3xl font-bold text-foreground-700">
+        Good Morning, Broker Anna!
+      </h2>
+      <span className="mt-2 flex text-foreground-700">
+        Heres your team performance overview
+      </span>
       <div className="grid grid-cols-4 gap-4 mt-8">
         <div className="bg-gray-200 rounded-medium flex flex-col p-4">
           <span className="flex font-bold text-2xl">18</span>
