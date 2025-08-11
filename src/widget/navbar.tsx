@@ -1,10 +1,7 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-<<<<<<< HEAD:src/components/navbar.tsx
 // import { onAuthStateChanged } from "firebase/auth";
 // import { doc, getDoc } from "firebase/firestore";
-=======
->>>>>>> a22b453f09e03326f301900840d5ed8f6f528b2c:src/widget/navbar.tsx
 import { Avatar, Button, Input, Navbar, Tab, Tabs } from "@heroui/react";
 import {
   IconArrowNarrowRight,
@@ -14,12 +11,10 @@ import {
 } from "@tabler/icons-react";
 
 import ImgLogo from "../assets/images/ic_logo.png";
+import MobileHomeNavBar from "@/components/MobileHomeNavBar";
 
-<<<<<<< HEAD:src/components/navbar.tsx
 // import { auth, db } from "@/firebase";
 
-=======
->>>>>>> a22b453f09e03326f301900840d5ed8f6f528b2c:src/widget/navbar.tsx
 export const NavBar = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -36,7 +31,6 @@ export const NavBar = () => {
     photoURL: null,
   });
 
-<<<<<<< HEAD:src/components/navbar.tsx
   // useEffect(() => {
   //   const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
   //     if (firebaseUser) {
@@ -65,8 +59,6 @@ export const NavBar = () => {
   //   return () => unsubscribe();
   // }, []);
 
-=======
->>>>>>> a22b453f09e03326f301900840d5ed8f6f528b2c:src/widget/navbar.tsx
   const handleAvatarClick = () => {
     if (user.role === "agent") {
       navigate("/profile/agent");
@@ -84,18 +76,21 @@ export const NavBar = () => {
     >
       <div className="flex flex-col justify-between">
         <div>
-          <a className="flex items-center" href="/">
-            <img
-              alt="Atuna Homes Logo"
-              className="h-10 w-10 ml-4"
-              src={ImgLogo}
-            />
-            <h1 className="text-3xl ml-4 font-bold text-foreground-700 tracking-tighter">
-              Atuna
-            </h1>
-          </a>
+          {/* <MobileHomeNavBar /> */}
+          <div className="flex items-center">
+            <a className="flex items-center" href="/">
+              <img
+                alt="Atuna Homes Logo"
+                className="h-10 w-10 ml-4"
+                src={ImgLogo}
+              />
+              <h1 className="text-3xl ml-4 font-bold text-foreground-700 tracking-tighter">
+                Atuna
+              </h1>
+            </a>
+          </div>
           {user.role !== "agent" && (
-            <div className="flex flex-wrap gap-4">
+            <div className="hidden md:flex flex-wrap gap-4">
               <Tabs
                 aria-label="Tabs variants"
                 color="primary"
@@ -170,7 +165,7 @@ export const NavBar = () => {
       ) : (
         <div className="flex items-center justify-center">
           <Button
-            className="mr-3"
+            className="mr-3 hidden md:flex"
             color="primary"
             radius="full"
             variant="ghost"
