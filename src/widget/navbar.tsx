@@ -1,10 +1,5 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-<<<<<<< HEAD:src/components/navbar.tsx
-// import { onAuthStateChanged } from "firebase/auth";
-// import { doc, getDoc } from "firebase/firestore";
-=======
->>>>>>> a22b453f09e03326f301900840d5ed8f6f528b2c:src/widget/navbar.tsx
 import { Avatar, Button, Input, Navbar, Tab, Tabs } from "@heroui/react";
 import {
   IconArrowNarrowRight,
@@ -15,11 +10,6 @@ import {
 
 import ImgLogo from "../assets/images/ic_logo.png";
 
-<<<<<<< HEAD:src/components/navbar.tsx
-// import { auth, db } from "@/firebase";
-
-=======
->>>>>>> a22b453f09e03326f301900840d5ed8f6f528b2c:src/widget/navbar.tsx
 export const NavBar = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -36,37 +26,6 @@ export const NavBar = () => {
     photoURL: null,
   });
 
-<<<<<<< HEAD:src/components/navbar.tsx
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-  //     if (firebaseUser) {
-  //       const docRef = doc(db, "clients", firebaseUser.uid);
-  //       const docSnap = await getDoc(docRef);
-
-  //       const role = docSnap.exists() ? docSnap.data().role : "client";
-  //       const fullName = docSnap.exists() ? docSnap.data().fullName : "User";
-
-  //       setUser({
-  //         isAuthenticated: true,
-  //         fullName,
-  //         role,
-  //         photoURL: firebaseUser.photoURL,
-  //       });
-  //     } else {
-  //       setUser({
-  //         isAuthenticated: false,
-  //         fullName: null,
-  //         role: null,
-  //         photoURL: null,
-  //       });
-  //     }
-  //   });
-
-  //   return () => unsubscribe();
-  // }, []);
-
-=======
->>>>>>> a22b453f09e03326f301900840d5ed8f6f528b2c:src/widget/navbar.tsx
   const handleAvatarClick = () => {
     if (user.role === "agent") {
       navigate("/profile/agent");
@@ -109,7 +68,6 @@ export const NavBar = () => {
                   href="/properties?tab=properties"
                   title="Properties"
                 />
-
                 <Tab key="/about" href="/about" title="About Us" />
               </Tabs>
             </div>

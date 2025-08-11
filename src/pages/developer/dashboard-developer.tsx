@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { DeveloperSideBar } from "@/widget/developer-sidebar";
+import { Notification } from "@/widget/notification";
 
 export const DashboardDeveloperPage = () => {
   const [searchParams] = useSearchParams();
@@ -15,6 +16,8 @@ export const DashboardDeveloperPage = () => {
     switch (tab) {
       case "dashboard":
         return <DashboardTabContent />;
+      case "notifications":
+        return <NotificationTabContent />;
       default:
         return <DashboardTabContent />;
     }
@@ -26,7 +29,6 @@ export const DashboardDeveloperPage = () => {
         <DeveloperSideBar />
       </aside>
 
-      <h1>Client&apos;s Page</h1>
       <section className="flex-1 pr-8 pt-8 pb-8">{renderTab()}</section>
     </main>
   );
@@ -35,4 +37,13 @@ export const DashboardDeveloperPage = () => {
 // Dashboard content.
 const DashboardTabContent = () => {
   return <></>;
+};
+
+// Notification content.
+const NotificationTabContent = () => {
+  return (
+    <>
+      <Notification />
+    </>
+  );
 };

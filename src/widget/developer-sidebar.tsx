@@ -11,13 +11,7 @@ import {
   ModalFooter,
   useDisclosure,
 } from "@heroui/react";
-import {
-  IconLayout,
-  IconLogout,
-  IconCalendar,
-  IconBookmark,
-  IconBell,
-} from "@tabler/icons-react";
+import { IconBell, IconLayout, IconLogout } from "@tabler/icons-react";
 
 import ImgLogo from "../assets/images/ic_logo.png";
 
@@ -25,6 +19,7 @@ import { LogoutConfirmationModal } from "./logout-modal";
 
 const navItems = [
   { key: "dashboard", icon: <IconLayout />, label: "Dashboard" },
+  { key: "notifications", icon: <IconBell />, label: "Notifications" },
 ];
 
 export const DeveloperSideBar = () => {

@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 
 import { ClientSideBar } from "@/widget/client-sidebar";
 import { Chatbot } from "@/widget/chatbot";
+import { Notification } from "@/widget/notification";
 
 export const DashboardClientPage = () => {
   const [searchParams] = useSearchParams();
@@ -16,6 +17,8 @@ export const DashboardClientPage = () => {
     switch (tab) {
       case "dashboard":
         return <DashboardTabContent />;
+      case "notifications":
+        return <NotificationTabContent />;
       default:
         return <PropertiesTabContent />;
     }
@@ -27,7 +30,6 @@ export const DashboardClientPage = () => {
         <ClientSideBar />
       </aside>
 
-      <h1>Client&apos;s Page</h1>
       <section className="flex-1 pr-8 pt-8 pb-8">{renderTab()}</section>
 
       {/* Chatbot UI */}
@@ -44,4 +46,13 @@ const DashboardTabContent = () => {
 // Teams content
 const PropertiesTabContent = () => {
   return <></>;
+};
+
+// Notification content
+const NotificationTabContent = () => {
+  return (
+    <>
+      <Notification />
+    </>
+  );
 };

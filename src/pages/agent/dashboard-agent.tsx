@@ -5,7 +5,7 @@ import { AgentSideBar } from "@/widget/agent-sidebar";
 import { TopPerformingAgent } from "@/widget/top-performing-agent.s";
 import { AgentCalendarEvents } from "@/widget/agent-calendar";
 import { AgentAutomation } from "@/widget/agent-automation";
-import { AgentNotification } from "@/widget/agent-notification";
+import { Notification } from "@/widget/notification";
 
 export const DashboardAgentPage = () => {
   const [searchParams] = useSearchParams();
@@ -79,7 +79,7 @@ const AutomationTabContent = () => {
 const NotificationTabContent = () => {
   return (
     <>
-      <AgentNotification />
+      <Notification />
     </>
   );
 };

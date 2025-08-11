@@ -1,7 +1,7 @@
 import { Button } from "@heroui/react";
 import { IconBell, IconCheck } from "@tabler/icons-react";
 
-export const AgentNotification = () => {
+export const Notification = () => {
   return (
     <div className="p-8 rounded-large shadow-medium bg-white">
       <div className="flex items-start justify-between">

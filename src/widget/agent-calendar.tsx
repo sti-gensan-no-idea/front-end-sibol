@@ -14,10 +14,7 @@ export const AgentCalendarEvents = () => {
   const firstDayOfWeek = getDayOfWeek(year, month, 1);
 
   const renderDayCell = (day: number | null, index: number) => {
-    if (!day)
-      return (
-        <div key={index} className="border border-gray-200 p-4 rounded-small" />
-      );
+    if (!day) return <div key={index} className="p-4 rounded-medium" />;
     const dateKey = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
     const dayEvents = agentEvents.filter((e) => e.date === dateKey);
     const maxEventsToShow = 3;
@@ -27,7 +24,9 @@ export const AgentCalendarEvents = () => {
         key={index}
         className="border border-gray-200 p-4 min-h-[110px] flex flex-col rounded-medium"
       >
-        <div className="font-semibold mb-1 text-foreground-700">{day}</div>
+        <span className="font-semibold mb-1 text-foreground-700 select-none">
+          {day}
+        </span>
 
         <div className="flex-1 overflow-hidden">
           {dayEvents.slice(0, maxEventsToShow).map((event) => (
@@ -62,14 +61,14 @@ export const AgentCalendarEvents = () => {
   return (
     <div className="px-4 bg-white p-8 rounded-large shadow-medium">
       <h2 className="text-xl font-semibold mb-4 text-center">August 2025</h2>
-      <div className="grid grid-cols-7 gap-1 text-center font-semibold text-foreground-700 mb-2">
-        <div>Sun</div>
-        <div>Mon</div>
-        <div>Tue</div>
-        <div>Wed</div>
-        <div>Thu</div>
-        <div>Fri</div>
-        <div>Sat</div>
+      <div className="grid grid-cols-7 gap-1 text-center font-semibold text-foreground-500 mb-2 bg-gray-100 mx-4 py-2 rounded-medium">
+        <span>Sunday</span>
+        <span>Monday</span>
+        <span>Tuesday</span>
+        <span>Wednesday</span>
+        <span>Thursday</span>
+        <span>Friday</span>
+        <span>Saturday</span>
       </div>
       <div className="grid grid-cols-7 gap-1 px-4">{cells}</div>
     </div>

@@ -5,6 +5,7 @@ import { BrokerSideBar } from "@/widget/broker-sidebar";
 import { BrokerWelcome } from "@/widget/broker-welcome";
 import { BrokerTeams } from "@/widget/broker-teams";
 import { TopPerformingAgent } from "@/widget/top-performing-agent.s";
+import { Notification } from "@/widget/notification";
 
 export const DashboardBrokerPage = () => {
   const [searchParams] = useSearchParams();
@@ -59,5 +60,9 @@ const TeamsTabContent = () => {
 
 // Notification content
 const NotificationTabContent = () => {
-  return <></>;
+  return (
+    <>
+      <Notification />
+    </>
+  );
 };
