@@ -6,6 +6,8 @@ import { TopPerformingAgent } from "@/widget/top-performing-agent.s";
 import { AgentCalendarEvents } from "@/widget/agent-calendar";
 import { AgentAutomation } from "@/widget/agent-automation";
 import { Notification } from "@/widget/notification";
+import { AgentWelcome } from "@/widget/agent-welcome";
+import { SiteViewingRequest } from "@/widget/agent-site-viewing-request";
 
 export const DashboardAgentPage = () => {
   const [searchParams] = useSearchParams();
@@ -45,7 +47,12 @@ export const DashboardAgentPage = () => {
 
 // Dashboard content.
 const DashboardTabContent = () => {
-  return <></>;
+  return (
+    <div className="flex flex-col gap-4">
+      <AgentWelcome />
+      <SiteViewingRequest />
+    </div>
+  );
 };
 
 // Calendar content

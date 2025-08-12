@@ -1,4 +1,5 @@
-import { Chip } from "@heroui/react";
+import { Button, Chip, Tooltip } from "@heroui/react";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 
 import { agentEvents } from "@/data/agent-events";
 
@@ -22,7 +23,7 @@ export const AgentCalendarEvents = () => {
     return (
       <div
         key={index}
-        className="border border-gray-200 p-4 min-h-[110px] flex flex-col rounded-medium"
+        className="border border-gray-400 p-4 min-h-[110px] flex flex-col rounded-medium"
       >
         <span className="font-semibold mb-1 text-foreground-700 select-none">
           {day}
@@ -60,7 +61,23 @@ export const AgentCalendarEvents = () => {
 
   return (
     <div className="px-4 bg-white p-8 rounded-large shadow-medium">
-      <h2 className="text-xl font-semibold mb-4 text-center">August 2025</h2>
+      <div className="flex items-center justify-between px-4 mb-4">
+        <h2 className="text-xl font-semibold text-center text-foreground-700">
+          August 2025
+        </h2>
+        <div className="flex items-center gap-4">
+          <Tooltip color="primary" content="Previous Month" placement="top">
+            <Button isIconOnly radius="full" variant="light">
+              <IconChevronLeft />
+            </Button>
+          </Tooltip>
+          <Tooltip color="primary" content="Next Month" placement="top">
+            <Button isIconOnly radius="full" variant="light">
+              <IconChevronRight />
+            </Button>
+          </Tooltip>
+        </div>
+      </div>
       <div className="grid grid-cols-7 gap-1 text-center font-semibold text-foreground-500 mb-2 bg-gray-100 mx-4 py-2 rounded-medium">
         <span>Sunday</span>
         <span>Monday</span>

@@ -44,7 +44,7 @@ export const TopPerformingAgent = () => {
     <div className="container mx-auto bg-white rounded-large shadow-medium p-8">
       <div className="flex items-center">
         <IconAward className="text-gray-500" size={26} />
-        <span className="text-lg font-bold ml-2 text-foreground-700">
+        <span className="text-lg font-semibold ml-2 text-foreground-700">
           Best Performing Agents
         </span>
       </div>
