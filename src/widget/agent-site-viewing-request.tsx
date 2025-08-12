@@ -1,4 +1,9 @@
-import { IconCalendar, IconChecks, IconEye } from "@tabler/icons-react";
+import {
+  IconCalendar,
+  IconChecks,
+  IconChevronRight,
+  IconEye,
+} from "@tabler/icons-react";
 import { Button, Pagination } from "@heroui/react";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -53,7 +58,7 @@ export const SiteViewingRequest = () => {
         {paginatedData.map((req, i) => (
           <li
             key={i}
-            className="flex gap-4 hover:bg-gray-100 rounded-large p-2 cursor-pointer"
+            className="flex items-center gap-4 hover:bg-gray-100 rounded-large p-2 cursor-pointer"
           >
             <img
               alt={`${req.name} house preview`}
@@ -69,6 +74,7 @@ export const SiteViewingRequest = () => {
               </span>
               <span className="text-sm text-foreground-500">{req.message}</span>
             </div>
+            <IconChevronRight className="ml-auto text-gray-500" />
           </li>
         ))}
       </ul>

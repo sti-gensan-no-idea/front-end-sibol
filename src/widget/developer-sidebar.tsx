@@ -1,29 +1,27 @@
 import { useSearchParams } from "react-router-dom";
+import { Avatar, Button, Divider, Tooltip, useDisclosure } from "@heroui/react";
 import {
-  Avatar,
-  Button,
-  Divider,
-  Tooltip,
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  useDisclosure,
-} from "@heroui/react";
-import { IconBell, IconLayout, IconLogout } from "@tabler/icons-react";
+  IconBell,
+  IconBuildingCommunity,
+  IconLayout,
+  IconLogout,
+  IconPlus,
+} from "@tabler/icons-react";
 
 import ImgLogo from "../assets/images/ic_logo.png";
 
 import { LogoutConfirmationModal } from "./logout-modal";
+import { DeveloperUploadModal } from "./developer-upload-modal";
 
 const navItems = [
   { key: "dashboard", icon: <IconLayout />, label: "Dashboard" },
+  { key: "properties", icon: <IconBuildingCommunity />, label: "Properties" },
   { key: "notifications", icon: <IconBell />, label: "Notifications" },
 ];
 
 export const DeveloperSideBar = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+
   const {
     isOpen: isProfileOpen,
     onOpen: onProfileOpen,
@@ -34,6 +32,12 @@ export const DeveloperSideBar = () => {
     isOpen: isLogoutOpen,
     onOpen: onLogoutOpen,
     onOpenChange: onLogoutOpenChange,
+  } = useDisclosure();
+
+  const {
+    isOpen: isAddOpen,
+    onOpen: onAddOpen,
+    onOpenChange: onAddOpenChange,
   } = useDisclosure();
 
   const tab = searchParams.get("tab") || "dashboard";
@@ -49,6 +53,8 @@ export const DeveloperSideBar = () => {
   const isSolid = (key: string) => (tab === key ? "solid" : "light");
 
   const handleLogout = () => {};
+
+  const handleAddProperty = () => {};
 
   return (
     <>
@@ -71,6 +77,21 @@ export const DeveloperSideBar = () => {
 
         <Divider className="w-5 mt-3 mb-3" />
 
+        <Tooltip color="primary" content="Add Properties" placement="right">
+          <Button
+            isIconOnly
+            className="text-foreground-700"
+            color="primary"
+            radius="full"
+            variant="flat"
+            onPress={onAddOpen}
+          >
+            <IconPlus />
+          </Button>
+        </Tooltip>
+
+        <Divider className="w-5 mt-3 mb-3" />
+
         <Tooltip color="primary" content="Log out" placement="right">
           <Button
             isIconOnly
@@ -89,33 +110,11 @@ export const DeveloperSideBar = () => {
         />
       </div>
 
-      {/* Profile Modal */}
-      <Modal
-        backdrop="blur"
-        isOpen={isProfileOpen}
-        onOpenChange={onProfileOpenChange}
-      >
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">
-                User Profile
-              </ModalHeader>
-              <ModalBody>
-                <p>This is your profile modal. Add user details here.</p>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Close
-                </Button>
-                <Button color="primary" onPress={onClose}>
-                  Save
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+      <DeveloperUploadModal
+        isOpen={isAddOpen}
+        onConfirm={handleAddProperty}
+        onOpenChange={onAddOpenChange}
+      />
 
       <LogoutConfirmationModal
         isOpen={isLogoutOpen}

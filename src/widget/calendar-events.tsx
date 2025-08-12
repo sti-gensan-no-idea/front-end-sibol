@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Chip, Tooltip } from "@heroui/react";
+import { Button, Tooltip } from "@heroui/react";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 
 import { agentEvents } from "@/data/agent-events";
@@ -15,7 +15,7 @@ const getDayOfWeek = (year: number, month: number, day: number) => {
 
 export const CalendarEvents = () => {
   const [year, setYear] = useState(2025);
-  const [month, setMonth] = useState(8); // 1-based month (August)
+  const [month, setMonth] = useState(8);
 
   const daysInMonth = getDaysInMonth(year, month);
   const firstDayOfWeek = getDayOfWeek(year, month, 1);
@@ -55,9 +55,16 @@ export const CalendarEvents = () => {
 
         <div className="flex-1 overflow-hidden">
           {dayEvents.slice(0, maxEventsToShow).map((event) => (
-            <Chip key={event.id} color="primary" size="sm" variant="flat">
+            <Button
+              key={event.id}
+              className="mb-1"
+              color="primary"
+              radius="full"
+              size="sm"
+              variant="flat"
+            >
               {`${event.title} ${event.time}`}
-            </Chip>
+            </Button>
           ))}
 
           {dayEvents.length > maxEventsToShow && (
@@ -92,7 +99,7 @@ export const CalendarEvents = () => {
               isIconOnly
               radius="full"
               variant="light"
-              onClick={goToPrevMonth}
+              onPress={goToPrevMonth}
             >
               <IconChevronLeft />
             </Button>
@@ -102,7 +109,7 @@ export const CalendarEvents = () => {
               isIconOnly
               radius="full"
               variant="light"
-              onClick={goToNextMonth}
+              onPress={goToNextMonth}
             >
               <IconChevronRight />
             </Button>
