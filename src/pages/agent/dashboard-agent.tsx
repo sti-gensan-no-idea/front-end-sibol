@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 
 import { AgentSideBar } from "@/widget/agent-sidebar";
 import { TopPerformingAgent } from "@/widget/top-performing-agent.s";
-import { AgentCalendarEvents } from "@/widget/agent-calendar";
+import { CalendarEvents } from "@/widget/calendar-events";
 import { AgentAutomation } from "@/widget/agent-automation";
 import { Notification } from "@/widget/notification";
 import { AgentWelcome } from "@/widget/agent-welcome";
@@ -59,7 +59,7 @@ const DashboardTabContent = () => {
 const CalendarTabContent = () => {
   return (
     <>
-      <AgentCalendarEvents />
+      <CalendarEvents />
     </>
   );
 };

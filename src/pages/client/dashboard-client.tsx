@@ -4,6 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import { ClientSideBar } from "@/widget/client-sidebar";
 import { Chatbot } from "@/widget/chatbot";
 import { Notification } from "@/widget/notification";
+import { CalendarEvents } from "@/widget/calendar-events";
 
 export const DashboardClientPage = () => {
   const [searchParams] = useSearchParams();
@@ -17,6 +18,8 @@ export const DashboardClientPage = () => {
     switch (tab) {
       case "dashboard":
         return <DashboardTabContent />;
+      case "calendar":
+        return <CalendarTabContent />;
       case "notifications":
         return <NotificationTabContent />;
       default:
@@ -43,9 +46,18 @@ const DashboardTabContent = () => {
   return <></>;
 };
 
-// Teams content
+// Properties content
 const PropertiesTabContent = () => {
   return <></>;
+};
+
+// Calendar content
+const CalendarTabContent = () => {
+  return (
+    <>
+      <CalendarEvents />
+    </>
+  );
 };
 
 // Notification content

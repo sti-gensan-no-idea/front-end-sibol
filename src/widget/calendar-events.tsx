@@ -1,18 +1,42 @@
+import { useState } from "react";
 import { Button, Chip, Tooltip } from "@heroui/react";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 
 import { agentEvents } from "@/data/agent-events";
+import { monthNames } from "@/data/months";
 
-const daysInMonth = 31;
+const getDaysInMonth = (year: number, month: number) => {
+  return new Date(year, month, 0).getDate();
+};
 
 const getDayOfWeek = (year: number, month: number, day: number) => {
   return new Date(year, month - 1, day).getDay();
 };
 
-export const AgentCalendarEvents = () => {
-  const year = 2025;
-  const month = 8;
+export const CalendarEvents = () => {
+  const [year, setYear] = useState(2025);
+  const [month, setMonth] = useState(8); // 1-based month (August)
+
+  const daysInMonth = getDaysInMonth(year, month);
   const firstDayOfWeek = getDayOfWeek(year, month, 1);
+
+  const goToPrevMonth = () => {
+    if (month === 1) {
+      setMonth(12);
+      setYear((y) => y - 1);
+    } else {
+      setMonth((m) => m - 1);
+    }
+  };
+
+  const goToNextMonth = () => {
+    if (month === 12) {
+      setMonth(1);
+      setYear((y) => y + 1);
+    } else {
+      setMonth((m) => m + 1);
+    }
+  };
 
   const renderDayCell = (day: number | null, index: number) => {
     if (!day) return <div key={index} className="p-4 rounded-medium" />;
@@ -31,12 +55,9 @@ export const AgentCalendarEvents = () => {
 
         <div className="flex-1 overflow-hidden">
           {dayEvents.slice(0, maxEventsToShow).map((event) => (
-            <Chip
-              key={event.id}
-              color="primary"
-              size="sm"
-              variant="flat"
-            >{`${event.title} ${event.time}`}</Chip>
+            <Chip key={event.id} color="primary" size="sm" variant="flat">
+              {`${event.title} ${event.time}`}
+            </Chip>
           ))}
 
           {dayEvents.length > maxEventsToShow && (
@@ -63,16 +84,26 @@ export const AgentCalendarEvents = () => {
     <div className="px-4 bg-white p-8 rounded-large shadow-medium">
       <div className="flex items-center justify-between px-4 mb-4">
         <h2 className="text-xl font-semibold text-center text-foreground-700">
-          August 2025
+          {monthNames[month - 1]} {year}
         </h2>
         <div className="flex items-center gap-4">
           <Tooltip color="primary" content="Previous Month" placement="top">
-            <Button isIconOnly radius="full" variant="light">
+            <Button
+              isIconOnly
+              radius="full"
+              variant="light"
+              onClick={goToPrevMonth}
+            >
               <IconChevronLeft />
             </Button>
           </Tooltip>
           <Tooltip color="primary" content="Next Month" placement="top">
-            <Button isIconOnly radius="full" variant="light">
+            <Button
+              isIconOnly
+              radius="full"
+              variant="light"
+              onClick={goToNextMonth}
+            >
               <IconChevronRight />
             </Button>
           </Tooltip>

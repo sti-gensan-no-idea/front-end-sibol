@@ -62,7 +62,7 @@ export const SiteViewingRequest = () => {
             />
             <div className="flex flex-col">
               <span className="font-semibold text-foreground-700">
-                {req.message}
+                {req.name} requested site viewing
               </span>
               <span className="text-sm text-foreground-500 mt-2">
                 {req.date}
