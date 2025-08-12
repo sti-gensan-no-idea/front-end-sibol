@@ -1,5 +1,10 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+<<<<<<< HEAD
+// import { onAuthStateChanged } from "firebase/auth";
+// import { doc, getDoc } from "firebase/firestore";
+=======
+>>>>>>> a1259595b0e04fd55b659556735ee84c8f3f6b08
 import { Avatar, Button, Input, Navbar, Tab, Tabs } from "@heroui/react";
 import {
   IconArrowNarrowRight,
@@ -9,7 +14,13 @@ import {
 } from "@tabler/icons-react";
 
 import ImgLogo from "../assets/images/ic_logo.png";
+import MobileHomeNavBar from "@/components/MobileHomeNavBar";
 
+<<<<<<< HEAD
+// import { auth, db } from "@/firebase";
+
+=======
+>>>>>>> a1259595b0e04fd55b659556735ee84c8f3f6b08
 export const NavBar = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -26,6 +37,37 @@ export const NavBar = () => {
     photoURL: null,
   });
 
+<<<<<<< HEAD
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+  //     if (firebaseUser) {
+  //       const docRef = doc(db, "clients", firebaseUser.uid);
+  //       const docSnap = await getDoc(docRef);
+
+  //       const role = docSnap.exists() ? docSnap.data().role : "client";
+  //       const fullName = docSnap.exists() ? docSnap.data().fullName : "User";
+
+  //       setUser({
+  //         isAuthenticated: true,
+  //         fullName,
+  //         role,
+  //         photoURL: firebaseUser.photoURL,
+  //       });
+  //     } else {
+  //       setUser({
+  //         isAuthenticated: false,
+  //         fullName: null,
+  //         role: null,
+  //         photoURL: null,
+  //       });
+  //     }
+  //   });
+
+  //   return () => unsubscribe();
+  // }, []);
+
+=======
+>>>>>>> a1259595b0e04fd55b659556735ee84c8f3f6b08
   const handleAvatarClick = () => {
     if (user.role === "agent") {
       navigate("/profile/agent");
@@ -43,18 +85,21 @@ export const NavBar = () => {
     >
       <div className="flex flex-col justify-between">
         <div>
-          <a className="flex items-center" href="/">
-            <img
-              alt="Atuna Homes Logo"
-              className="h-10 w-10 ml-4"
-              src={ImgLogo}
-            />
-            <h1 className="text-3xl ml-4 font-bold text-foreground-700 tracking-tighter">
-              Atuna
-            </h1>
-          </a>
+          {/* <MobileHomeNavBar /> */}
+          <div className="flex items-center">
+            <a className="flex items-center" href="/">
+              <img
+                alt="Atuna Homes Logo"
+                className="h-10 w-10 ml-4"
+                src={ImgLogo}
+              />
+              <h1 className="text-3xl ml-4 font-bold text-foreground-700 tracking-tighter">
+                Atuna
+              </h1>
+            </a>
+          </div>
           {user.role !== "agent" && (
-            <div className="flex flex-wrap gap-4">
+            <div className="hidden md:flex flex-wrap gap-4">
               <Tabs
                 aria-label="Tabs variants"
                 color="primary"
@@ -128,7 +173,7 @@ export const NavBar = () => {
       ) : (
         <div className="flex items-center justify-center">
           <Button
-            className="mr-3"
+            className="mr-3 hidden md:flex"
             color="primary"
             radius="full"
             variant="ghost"
