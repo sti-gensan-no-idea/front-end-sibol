@@ -32,8 +32,9 @@ export const Notification = () => {
   const totalPages = Math.ceil(notifications.length / ITEMS_PER_PAGE);
 
   return (
-    <div className="p-8 rounded-large shadow-medium bg-white">
-      <div className="flex items-start justify-between">
+    <div className="p-4 sm:p-6 md:p-8 rounded-large shadow-medium bg-white">
+      {/* Header */}
+      <div className="flex items-center md:items-start justify-between">
         <div className="flex items-center">
           <IconBell className="text-gray-500" size={26} />
           <span className="text-lg font-bold ml-2 text-foreground-700">
