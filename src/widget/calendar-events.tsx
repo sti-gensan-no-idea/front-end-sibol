@@ -1,17 +1,42 @@
-import { Chip } from "@heroui/react";
+import { useState } from "react";
+import { Button, Tooltip } from "@heroui/react";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 
 import { agentEvents } from "@/data/agent-events";
+import { monthNames } from "@/data/months";
 
-const daysInMonth = 31;
+const getDaysInMonth = (year: number, month: number) => {
+  return new Date(year, month, 0).getDate();
+};
 
 const getDayOfWeek = (year: number, month: number, day: number) => {
   return new Date(year, month - 1, day).getDay();
 };
 
-export const AgentCalendarEvents = () => {
-  const year = 2025;
-  const month = 8;
+export const CalendarEvents = () => {
+  const [year, setYear] = useState(2025);
+  const [month, setMonth] = useState(8);
+
+  const daysInMonth = getDaysInMonth(year, month);
   const firstDayOfWeek = getDayOfWeek(year, month, 1);
+
+  const goToPrevMonth = () => {
+    if (month === 1) {
+      setMonth(12);
+      setYear((y) => y - 1);
+    } else {
+      setMonth((m) => m - 1);
+    }
+  };
+
+  const goToNextMonth = () => {
+    if (month === 12) {
+      setMonth(1);
+      setYear((y) => y + 1);
+    } else {
+      setMonth((m) => m + 1);
+    }
+  };
 
   const renderDayCell = (day: number | null, index: number) => {
     if (!day) return <div key={index} className="p-4 rounded-medium" />;
@@ -22,7 +47,7 @@ export const AgentCalendarEvents = () => {
     return (
       <div
         key={index}
-        className="border border-gray-200 p-4 min-h-[110px] flex flex-col rounded-medium"
+        className="border border-gray-400 p-4 min-h-[110px] flex flex-col rounded-medium"
       >
         <span className="font-semibold mb-1 text-foreground-700 select-none">
           {day}
@@ -30,12 +55,16 @@ export const AgentCalendarEvents = () => {
 
         <div className="flex-1 overflow-hidden">
           {dayEvents.slice(0, maxEventsToShow).map((event) => (
-            <Chip
+            <Button
               key={event.id}
+              className="mb-1"
               color="primary"
+              radius="full"
               size="sm"
               variant="flat"
-            >{`${event.title} ${event.time}`}</Chip>
+            >
+              {`${event.title} ${event.time}`}
+            </Button>
           ))}
 
           {dayEvents.length > maxEventsToShow && (
@@ -60,7 +89,33 @@ export const AgentCalendarEvents = () => {
 
   return (
     <div className="px-4 bg-white p-8 rounded-large shadow-medium">
-      <h2 className="text-xl font-semibold mb-4 text-center">August 2025</h2>
+      <div className="flex items-center justify-between px-4 mb-4">
+        <h2 className="text-xl font-semibold text-center text-foreground-700">
+          {monthNames[month - 1]} {year}
+        </h2>
+        <div className="flex items-center gap-4">
+          <Tooltip color="primary" content="Previous Month" placement="top">
+            <Button
+              isIconOnly
+              radius="full"
+              variant="light"
+              onPress={goToPrevMonth}
+            >
+              <IconChevronLeft />
+            </Button>
+          </Tooltip>
+          <Tooltip color="primary" content="Next Month" placement="top">
+            <Button
+              isIconOnly
+              radius="full"
+              variant="light"
+              onPress={goToNextMonth}
+            >
+              <IconChevronRight />
+            </Button>
+          </Tooltip>
+        </div>
+      </div>
       <div className="grid grid-cols-7 gap-1 text-center font-semibold text-foreground-500 mb-2 bg-gray-100 mx-4 py-2 rounded-medium">
         <span>Sunday</span>
         <span>Monday</span>

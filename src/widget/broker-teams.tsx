@@ -1,6 +1,4 @@
 import {
-  Avatar,
-  AvatarGroup,
   Button,
   Dropdown,
   DropdownItem,
@@ -11,14 +9,12 @@ import {
 } from "@heroui/react";
 import {
   IconPlus,
-  IconMapPin,
   IconBuildingCommunity,
   IconSearch,
   IconAdjustmentsHorizontal,
+  IconUsers,
 } from "@tabler/icons-react";
 import { useState } from "react";
-
-import BgPattern from "../assets/images/pattern.png";
 
 import { TeamModal } from "./broker-team-modal";
 
@@ -44,9 +40,13 @@ export const BrokerTeams = () => {
   };
 
   return (
-    <div className="flex flex-col">
-      <h2 className="text-2xl font-bold">My Teams</h2>
-      <SearchBar />
+    <div className="flex flex-col bg-white p-8 rounded-large shadow-medium">
+      <div className="flex items-center gap-8">
+        <SearchBar />
+        <Button color="primary" startContent={<IconPlus />} variant="flat">
+          Create Team
+        </Button>
+      </div>
 
       <div className="grid grid-cols-4 mt-8 gap-4">
         {teams.map((team, index) => (
@@ -56,13 +56,6 @@ export const BrokerTeams = () => {
             onClick={() => handleCardClick(team)}
           />
         ))}
-
-        <div className="rounded-medium flex flex-col items-center justify-center cursor-pointer bg-white shadow-medium">
-          <Button isIconOnly radius="full">
-            <IconPlus />
-          </Button>
-          <span className="mt-2">Create Team</span>
-        </div>
       </div>
 
       {selectedTeam && (
@@ -74,9 +67,28 @@ export const BrokerTeams = () => {
 
 const SearchBar = () => {
   return (
-    <div className="rounded-large bg-white shadow-small p-4 mt-8 flex items-center">
+    <div className="flex items-center w-full">
       <form action="#" className="flex items-center w-full" method="get">
         <Input
+          endContent={
+            <Dropdown>
+              <DropdownTrigger>
+                <Button
+                  isIconOnly
+                  className="ml-4"
+                  radius="full"
+                  variant="light"
+                >
+                  <IconAdjustmentsHorizontal />
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Filter Options">
+                <DropdownItem key="name">Name</DropdownItem>
+                <DropdownItem key="location">Location</DropdownItem>
+                <DropdownItem key="date">Date</DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          }
           placeholder="Search team..."
           size="lg"
           startContent={<IconSearch />}
@@ -85,58 +97,51 @@ const SearchBar = () => {
           <IconSearch />
         </Button>
       </form>
-      <Dropdown>
-        <DropdownTrigger>
-          <Button isIconOnly className="ml-4" radius="full" variant="light">
-            <IconAdjustmentsHorizontal />
-          </Button>
-        </DropdownTrigger>
-        <DropdownMenu aria-label="Filter Options">
-          <DropdownItem key="name">Name</DropdownItem>
-          <DropdownItem key="location">Location</DropdownItem>
-          <DropdownItem key="date">Date</DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
     </div>
   );
 };
 
-const CardTeam = ({
-  name,
-  location,
-  totalProperties,
-  agents,
-  onClick,
-}: CardTeamInterface) => {
+const CardTeam = ({ name, totalProperties, onClick }: CardTeamInterface) => {
   return (
-    <button
-      className="text-left bg-white shadow-small hover:shadow-medium cursor-pointer rounded-large overflow-hidden transition w-full focus:outline-none focus:ring-2 focus:ring-primary"
-      onClick={onClick}
-    >
-      <div
-        className="h-24 w-full mb-4 relative bg-repeat"
-        style={{
-          backgroundImage: `url(${BgPattern})`,
-        }}
-      >
-        <AvatarGroup isBordered className="absolute left-4 bottom-4">
-          {agents.map((src, i) => (
-            <Avatar key={i} src={src} />
-          ))}
-        </AvatarGroup>
+    <div className="text-left shadow-small rounded-large overflow-hidden transition w-full focus:outline-none focus:ring-2 focus:ring-primary">
+      <div className="p-6">
+        <div className="flex justify-between items-center">
+          <h3 className="text-lg font-semibold">{name}</h3>
+          <Dropdown>
+            <DropdownTrigger>
+              <Button
+                isIconOnly
+                className="ml-4"
+                radius="full"
+                size="sm"
+                variant="light"
+              >
+                <IconAdjustmentsHorizontal />
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu aria-label="Filter Options">
+              <DropdownItem key="delete">Delete</DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        </div>
+        <div className="block">
+          <p className="text-sm text-gray-600 flex items-center mt-1">
+            <IconBuildingCommunity className="mr-2" size={18} />
+            {totalProperties} Properties
+          </p>
+          <p className="text-sm text-gray-600 flex items-center mt-1">
+            <IconUsers className="mr-2" size={18} />8 Members
+          </p>
+        </div>
+        <Button
+          className="w-full mt-4"
+          color="primary"
+          size="sm"
+          onPress={onClick}
+        >
+          View Team
+        </Button>
       </div>
-
-      <div className="pl-6 pr-6 pb-6">
-        <h3 className="text-lg font-semibold">{name}</h3>
-        <p className="text-sm text-gray-600 flex items-center mt-4">
-          <IconMapPin className="mr-2" size={18} />
-          {location}
-        </p>
-        <p className="text-sm text-gray-600 flex items-center mt-1">
-          <IconBuildingCommunity className="mr-2" size={18} />
-          {totalProperties} Properties
-        </p>
-      </div>
-    </button>
+    </div>
   );
 };

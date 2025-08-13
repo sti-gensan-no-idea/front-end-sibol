@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Avatar, Button, Pagination } from "@heroui/react";
+import { Avatar, Button, Pagination, Tooltip } from "@heroui/react";
 import { IconBell, IconCheck, IconTrash } from "@tabler/icons-react";
 
 import { notifications } from "@/data/notification";
@@ -63,9 +63,11 @@ export const Notification = () => {
                 </span>
               </div>
             </a>
-            <Button isIconOnly radius="full" variant="light">
-              <IconTrash />
-            </Button>
+            <Tooltip color="primary" content="Delete" placement="left">
+              <Button isIconOnly radius="full" variant="light">
+                <IconTrash className="text-foreground-600" />
+              </Button>
+            </Tooltip>
           </li>
         ))}
       </ul>

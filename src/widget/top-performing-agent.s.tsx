@@ -15,6 +15,7 @@ import {
   Button,
   useDisclosure,
   Divider,
+  Badge,
 } from "@heroui/react";
 import {
   IconAward,
@@ -24,6 +25,7 @@ import {
   IconMapPinFilled,
   IconMessage2,
   IconPhoneFilled,
+  IconRosetteDiscountCheckFilled,
   IconStarFilled,
 } from "@tabler/icons-react";
 
@@ -44,7 +46,7 @@ export const TopPerformingAgent = () => {
     <div className="container mx-auto bg-white rounded-large shadow-medium p-8">
       <div className="flex items-center">
         <IconAward className="text-gray-500" size={26} />
-        <span className="text-lg font-bold ml-2 text-foreground-700">
+        <span className="text-lg font-semibold ml-2 text-foreground-700">
           Best Performing Agents
         </span>
       </div>
@@ -64,7 +66,16 @@ export const TopPerformingAgent = () => {
               onClick={() => handleRowClick(agent)}
             >
               <TableCell className="flex gap-5">
-                <Avatar radius="full" size="md" src={agent.avatar} />
+                <Badge
+                  isOneChar
+                  color="primary"
+                  content={<IconRosetteDiscountCheckFilled size={18} />}
+                  placement="bottom-right"
+                  shape="circle"
+                  variant="faded"
+                >
+                  <Avatar radius="full" size="md" src={agent.avatar} />
+                </Badge>
                 <div className="flex flex-col gap-1 items-start justify-center">
                   <h4 className="font-semibold leading-none text-default-700 text-medium">
                     {agent.name}
@@ -94,11 +105,21 @@ export const TopPerformingAgent = () => {
               <ModalBody>
                 {selectedAgent && (
                   <div className="flex flex-col items-center">
-                    <Avatar
-                      className="w-30 h-30"
-                      radius="full"
-                      src={selectedAgent.avatar}
-                    />
+                    <Badge
+                      isOneChar
+                      color="primary"
+                      content={<IconRosetteDiscountCheckFilled />}
+                      placement="bottom-right"
+                      shape="circle"
+                      size="lg"
+                      variant="faded"
+                    >
+                      <Avatar
+                        className="w-30 h-30"
+                        radius="full"
+                        src={selectedAgent.avatar}
+                      />
+                    </Badge>
                     <span className="text-2xl mt-4 font-semibold text-foreground-700 flex items-center justify-center">
                       {selectedAgent.name}
                     </span>
