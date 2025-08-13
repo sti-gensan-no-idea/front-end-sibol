@@ -65,7 +65,7 @@ export const Notification = () => {
             </a>
             <Tooltip color="primary" content="Delete" placement="left">
               <Button isIconOnly radius="full" variant="light">
-                <IconTrash />
+                <IconTrash className="text-foreground-600" />
               </Button>
             </Tooltip>
           </li>

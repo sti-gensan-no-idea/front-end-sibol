@@ -62,7 +62,7 @@ export const SiteViewingRequest = () => {
           >
             <img
               alt={`${req.name} house preview`}
-              className="w-20 h-20 object-cover rounded-large"
+              className="w-20 h-20 object-cover rounded-large bg-gray-300"
               src={req.img}
             />
             <div className="flex flex-col">

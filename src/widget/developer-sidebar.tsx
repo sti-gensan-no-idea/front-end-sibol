@@ -1,5 +1,16 @@
 import { useSearchParams } from "react-router-dom";
-import { Avatar, Button, Divider, Tooltip, useDisclosure } from "@heroui/react";
+import {
+  Avatar,
+  Button,
+  Divider,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Tooltip,
+  useDisclosure,
+} from "@heroui/react";
 import {
   IconBell,
   IconBuildingCommunity,
@@ -110,12 +121,44 @@ export const DeveloperSideBar = () => {
         />
       </div>
 
+      {/* Add Property Modal */}
       <DeveloperUploadModal
         isOpen={isAddOpen}
         onConfirm={handleAddProperty}
         onOpenChange={onAddOpenChange}
       />
 
+      {/* Profile Modal */}
+      <Modal
+        backdrop="blur"
+        isOpen={isProfileOpen}
+        onOpenChange={onProfileOpenChange}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Developer Profile
+              </ModalHeader>
+              <ModalBody>
+                <p>
+                  This is your developer profile modal. Add user details here.
+                </p>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+                <Button color="primary" onPress={onClose}>
+                  Save
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+
+      {/* Logout Modal */}
       <LogoutConfirmationModal
         isOpen={isLogoutOpen}
         onConfirm={handleLogout}
