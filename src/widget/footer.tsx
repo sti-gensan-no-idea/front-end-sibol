@@ -5,45 +5,55 @@ import ImgFooterBackground from "../assets/images/img_footer_background.png";
 export const Footer = () => {
   return (
     <footer className="min-h-screen relative overflow-y-hidden">
+      {/* Background image */}
       <img
         alt="Footer Background"
         className="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-cover"
         src={ImgFooterBackground}
       />
+      {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/70" />
+
+      {/* Big 'atuna' text */}
       <span
         className="flex items-center justify-center absolute bottom-0 left-0 right-0 text-center text-white font-bold select-none"
-        style={{ fontSize: 300 }}
+        style={{ fontSize: "clamp(4rem, 15vw, 18rem)" }} // responsive size
       >
         atuna
       </span>
 
-      <div className="container mx-auto flex flex-col">
-        {/* I want this div to be at the top. */}
-        <div className="mt-20 bg-white rounded-2xl z-10 shadow-large shadow-gray-300 p-14 flex">
-          <div className="flex flex-col w-full">
-            <span className="text-4xl font-bold">Atuna</span>
-            <p className="max-w-sm mt-4">
+      <div className="container mx-auto flex flex-col relative z-10">
+        {/* Top card */}
+        <div className="mt-10 sm:mt-20 bg-white rounded-2xl shadow-large shadow-gray-300 p-6 sm:p-10 md:p-14 flex flex-col sm:flex-row gap-8 sm:gap-12">
+          <div className="flex flex-col flex-1">
+            <span className="text-2xl sm:text-3xl md:text-4xl font-bold">
+              Atuna
+            </span>
+            <p className="max-w-sm mt-4 text-sm sm:text-base">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
               ornare rutrum sem, eget maximus mauris lobortis a.
             </p>
           </div>
-          <div>
-            <span className="font-bold text-xl">Address</span>
-            <p className="mt-4 max-w-sm">
+
+          <div className="flex-1">
+            <span className="font-bold text-lg sm:text-xl">Address</span>
+            <p className="mt-4 max-w-sm text-sm sm:text-base">
               Tiongson Street, San Pedro Barangay Lagao
             </p>
           </div>
-          <div className="ml-8">
-            <span className="font-bold text-xl">Contact</span>
-            <p className="mt-4 max-w-sm">
-              rolandoferrer@hotmail.com +1 (09) 2359345t
+
+          <div className="flex-1">
+            <span className="font-bold text-lg sm:text-xl">Contact</span>
+            <p className="mt-4 max-w-sm text-sm sm:text-base">
+              rolandoferrer@hotmail.com <br /> +1 (09) 2359345t
             </p>
           </div>
         </div>
-        <div className="text-white p-14">
-          <span className="font-bold text-xl">Quick Menu</span>
-          <ul className="flex gap-4 mt-4">
+
+        {/* Quick menu */}
+        <div className="text-white p-6 sm:p-14">
+          <span className="font-bold text-lg sm:text-xl">Quick Menu</span>
+          <ul className="flex flex-col sm:flex-row gap-2 sm:gap-4 mt-4">
             <li>
               <Link className="text-white" href="/" underline="hover">
                 Home
@@ -61,7 +71,6 @@ export const Footer = () => {
             </li>
           </ul>
         </div>
-        <div className="h-screen" />
       </div>
     </footer>
   );

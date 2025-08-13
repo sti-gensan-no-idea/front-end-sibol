@@ -1,16 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
-<<<<<<< HEAD
-import { Avatar, Button, Input, Navbar, Tab, Tabs } from "@heroui/react";
-import {
-  IconArrowNarrowRight,
-  IconBell,
-  IconMessage2,
-  IconSearch,
-} from "@tabler/icons-react";
-=======
 import { Button, Navbar, Tab, Tabs } from "@heroui/react";
 import { IconArrowNarrowRight } from "@tabler/icons-react";
->>>>>>> 07ae9a50f2e682c4f396f1ce13b6d267ea034847
 
 import ImgLogo from "../assets/images/ic_logo.png";
 
@@ -18,29 +8,6 @@ export const NavBar = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-<<<<<<< HEAD
-  const [user, setUser] = useState<{
-    isAuthenticated: boolean;
-    fullName: string | null;
-    role: string | null;
-    photoURL: string | null;
-  }>({
-    isAuthenticated: false,
-    fullName: null,
-    role: null,
-    photoURL: null,
-  });
-
-  const handleAvatarClick = () => {
-    if (user.role === "agent") {
-      navigate("/profile/agent");
-    } else {
-      navigate("/profile/client");
-    }
-  };
-
-=======
->>>>>>> 07ae9a50f2e682c4f396f1ce13b6d267ea034847
   return (
     <Navbar
       className="border-t-4 border-solid border-t-primary h-30"
