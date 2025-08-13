@@ -7,10 +7,10 @@ export const AgentWelcome = () => {
         Good {getTimeOfDay()}, Mark!
       </h2>
       <span className="mt-2 flex text-foreground-700">
-        Heres your team performance overview
+        Here&apos;s your team performance overview
       </span>
 
-      <ul className="grid grid-cols-4 gap-4 mt-8">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
         <li className="bg-gray-100 rounded-medium flex flex-col p-4">
           <span className="flex font-bold text-2xl">12</span>
           <span className="flex">Active Properties</span>

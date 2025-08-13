@@ -89,11 +89,12 @@ export const CalendarEvents = () => {
 
   return (
     <div className="px-4 bg-white p-8 rounded-large shadow-medium">
-      <div className="flex items-center justify-between px-4 mb-4">
-        <h2 className="text-xl font-semibold text-center text-foreground-700">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between px-4 mb-4 gap-2">
+        <h2 className="text-lg sm:text-xl font-semibold text-center text-foreground-700">
           {monthNames[month - 1]} {year}
         </h2>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center justify-center gap-2 sm:gap-4">
           <Tooltip color="primary" content="Previous Month" placement="top">
             <Button
               isIconOnly
@@ -116,16 +117,22 @@ export const CalendarEvents = () => {
           </Tooltip>
         </div>
       </div>
-      <div className="grid grid-cols-7 gap-1 text-center font-semibold text-foreground-500 mb-2 bg-gray-100 mx-4 py-2 rounded-medium">
-        <span>Sunday</span>
-        <span>Monday</span>
-        <span>Tuesday</span>
-        <span>Wednesday</span>
-        <span>Thursday</span>
-        <span>Friday</span>
-        <span>Saturday</span>
+
+      {/* Weekday headers */}
+      <div className="grid grid-cols-3 xs:grid-cols-4 sm:grid-cols-7 gap-1 text-center text-xs sm:text-sm font-semibold text-foreground-500 mb-2 bg-gray-100 mx-2 sm:mx-4 py-2 rounded-medium">
+        <span>Sun</span>
+        <span>Mon</span>
+        <span>Tue</span>
+        <span>Wed</span>
+        <span>Thu</span>
+        <span>Fri</span>
+        <span>Sat</span>
       </div>
-      <div className="grid grid-cols-7 gap-1 px-4">{cells}</div>
+
+      {/* Days */}
+      <div className="grid grid-cols-3 xs:grid-cols-4 sm:grid-cols-7 gap-1 px-2 sm:px-4 text-xs sm:text-sm">
+        {cells}
+      </div>
     </div>
   );
 };
