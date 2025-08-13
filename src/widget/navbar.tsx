@@ -1,10 +1,5 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-<<<<<<< HEAD
-// import { onAuthStateChanged } from "firebase/auth";
-// import { doc, getDoc } from "firebase/firestore";
-=======
->>>>>>> a1259595b0e04fd55b659556735ee84c8f3f6b08
 import { Avatar, Button, Input, Navbar, Tab, Tabs } from "@heroui/react";
 import {
   IconArrowNarrowRight,
@@ -16,11 +11,6 @@ import {
 import ImgLogo from "../assets/images/ic_logo.png";
 import MobileHomeNavBar from "@/components/MobileHomeNavBar";
 
-<<<<<<< HEAD
-// import { auth, db } from "@/firebase";
-
-=======
->>>>>>> a1259595b0e04fd55b659556735ee84c8f3f6b08
 export const NavBar = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -37,37 +27,6 @@ export const NavBar = () => {
     photoURL: null,
   });
 
-<<<<<<< HEAD
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-  //     if (firebaseUser) {
-  //       const docRef = doc(db, "clients", firebaseUser.uid);
-  //       const docSnap = await getDoc(docRef);
-
-  //       const role = docSnap.exists() ? docSnap.data().role : "client";
-  //       const fullName = docSnap.exists() ? docSnap.data().fullName : "User";
-
-  //       setUser({
-  //         isAuthenticated: true,
-  //         fullName,
-  //         role,
-  //         photoURL: firebaseUser.photoURL,
-  //       });
-  //     } else {
-  //       setUser({
-  //         isAuthenticated: false,
-  //         fullName: null,
-  //         role: null,
-  //         photoURL: null,
-  //       });
-  //     }
-  //   });
-
-  //   return () => unsubscribe();
-  // }, []);
-
-=======
->>>>>>> a1259595b0e04fd55b659556735ee84c8f3f6b08
   const handleAvatarClick = () => {
     if (user.role === "agent") {
       navigate("/profile/agent");
