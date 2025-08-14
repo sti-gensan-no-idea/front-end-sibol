@@ -1,75 +1,48 @@
 import { Route, Routes } from "react-router-dom";
 
-import { AboutUsPage } from "./pages/about-us";
-
-import { UnauthorizePage } from "@/pages/unauthorize";
-import ProtectedRoute from "@/hooks/protected-route";
-import { IndexPage } from "@/pages/index";
-import { PropertiesPage } from "@/pages/properties";
-import { PropertyPreviewPage } from "@/pages/property-preview";
-import { NotFoundPage } from "@/pages/page-not-found";
-import { SignUpPage } from "@/pages/sign-up";
-import { SignInPage } from "@/pages/sign-in";
-import { SignInAgentPage } from "@/pages/sign-in-agent";
-import { DashboardAgentPage } from "@/pages/dashboard-agent";
-import { DashboardClientPage } from "@/pages/dashboard-client";
-import { AdminDashboardPage } from "@/pages/dashboard-admin";
-import { DemoShowcasePage } from "@/pages/demo-showcase";
-import { ContactAgentPage } from "@/pages/contact-agent";
-
-import ChatPage from "@/pages/ChatPage";
-
-
-
-
-import { ScheduleViewingPage } from "./pages/schedule-viewing";
-
-
-import Pipeline from "@/pages/pipeline"; 
+import { IndexPage } from "@/pages/public";
+import { SignInPage } from "@/pages/public/signin";
+import { SignUpPage } from "@/pages/public/signup";
+import { AboutUsPage } from "@/pages/public/about-us";
+import { AgentSignInPage } from "@/pages/public/agent-signin";
+import { BrokerSignInPage } from "@/pages/public/broker-signin";
+import { DeveloperSignInPage } from "@/pages/public/developer-signin";
+import { AgentSignUpPage } from "@/pages/public/agent-signup";
+import { BrokerSignUpPage } from "@/pages/public/broker-signup";
+import { DeveloperSignUpPage } from "@/pages/public/developer-signup";
+import { DashboardClientPage } from "@/pages/client/dashboard-client";
+import { DashboardDeveloperPage } from "@/pages/developer/dashboard-developer";
+import { DashboardAgentPage } from "@/pages/agent/dashboard-agent";
+import { DashboardBrokerPage } from "@/pages/broker/dashboard-broker";
+import { DashboardAdminPage } from "@/pages/admin/dashboard-admin";
+import { NotFoundPage } from "@/pages/public/not-found";
 
 function App() {
   return (
     <Routes>
       <Route element={<IndexPage />} path="/" />
-      <Route element={<SignInPage />} path="/sign-in" />
-      <Route element={<SignInAgentPage />} path="/sign-in-agent" />
-      <Route element={<SignUpPage />} path="/sign-up" />
-      <Route element={<PropertiesPage />} path="/properties" />
-      <Route element={<PropertyPreviewPage />} path="/properties/preview" />
+      <Route element={<SignInPage />} path="/signin" />
+      <Route element={<SignUpPage />} path="/signup" />
+      <Route element={<AboutUsPage />} path="/about" />
 
-      <Route element={<ChatPage />} path="/chat" />
+      {/* Sign In of the 3 roles. */}
+      <Route element={<AgentSignInPage />} path="/signin/agent" />
+      <Route element={<BrokerSignInPage />} path="/signin/broker" />
+      <Route element={<DeveloperSignInPage />} path="/signin/developer" />
 
+      {/* Sign Up of the 3 roles. */}
+      <Route element={<AgentSignUpPage />} path="/signup/agent" />
+      <Route element={<BrokerSignUpPage />} path="/signup/broker" />
+      <Route element={<DeveloperSignUpPage />} path="/signup/developer" />
 
-      {/* Demo Showcase */}
-      <Route element={<DemoShowcasePage />} path="/demo" />
-       <Route element={<Pipeline />} path="/pipeline" />
+      <Route element={<DashboardClientPage />} path="/profile/client" />
+      <Route element={<DashboardDeveloperPage />} path="/profile/developer" />
+      <Route element={<DashboardAgentPage />} path="/profile/agent" />
+      <Route element={<DashboardBrokerPage />} path="/profile/broker" />
+      <Route element={<DashboardAdminPage />} path="/profile/admin" />
 
-      <Route element={<AboutUsPage />} path="/about-us" />
-
-
-      {/* Protected Routes */}
-      <Route element={<ProtectedRoute allowedRole="client" />}>
-        <Route element={<DashboardClientPage />} path="/profile/client" />
-      </Route>
-      <Route element={<ProtectedRoute allowedRole="agent" />}>
-     
-        <Route element={<DashboardAgentPage />} path="/profile/agent" />
-      </Route>
-      <Route element={<ProtectedRoute allowedRole="client" />}>
-        <Route element={<ContactAgentPage />} path="/contact-agent" />
-      </Route>
-
-      
-      {/* Admin Dashboard - for demo purposes, not protected */}
-      {/* <Route element={} path="/agent/dashboard" /> */}
-      <Route element={<ProtectedRoute allowedRole="client" />}>
-        <Route element={<ScheduleViewingPage />} path="/schedule-viewing" />
-      </Route>
-      <Route element={<UnauthorizePage />} path="/not-authorized" />
       <Route element={<NotFoundPage />} path="*" />
     </Routes>
-
-    
   );
 }
 

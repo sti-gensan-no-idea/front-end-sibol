@@ -1,10 +1,17 @@
 User-agent: *
 
-Allow: /sign-in
-Allow: /sign-up
-Allow: /properties
-Allow: /about-us
+Allow: /signin
+Allow: /signup
+Allow: /about
 
-Disallow: /sign-in-agent
-Disallow: /contact
+Disallow: /signin/developer
+Disallow: /signin/agent
+Disallow: /signin/broker
+Disallow: /signin/admin
+
+Disallow: /signup/developer
+Disallow: /signup/agent
+Disallow: /signup/broker
+Disallow: /signup/admin
+
 Disallow: /profile
