@@ -1,14 +1,57 @@
+import { useState } from "react";
 import { Button, Divider, Input, Link } from "@heroui/react";
 import {
   IconMailFilled,
   IconUserFilled,
   IconLockFilled,
-  IconMapPinFilled,
+  IconPhoneFilled,
 } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks";
 
 export const ClientSignUpCardForm = () => {
   const navigate = useNavigate();
+  const { signup, loading, error } = useAuth();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+    first_name: "",
+    last_name: "",
+    phone: "",
+  });
+
+  const handleInputChange = (name: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords don't match!");
+      return;
+    }
+
+    const userData = {
+      email: formData.email,
+      password: formData.password,
+      first_name: formData.first_name,
+      last_name: formData.last_name,
+      phone: formData.phone,
+      role: 'client' as const,
+    };
+
+    const success = await signup(userData, 'client');
+    
+    if (success) {
+      alert("Account created successfully! Please sign in to continue.");
+      navigate("/signin");
+    }
+  };
 
   return (
     <div className="container mx-auto p-8 h-screen flex flex-col items-center justify-center relative">
@@ -25,13 +68,32 @@ export const ClientSignUpCardForm = () => {
           Join thousands of property enthusiasts
         </span>
 
-        <form action="#" className="flex flex-col w-full" method="post">
+        <form onSubmit={handleSubmit} className="flex flex-col w-full">
           <div className="flex flex-col w-full mt-8">
+            {error && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                {error}
+              </div>
+            )}
+
             <Input
-              label="Full name"
-              name="fullName"
-              placeholder="Full name"
+              label="First name"
+              name="first_name"
+              placeholder="First name"
               startContent={<IconUserFilled />}
+              value={formData.first_name}
+              onChange={(e) => handleInputChange("first_name", e.target.value)}
+              required
+            />
+            <Input
+              className="mt-4"
+              label="Last name"
+              name="last_name"
+              placeholder="Last name"
+              startContent={<IconUserFilled />}
+              value={formData.last_name}
+              onChange={(e) => handleInputChange("last_name", e.target.value)}
+              required
             />
             <Input
               className="mt-4"
@@ -39,13 +101,19 @@ export const ClientSignUpCardForm = () => {
               name="email"
               placeholder="Email address"
               startContent={<IconMailFilled />}
+              type="email"
+              value={formData.email}
+              onChange={(e) => handleInputChange("email", e.target.value)}
+              required
             />
             <Input
               className="mt-4"
-              label="Home address"
-              name="address"
-              placeholder="Complete home address"
-              startContent={<IconMapPinFilled />}
+              label="Phone"
+              name="phone"
+              placeholder="Phone number"
+              startContent={<IconPhoneFilled />}
+              value={formData.phone}
+              onChange={(e) => handleInputChange("phone", e.target.value)}
             />
             <Input
               className="mt-4"
@@ -54,6 +122,9 @@ export const ClientSignUpCardForm = () => {
               placeholder="Set password"
               startContent={<IconLockFilled />}
               type="password"
+              value={formData.password}
+              onChange={(e) => handleInputChange("password", e.target.value)}
+              required
             />
             <Input
               className="mt-4"
@@ -62,11 +133,20 @@ export const ClientSignUpCardForm = () => {
               placeholder="Confirm password"
               startContent={<IconLockFilled />}
               type="password"
+              value={formData.confirmPassword}
+              onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
+              required
             />
           </div>
 
-          <Button className="mt-8 w-full" color="primary" type="submit">
-            Submit
+          <Button 
+            className="mt-8 w-full" 
+            color="primary" 
+            type="submit"
+            isLoading={loading}
+            disabled={loading}
+          >
+            {loading ? "Creating Account..." : "Submit"}
           </Button>
         </form>
 
