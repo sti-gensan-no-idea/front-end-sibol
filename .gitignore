@@ -22,7 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
+INTEGRATION_README.md
 
 pnpm-lock.yaml
 yarn.lock
@@ -31,3 +31,5 @@ bun.lockb
 
 # Files and folders.
 .env
+
+.env.example
