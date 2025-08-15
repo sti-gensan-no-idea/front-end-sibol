@@ -363,5 +363,3 @@ Visit http://localhost:8000/docs for FastAPI Swagger documentation
 3. Services make HTTP requests to FastAPI backend
 4. Responses are processed and state is updated
 5. Components re-render with new data
-
-This integration provides a complete, type-safe connection between the Atuna frontend and backend, supporting all the features mentioned in your backend implementation.
