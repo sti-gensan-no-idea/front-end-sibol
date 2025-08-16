@@ -9,13 +9,15 @@ import {
 } from "@heroui/react";
 import { IconFileUpload, IconPlus } from "@tabler/icons-react";
 
+import { useProperties } from "../hooks";
+
 import { ManualAddModal } from "./developer-manual-form-modal";
 import { BulkUploadModal } from "./developer-upload-bulk-modal";
 
 export interface UploadModalInterface {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
-  onConfirm: () => void;
+  onConfirm?: () => void;
 }
 
 export const DeveloperUploadModal = ({
@@ -24,6 +26,7 @@ export const DeveloperUploadModal = ({
 }: UploadModalInterface) => {
   const [isManualModalOpen, setIsManualModalOpen] = useState(false);
   const [isBulkModalOpen, setIsBulkModalOpen] = useState(false);
+  const { fetchProperties } = useProperties();
 
   const openManualModal = () => {
     onOpenChange(false);

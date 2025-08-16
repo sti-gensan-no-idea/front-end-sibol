@@ -25,6 +25,7 @@ function App() {
       <Route element={<DashboardBrokerPage />} path="/profile/broker" />
       <Route element={<DashboardAdminPage />} path="/profile/admin" />
 
+      {/* 404 Page */}
       <Route element={<NotFoundPage />} path="*" />
     </Routes>
   );
