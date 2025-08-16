@@ -11,47 +11,67 @@ import type {
 export class AuthService {
   // Client authentication
   async clientSignin(credentials: LoginCredentials): Promise<TokenResponse> {
+<<<<<<< HEAD
     const response = await apiService.post<TokenResponse>('/auth/signin', credentials);
     if (response.role !== 'client') {
       throw new Error('Invalid credentials for client role');
     }
     return response;
+=======
+    return apiService.post<TokenResponse>('/auth/signin', credentials);
+>>>>>>> main
   }
 
   // Developer authentication
   async developerSignin(credentials: LoginCredentials): Promise<TokenResponse> {
+<<<<<<< HEAD
     const response = await apiService.post<TokenResponse>('/auth/developer/signin', credentials);
     if (response.role !== 'developer') {
       throw new Error('Invalid credentials for developer role');
     }
     return response;
+=======
+    return apiService.post<TokenResponse>('/auth/developer/signin', credentials);
+>>>>>>> main
   }
 
   // Broker authentication
   async brokerSignin(credentials: LoginCredentials): Promise<TokenResponse> {
+<<<<<<< HEAD
     const response = await apiService.post<TokenResponse>('/auth/broker/signin', credentials);
     if (response.role !== 'broker') {
       throw new Error('Invalid credentials for broker role');
     }
     return response;
+=======
+    return apiService.post<TokenResponse>('/auth/broker/signin', credentials);
+>>>>>>> main
   }
 
   // Agent authentication
   async agentSignin(credentials: LoginCredentials): Promise<TokenResponse> {
+<<<<<<< HEAD
     const response = await apiService.post<TokenResponse>('/auth/agent/signin', credentials);
     if (response.role !== 'agent') {
       throw new Error('Invalid credentials for agent role');
     }
     return response;
+=======
+    return apiService.post<TokenResponse>('/auth/agent/signin', credentials);
+>>>>>>> main
   }
 
   // Admin authentication
   async adminSignin(credentials: LoginCredentials): Promise<TokenResponse> {
+<<<<<<< HEAD
     const response = await apiService.post<TokenResponse>('/auth/admin/signin', credentials);
     if (response.role !== 'admin') {
       throw new Error('Invalid credentials for admin role');
     }
     return response;
+=======
+    return apiService.post<TokenResponse>('/auth/admin/signin', credentials);
+>>>>>>> main
   }
 
   // Client registration
@@ -74,6 +94,7 @@ export class AuthService {
     return apiService.post('/register/agent', userData);
   }
 
+<<<<<<< HEAD
   // Store authentication data with enhanced security
   storeAuthData(tokenData: TokenResponse): void {
     const { access_token, user_id, role } = tokenData;
@@ -217,8 +238,42 @@ export class AuthService {
     }
     
     window.location.href = redirectPath;
+=======
+  // Logout
+  logout(): void {
+    apiService.clearToken();
+    // Clear any other stored user data
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('user_role');
+  }
+
+  // Check if user is authenticated
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem('access_token');
+  }
+
+  // Get current user role
+  getUserRole(): string | null {
+    return localStorage.getItem('user_role');
+  }
+
+  // Get current user ID
+  getUserId(): string | null {
+    return localStorage.getItem('user_id');
+  }
+
+  // Store authentication data
+  storeAuthData(tokenData: TokenResponse): void {
+    apiService.setToken(tokenData.access_token);
+    localStorage.setItem('user_id', tokenData.user_id);
+    localStorage.setItem('user_role', tokenData.role);
+>>>>>>> main
   }
 }
 
 export const authService = new AuthService();
+<<<<<<< HEAD
 export default authService;
+=======
+export default authService;
+>>>>>>> main

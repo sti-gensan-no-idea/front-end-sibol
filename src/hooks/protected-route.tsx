@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { Spinner } from "@heroui/react";
+<<<<<<< HEAD
 import { useAuth, type UserRole } from "./useAuth";
+=======
+import { useAuth } from "./useAuth";
+>>>>>>> main
 
 interface ProtectedRouteProps {
   allowedRole: UserRole;
   requiresPermission?: string;
 }
 
+<<<<<<< HEAD
 export const ProtectedRoute = ({ allowedRole, requiresPermission }: ProtectedRouteProps) => {
   const { 
     isAuthenticated, 
@@ -37,6 +42,20 @@ export const ProtectedRoute = ({ allowedRole, requiresPermission }: ProtectedRou
 
     validateSession();
   }, [checkSession, logout]);
+=======
+export const ProtectedRoute = ({ allowedRole }: AllowedRoleInterface) => {
+  const { isAuthenticated, userRole } = useAuth();
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    // Add a small delay to prevent flash of content
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+>>>>>>> main
 
   if (loading) {
     return <LoadingPage />;
@@ -59,6 +78,7 @@ export const ProtectedRoute = ({ allowedRole, requiresPermission }: ProtectedRou
     }
   }
 
+<<<<<<< HEAD
   // Check if user has the required role
   if (userRole !== allowedRole) {
     // Redirect to appropriate dashboard if user has wrong role but is authenticated
@@ -74,6 +94,24 @@ export const ProtectedRoute = ({ allowedRole, requiresPermission }: ProtectedRou
   const currentPath = window.location.pathname;
   if (!canAccessRoute(currentPath)) {
     return <Navigate replace to={getDashboardRoute(userRole)} />;
+=======
+  if (userRole !== allowedRole) {
+    // Redirect to appropriate dashboard if user has wrong role but is authenticated
+    switch (userRole) {
+      case 'client':
+        return <Navigate replace to="/client/dashboard" />;
+      case 'developer':
+        return <Navigate replace to="/developer/dashboard" />;
+      case 'agent':
+        return <Navigate replace to="/agent/dashboard" />;
+      case 'broker':
+        return <Navigate replace to="/broker/dashboard" />;
+      case 'admin':
+        return <Navigate replace to="/admin/dashboard" />;
+      default:
+        return <Navigate replace to="/signin" />;
+    }
+>>>>>>> main
   }
 
   return <Outlet />;
@@ -102,7 +140,11 @@ const LoadingPage = () => {
   return (
     <main className="h-screen container mx-auto flex flex-col items-center justify-center">
       <Spinner color="primary" size="lg" />
+<<<<<<< HEAD
       <span className="mt-4 text-lg text-gray-600">Verifying session...</span>
+=======
+      <span className="mt-4 text-lg text-gray-600">Loading...</span>
+>>>>>>> main
     </main>
   );
 };

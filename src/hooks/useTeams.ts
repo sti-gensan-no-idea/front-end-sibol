@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+<<<<<<< HEAD
 import { 
   teamService, 
   type TeamResponse, 
@@ -28,6 +29,22 @@ interface UseTeamsReturn {
 export const useTeams = (): UseTeamsReturn => {
   const [teams, setTeams] = useState<TeamResponse[]>([]);
   const [selectedTeam, setSelectedTeam] = useState<TeamDetailResponse | null>(null);
+=======
+import { dataService, type Team, type TeamCreate } from '../services';
+
+interface UseTeamsReturn {
+  teams: Team[];
+  loading: boolean;
+  error: string | null;
+  fetchTeams: () => Promise<void>;
+  createTeam: (teamData: TeamCreate) => Promise<Team | null>;
+  addMember: (teamId: string, userId: string) => Promise<boolean>;
+  removeMember: (teamId: string, userId: string) => Promise<boolean>;
+}
+
+export const useTeams = (): UseTeamsReturn => {
+  const [teams, setTeams] = useState<Team[]>([]);
+>>>>>>> main
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -35,16 +52,24 @@ export const useTeams = (): UseTeamsReturn => {
     setLoading(true);
     setError(null);
     try {
+<<<<<<< HEAD
       const data = await teamService.getTeams();
       setTeams(data);
     } catch (err: any) {
       setError(err.message || 'Failed to fetch teams');
       setTeams([]);
+=======
+      const data = await dataService.getTeams();
+      setTeams(data);
+    } catch (err: any) {
+      setError(err.message || 'Failed to fetch teams');
+>>>>>>> main
     } finally {
       setLoading(false);
     }
   }, []);
 
+<<<<<<< HEAD
   const getTeamById = useCallback(async (id: string): Promise<TeamDetailResponse | null> => {
     setLoading(true);
     setError(null);
@@ -66,6 +91,14 @@ export const useTeams = (): UseTeamsReturn => {
     try {
       const newTeam = await teamService.createTeam(team);
       setTeams(prev => [newTeam, ...prev]);
+=======
+  const createTeam = useCallback(async (teamData: TeamCreate): Promise<Team | null> => {
+    setLoading(true);
+    setError(null);
+    try {
+      const newTeam = await dataService.createTeam(teamData);
+      setTeams(prev => [...prev, newTeam]);
+>>>>>>> main
       return newTeam;
     } catch (err: any) {
       setError(err.message || 'Failed to create team');
@@ -75,6 +108,7 @@ export const useTeams = (): UseTeamsReturn => {
     }
   }, []);
 
+<<<<<<< HEAD
   const updateTeam = useCallback(async (id: string, updates: TeamUpdate): Promise<TeamResponse | null> => {
     setLoading(true);
     setError(null);
@@ -119,6 +153,14 @@ export const useTeams = (): UseTeamsReturn => {
       }
       // Update teams list to reflect new member count
       await fetchTeams();
+=======
+  const addMember = useCallback(async (teamId: string, userId: string): Promise<boolean> => {
+    setLoading(true);
+    setError(null);
+    try {
+      await dataService.addTeamMember(teamId, userId);
+      await fetchTeams(); // Refresh the list
+>>>>>>> main
       return true;
     } catch (err: any) {
       setError(err.message || 'Failed to add team member');
@@ -126,6 +168,7 @@ export const useTeams = (): UseTeamsReturn => {
     } finally {
       setLoading(false);
     }
+<<<<<<< HEAD
   }, [selectedTeam?.id, getTeamById, fetchTeams]);
 
   const removeTeamMember = useCallback(async (teamId: string, userId: string): Promise<boolean> => {
@@ -139,6 +182,16 @@ export const useTeams = (): UseTeamsReturn => {
       }
       // Update teams list to reflect new member count
       await fetchTeams();
+=======
+  }, [fetchTeams]);
+
+  const removeMember = useCallback(async (teamId: string, userId: string): Promise<boolean> => {
+    setLoading(true);
+    setError(null);
+    try {
+      await dataService.removeTeamMember(teamId, userId);
+      await fetchTeams(); // Refresh the list
+>>>>>>> main
       return true;
     } catch (err: any) {
       setError(err.message || 'Failed to remove team member');
@@ -146,6 +199,7 @@ export const useTeams = (): UseTeamsReturn => {
     } finally {
       setLoading(false);
     }
+<<<<<<< HEAD
   }, [selectedTeam?.id, getTeamById, fetchTeams]);
 
   const getTeamStatistics = useCallback(async (teamId: string) => {
@@ -178,6 +232,8 @@ export const useTeams = (): UseTeamsReturn => {
 
   const refreshTeams = useCallback(async () => {
     await fetchTeams();
+=======
+>>>>>>> main
   }, [fetchTeams]);
 
   useEffect(() => {
@@ -188,6 +244,7 @@ export const useTeams = (): UseTeamsReturn => {
     teams,
     loading,
     error,
+<<<<<<< HEAD
     selectedTeam,
     fetchTeams,
     getTeamById,
@@ -201,3 +258,11 @@ export const useTeams = (): UseTeamsReturn => {
     refreshTeams,
   };
 };
+=======
+    fetchTeams,
+    createTeam,
+    addMember,
+    removeMember,
+  };
+};
+>>>>>>> main

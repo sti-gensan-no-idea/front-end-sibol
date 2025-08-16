@@ -1,10 +1,16 @@
+<<<<<<< HEAD
 import React, { useState } from "react";
 import { Button, Divider, Input, Link, Select, SelectItem, Chip } from "@heroui/react";
+=======
+import { useState } from "react";
+import { Button, Divider, Input, Link } from "@heroui/react";
+>>>>>>> main
 import {
   IconMailFilled,
   IconUserFilled,
   IconLockFilled,
   IconPhoneFilled,
+<<<<<<< HEAD
   IconIdBadge2,
   IconBuilding,
   IconFileCheck,
@@ -46,12 +52,23 @@ export const ClientSignUpCardForm = () => {
   const roleFromUrl = searchParams.get('role') as UserRole || 'client';
   
   const [formData, setFormData] = useState<SignUpFormData>({
+=======
+} from "@tabler/icons-react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks";
+
+export const ClientSignUpCardForm = () => {
+  const navigate = useNavigate();
+  const { signup, loading, error } = useAuth();
+  const [formData, setFormData] = useState({
+>>>>>>> main
     email: "",
     password: "",
     confirmPassword: "",
     first_name: "",
     last_name: "",
     phone: "",
+<<<<<<< HEAD
     role: roleFromUrl,
   });
   const [success, setSuccess] = useState(false);
@@ -122,11 +139,21 @@ export const ClientSignUpCardForm = () => {
     const newParams = new URLSearchParams(searchParams);
     newParams.set('role', role);
     navigate(`/signup?${newParams.toString()}`, { replace: true });
+=======
+  });
+
+  const handleInputChange = (name: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+>>>>>>> main
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+<<<<<<< HEAD
     if (!validateForm()) return;
 
     try {
@@ -213,6 +240,29 @@ export const ClientSignUpCardForm = () => {
   }
 
   const selectedRole = roleOptions.find(r => r.key === formData.role);
+=======
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords don't match!");
+      return;
+    }
+
+    const userData = {
+      email: formData.email,
+      password: formData.password,
+      first_name: formData.first_name,
+      last_name: formData.last_name,
+      phone: formData.phone,
+      role: 'client' as const,
+    };
+
+    const success = await signup(userData, 'client');
+    
+    if (success) {
+      alert("Account created successfully! Please sign in to continue.");
+      navigate("/signin");
+    }
+  };
+>>>>>>> main
 
   return (
     <div className="container mx-auto p-8 min-h-screen flex flex-col items-center justify-center relative">
@@ -277,19 +327,59 @@ export const ClientSignUpCardForm = () => {
               />
             </div>
 
+<<<<<<< HEAD
             <Input
+=======
+        <form onSubmit={handleSubmit} className="flex flex-col w-full">
+          <div className="flex flex-col w-full mt-8">
+            {error && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                {error}
+              </div>
+            )}
+
+            <Input
+              label="First name"
+              name="first_name"
+              placeholder="First name"
+              startContent={<IconUserFilled />}
+              value={formData.first_name}
+              onChange={(e) => handleInputChange("first_name", e.target.value)}
+              required
+            />
+            <Input
+              className="mt-4"
+              label="Last name"
+              name="last_name"
+              placeholder="Last name"
+              startContent={<IconUserFilled />}
+              value={formData.last_name}
+              onChange={(e) => handleInputChange("last_name", e.target.value)}
+              required
+            />
+            <Input
+              className="mt-4"
+>>>>>>> main
               label="Email"
               placeholder="Email address"
               type="email"
               startContent={<IconMailFilled />}
+<<<<<<< HEAD
               value={formData.email}
               onChange={(e) => handleChange("email", e.target.value)}
               errorMessage={validationErrors.email}
               isInvalid={!!validationErrors.email}
               isRequired
+=======
+              type="email"
+              value={formData.email}
+              onChange={(e) => handleInputChange("email", e.target.value)}
+              required
+>>>>>>> main
             />
 
             <Input
+<<<<<<< HEAD
               label="Phone"
               placeholder="+63XXXXXXXXXX or 09XXXXXXXXX"
               startContent={<IconPhoneFilled />}
@@ -298,6 +388,15 @@ export const ClientSignUpCardForm = () => {
               errorMessage={validationErrors.phone}
               isInvalid={!!validationErrors.phone}
               isRequired
+=======
+              className="mt-4"
+              label="Phone"
+              name="phone"
+              placeholder="Phone number"
+              startContent={<IconPhoneFilled />}
+              value={formData.phone}
+              onChange={(e) => handleInputChange("phone", e.target.value)}
+>>>>>>> main
             />
 
             {/* Role-Specific Fields */}
@@ -364,35 +463,55 @@ export const ClientSignUpCardForm = () => {
               label="Password"
               placeholder="Minimum 8 characters"
               type="password"
+<<<<<<< HEAD
               startContent={<IconLockFilled />}
               value={formData.password}
               onChange={(e) => handleChange("password", e.target.value)}
               errorMessage={validationErrors.password}
               isInvalid={!!validationErrors.password}
               isRequired
+=======
+              value={formData.password}
+              onChange={(e) => handleInputChange("password", e.target.value)}
+              required
+>>>>>>> main
             />
 
             <Input
               label="Confirm Password"
               placeholder="Confirm password"
               type="password"
+<<<<<<< HEAD
               startContent={<IconLockFilled />}
               value={formData.confirmPassword}
               onChange={(e) => handleChange("confirmPassword", e.target.value)}
               errorMessage={validationErrors.confirmPassword}
               isInvalid={!!validationErrors.confirmPassword}
               isRequired
+=======
+              value={formData.confirmPassword}
+              onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
+              required
+>>>>>>> main
             />
           </div>
 
           <Button 
+<<<<<<< HEAD
             className="mt-6 w-full" 
+=======
+            className="mt-8 w-full" 
+>>>>>>> main
             color="primary" 
             type="submit"
             isLoading={loading}
             disabled={loading}
           >
+<<<<<<< HEAD
             {loading ? "Creating Account..." : `Create ${selectedRole?.label} Account`}
+=======
+            {loading ? "Creating Account..." : "Submit"}
+>>>>>>> main
           </Button>
         </form>
 

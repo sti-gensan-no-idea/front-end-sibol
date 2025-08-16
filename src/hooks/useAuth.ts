@@ -1,12 +1,19 @@
+<<<<<<< HEAD
 import { useState, useCallback, useEffect } from 'react';
 import { authService, type LoginCredentials, type TokenResponse } from '../services';
 
 export type UserRole = 'client' | 'developer' | 'agent' | 'broker' | 'admin';
 
+=======
+import { useState, useCallback } from 'react';
+import { authService, type LoginCredentials, type TokenResponse } from '../services';
+
+>>>>>>> main
 interface UseAuthReturn {
   loading: boolean;
   error: string | null;
   isAuthenticated: boolean;
+<<<<<<< HEAD
   userRole: UserRole | null;
   userId: string | null;
   userEmail: string | null;
@@ -120,6 +127,20 @@ export const useAuth = (): UseAuthReturn => {
   }, []);
 
   const signin = useCallback(async (credentials: LoginCredentials, role: UserRole): Promise<boolean> => {
+=======
+  userRole: string | null;
+  userId: string | null;
+  signin: (credentials: LoginCredentials, role?: string) => Promise<boolean>;
+  signup: (userData: any, role: string) => Promise<boolean>;
+  logout: () => void;
+}
+
+export const useAuth = (): UseAuthReturn => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const signin = useCallback(async (credentials: LoginCredentials, role?: string): Promise<boolean> => {
+>>>>>>> main
     setLoading(true);
     setError(null);
 
@@ -140,11 +161,15 @@ export const useAuth = (): UseAuthReturn => {
         case 'admin':
           tokenResponse = await authService.adminSignin(credentials);
           break;
+<<<<<<< HEAD
         case 'client':
+=======
+>>>>>>> main
         default:
           tokenResponse = await authService.clientSignin(credentials);
       }
 
+<<<<<<< HEAD
       // Store authentication data with expiration
       authService.storeAuthData(tokenResponse);
       
@@ -161,6 +186,9 @@ export const useAuth = (): UseAuthReturn => {
         return false;
       }
 
+=======
+      authService.storeAuthData(tokenResponse);
+>>>>>>> main
       return true;
     } catch (err: any) {
       setError(err.message || 'Sign in failed');
@@ -170,11 +198,16 @@ export const useAuth = (): UseAuthReturn => {
     }
   }, []);
 
+<<<<<<< HEAD
   const signup = useCallback(async (userData: any, role: UserRole): Promise<boolean> => {
+=======
+  const signup = useCallback(async (userData: any, role: string): Promise<boolean> => {
+>>>>>>> main
     setLoading(true);
     setError(null);
 
     try {
+<<<<<<< HEAD
       // Add role to userData
       const registrationData = { ...userData, role };
 
@@ -190,13 +223,31 @@ export const useAuth = (): UseAuthReturn => {
           break;
         case 'agent':
           await authService.registerAgent(registrationData);
+=======
+      switch (role) {
+        case 'client':
+          await authService.registerClient(userData);
+          break;
+        case 'developer':
+          await authService.registerDeveloper(userData);
+          break;
+        case 'broker':
+          await authService.registerBroker(userData);
+          break;
+        case 'agent':
+          await authService.registerAgent(userData);
+>>>>>>> main
           break;
         default:
           throw new Error('Invalid role');
       }
       return true;
     } catch (err: any) {
+<<<<<<< HEAD
       setError(err.message || 'Registration failed');
+=======
+      setError(err.message || 'Sign up failed');
+>>>>>>> main
       return false;
     } finally {
       setLoading(false);
@@ -205,6 +256,7 @@ export const useAuth = (): UseAuthReturn => {
 
   const logout = useCallback(() => {
     authService.logout();
+<<<<<<< HEAD
     localStorage.removeItem('token_expiry');
     localStorage.removeItem('user_email');
     setSessionExpiry(null);
@@ -271,11 +323,15 @@ export const useAuth = (): UseAuthReturn => {
       }
       return route === allowedRoute;
     });
+=======
+    setError(null);
+>>>>>>> main
   }, []);
 
   return {
     loading,
     error,
+<<<<<<< HEAD
     isAuthenticated: authService.isAuthenticated() && checkSession(),
     userRole: authService.getUserRole() as UserRole,
     userId: authService.getUserId(),
@@ -290,3 +346,13 @@ export const useAuth = (): UseAuthReturn => {
     canAccessRoute,
   };
 };
+=======
+    isAuthenticated: authService.isAuthenticated(),
+    userRole: authService.getUserRole(),
+    userId: authService.getUserId(),
+    signin,
+    signup,
+    logout,
+  };
+};
+>>>>>>> main

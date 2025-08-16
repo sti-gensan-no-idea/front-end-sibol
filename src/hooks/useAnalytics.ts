@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+<<<<<<< HEAD
 import { 
   analyticsService,
   type DashboardAnalytics,
@@ -82,11 +83,48 @@ export const useAnalytics = (options: UseAnalyticsOptions = {}): UseAnalyticsRet
       setDashboardData(data);
     } catch (err: any) {
       setError(err.message || 'Failed to fetch dashboard analytics');
+=======
+import { dataService, type AnalyticsDashboard } from '../services';
+
+interface UseAnalyticsReturn {
+  dashboard: AnalyticsDashboard | null;
+  salesData: any;
+  leadsData: any;
+  inventoryData: any;
+  revenueData: any;
+  loading: boolean;
+  error: string | null;
+  fetchDashboard: () => Promise<void>;
+  fetchSales: () => Promise<void>;
+  fetchLeads: () => Promise<void>;
+  fetchInventory: () => Promise<void>;
+  fetchRevenue: () => Promise<void>;
+}
+
+export const useAnalytics = (): UseAnalyticsReturn => {
+  const [dashboard, setDashboard] = useState<AnalyticsDashboard | null>(null);
+  const [salesData, setSalesData] = useState<any>(null);
+  const [leadsData, setLeadsData] = useState<any>(null);
+  const [inventoryData, setInventoryData] = useState<any>(null);
+  const [revenueData, setRevenueData] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchDashboard = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await dataService.getAnalyticsDashboard();
+      setDashboard(data);
+    } catch (err: any) {
+      setError(err.message || 'Failed to fetch dashboard data');
+>>>>>>> main
     } finally {
       setLoading(false);
     }
   }, []);
 
+<<<<<<< HEAD
   const fetchSalesAnalytics = useCallback(async (params?: {
     start_date?: string;
     end_date?: string;
@@ -99,11 +137,22 @@ export const useAnalytics = (options: UseAnalyticsOptions = {}): UseAnalyticsRet
       setSalesData(data);
     } catch (err: any) {
       setError(err.message || 'Failed to fetch sales analytics');
+=======
+  const fetchSales = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await dataService.getSalesAnalytics();
+      setSalesData(data);
+    } catch (err: any) {
+      setError(err.message || 'Failed to fetch sales data');
+>>>>>>> main
     } finally {
       setLoading(false);
     }
   }, []);
 
+<<<<<<< HEAD
   const fetchLeadsAnalytics = useCallback(async (params?: {
     start_date?: string;
     end_date?: string;
@@ -116,11 +165,22 @@ export const useAnalytics = (options: UseAnalyticsOptions = {}): UseAnalyticsRet
       setLeadsData(data);
     } catch (err: any) {
       setError(err.message || 'Failed to fetch leads analytics');
+=======
+  const fetchLeads = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await dataService.getLeadsAnalytics();
+      setLeadsData(data);
+    } catch (err: any) {
+      setError(err.message || 'Failed to fetch leads data');
+>>>>>>> main
     } finally {
       setLoading(false);
     }
   }, []);
 
+<<<<<<< HEAD
   const fetchInventoryAnalytics = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -129,11 +189,22 @@ export const useAnalytics = (options: UseAnalyticsOptions = {}): UseAnalyticsRet
       setInventoryData(data);
     } catch (err: any) {
       setError(err.message || 'Failed to fetch inventory analytics');
+=======
+  const fetchInventory = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await dataService.getInventoryAnalytics();
+      setInventoryData(data);
+    } catch (err: any) {
+      setError(err.message || 'Failed to fetch inventory data');
+>>>>>>> main
     } finally {
       setLoading(false);
     }
   }, []);
 
+<<<<<<< HEAD
   const fetchRevenueAnalytics = useCallback(async (params?: {
     start_date?: string;
     end_date?: string;
@@ -146,11 +217,22 @@ export const useAnalytics = (options: UseAnalyticsOptions = {}): UseAnalyticsRet
       setRevenueData(data);
     } catch (err: any) {
       setError(err.message || 'Failed to fetch revenue analytics');
+=======
+  const fetchRevenue = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await dataService.getRevenueAnalytics();
+      setRevenueData(data);
+    } catch (err: any) {
+      setError(err.message || 'Failed to fetch revenue data');
+>>>>>>> main
     } finally {
       setLoading(false);
     }
   }, []);
 
+<<<<<<< HEAD
   const refreshAllAnalytics = useCallback(async () => {
     await Promise.all([
       fetchDashboardAnalytics(),
@@ -191,12 +273,21 @@ export const useAnalytics = (options: UseAnalyticsOptions = {}): UseAnalyticsRet
 
   return {
     dashboardData,
+=======
+  useEffect(() => {
+    fetchDashboard();
+  }, [fetchDashboard]);
+
+  return {
+    dashboard,
+>>>>>>> main
     salesData,
     leadsData,
     inventoryData,
     revenueData,
     loading,
     error,
+<<<<<<< HEAD
     fetchDashboardAnalytics,
     fetchSalesAnalytics,
     fetchLeadsAnalytics,
@@ -295,3 +386,12 @@ export const useBrokerAnalytics = (): UseBrokerAnalyticsReturn => {
     refreshAll,
   };
 };
+=======
+    fetchDashboard,
+    fetchSales,
+    fetchLeads,
+    fetchInventory,
+    fetchRevenue,
+  };
+};
+>>>>>>> main

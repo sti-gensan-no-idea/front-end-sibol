@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+<<<<<<< HEAD
 import { 
   crmService, 
   type LeadResponse, 
@@ -69,17 +70,54 @@ export const useLeads = (): UseLeadsReturn => {
     } catch (err: any) {
       setError(err.message || 'Failed to fetch leads');
       setLeads([]);
+=======
+import { dataService, type Lead, type LeadCreate, type LeadStatus } from '../services';
+
+interface UseLeadsReturn {
+  leads: Lead[];
+  loading: boolean;
+  error: string | null;
+  fetchLeads: () => Promise<void>;
+  createLead: (leadData: LeadCreate) => Promise<Lead | null>;
+  updateLeadStatus: (id: string, status: LeadStatus) => Promise<Lead | null>;
+  getLeadsByStatus: (status: LeadStatus) => Lead[];
+  getLeadStats: () => { total: number; byStatus: Record<LeadStatus, number> };
+}
+
+export const useLeads = (): UseLeadsReturn => {
+  const [leads, setLeads] = useState<Lead[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchLeads = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await dataService.getLeads();
+      setLeads(data);
+    } catch (err: any) {
+      setError(err.message || 'Failed to fetch leads');
+>>>>>>> main
     } finally {
       setLoading(false);
     }
   }, []);
 
+<<<<<<< HEAD
   const createLead = useCallback(async (lead: LeadCreate): Promise<LeadResponse | null> => {
     setLoading(true);
     setError(null);
     try {
       const newLead = await crmService.createLead(lead);
       setLeads(prev => [newLead, ...prev]);
+=======
+  const createLead = useCallback(async (leadData: LeadCreate): Promise<Lead | null> => {
+    setLoading(true);
+    setError(null);
+    try {
+      const newLead = await dataService.createLead(leadData);
+      setLeads(prev => [...prev, newLead]);
+>>>>>>> main
       return newLead;
     } catch (err: any) {
       setError(err.message || 'Failed to create lead');
@@ -89,6 +127,7 @@ export const useLeads = (): UseLeadsReturn => {
     }
   }, []);
 
+<<<<<<< HEAD
   const updateLeadStatus = useCallback(async (id: string, updates: LeadUpdate): Promise<LeadResponse | null> => {
     setLoading(true);
     setError(null);
@@ -98,12 +137,24 @@ export const useLeads = (): UseLeadsReturn => {
       return updatedLead;
     } catch (err: any) {
       setError(err.message || 'Failed to update lead');
+=======
+  const updateLeadStatus = useCallback(async (id: string, status: LeadStatus): Promise<Lead | null> => {
+    setLoading(true);
+    setError(null);
+    try {
+      const updatedLead = await dataService.updateLeadStatus(id, status);
+      setLeads(prev => prev.map(l => l.id === id ? updatedLead : l));
+      return updatedLead;
+    } catch (err: any) {
+      setError(err.message || 'Failed to update lead status');
+>>>>>>> main
       return null;
     } finally {
       setLoading(false);
     }
   }, []);
 
+<<<<<<< HEAD
   const assignLeadToAgent = useCallback(async (id: string, agentId: string): Promise<boolean> => {
     setLoading(true);
     setError(null);
@@ -165,6 +216,33 @@ export const useLeads = (): UseLeadsReturn => {
   const refreshLeads = useCallback(async () => {
     await fetchLeads();
   }, [fetchLeads]);
+=======
+  const getLeadsByStatus = useCallback((status: LeadStatus): Lead[] => {
+    return leads.filter(lead => lead.status === status);
+  }, [leads]);
+
+  const getLeadStats = useCallback(() => {
+    const stats = {
+      total: leads.length,
+      byStatus: {
+        'new': 0,
+        'contacted': 0,
+        'qualified': 0,
+        'proposal': 0,
+        'negotiation': 0,
+        'reserved': 0,
+        'closed': 0,
+        'lost': 0,
+      } as Record<LeadStatus, number>
+    };
+
+    leads.forEach(lead => {
+      stats.byStatus[lead.status]++;
+    });
+
+    return stats;
+  }, [leads]);
+>>>>>>> main
 
   useEffect(() => {
     fetchLeads();
@@ -177,6 +255,7 @@ export const useLeads = (): UseLeadsReturn => {
     fetchLeads,
     createLead,
     updateLeadStatus,
+<<<<<<< HEAD
     assignLeadToAgent,
     getAgentLeads,
     getLeadsByStatus,
@@ -376,3 +455,9 @@ export const useNotifications = (): UseNotificationsReturn => {
     refreshNotifications,
   };
 };
+=======
+    getLeadsByStatus,
+    getLeadStats,
+  };
+};
+>>>>>>> main
