@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Button, Divider, Input, Link, Select, SelectItem, Chip } from "@heroui/react";
+import {
+  Button,
+  Divider,
+  Input,
+  Link,
+  Select,
+  SelectItem,
+  Chip,
+} from "@heroui/react";
 import {
   IconMailFilled,
   IconUserFilled,
@@ -10,9 +18,10 @@ import {
   IconFileCheck,
 } from "@tabler/icons-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+
 import { useAuth } from "../hooks";
 
-type UserRole = 'client' | 'developer' | 'agent' | 'broker' | 'admin';
+type UserRole = "client" | "developer" | "agent" | "broker" | "admin";
 
 interface SignUpFormData {
   email: string;
@@ -31,20 +40,36 @@ interface SignUpFormData {
 }
 
 const roleOptions = [
-  { key: "client", label: "Client", description: "Browse and purchase properties" },
-  { key: "agent", label: "Agent", description: "Manage leads and assist clients" },
-  { key: "broker", label: "Broker", description: "Manage teams and properties" },
-  { key: "developer", label: "Developer", description: "Upload and manage developments" },
+  {
+    key: "client",
+    label: "Client",
+    description: "Browse and purchase properties",
+  },
+  {
+    key: "agent",
+    label: "Agent",
+    description: "Manage leads and assist clients",
+  },
+  {
+    key: "broker",
+    label: "Broker",
+    description: "Manage teams and properties",
+  },
+  {
+    key: "developer",
+    label: "Developer",
+    description: "Upload and manage developments",
+  },
 ];
 
 export const ClientSignUpCardForm = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { signup, loading, error } = useAuth();
-  
+
   // Get role from URL parameter if present
-  const roleFromUrl = searchParams.get('role') as UserRole || 'client';
-  
+  const roleFromUrl = (searchParams.get("role") as UserRole) || "client";
+
   const [formData, setFormData] = useState<SignUpFormData>({
     email: "",
     password: "",
@@ -55,7 +80,9 @@ export const ClientSignUpCardForm = () => {
     role: roleFromUrl,
   });
   const [success, setSuccess] = useState(false);
-  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+  const [validationErrors, setValidationErrors] = useState<
+    Record<string, string>
+  >({});
 
   const validateForm = (): boolean => {
     const errors: Record<string, string> = {};
@@ -69,6 +96,7 @@ export const ClientSignUpCardForm = () => {
 
     // Email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     if (formData.email && !emailRegex.test(formData.email)) {
       errors.email = "Invalid email format";
     }
@@ -85,6 +113,7 @@ export const ClientSignUpCardForm = () => {
 
     // Phone format
     const phoneRegex = /^(\+63|0)\d{10}$/;
+
     if (formData.phone && !phoneRegex.test(formData.phone)) {
       errors.phone = "Invalid phone format (use +63XXXXXXXXXX or 09XXXXXXXXX)";
     }
@@ -95,19 +124,20 @@ export const ClientSignUpCardForm = () => {
     }
 
     setValidationErrors(errors);
+
     return Object.keys(errors).length === 0;
   };
 
   const handleChange = (field: keyof SignUpFormData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
     // Clear validation error when user starts typing
     if (validationErrors[field]) {
-      setValidationErrors(prev => ({ ...prev, [field]: "" }));
+      setValidationErrors((prev) => ({ ...prev, [field]: "" }));
     }
   };
 
   const handleRoleChange = (role: UserRole) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       role,
       // Clear role-specific fields when changing roles
@@ -117,16 +147,17 @@ export const ClientSignUpCardForm = () => {
       cpd_certificate: "",
       broker_id: "",
     }));
-    
+
     // Update URL parameter
     const newParams = new URLSearchParams(searchParams);
-    newParams.set('role', role);
+
+    newParams.set("role", role);
     navigate(`/signup?${newParams.toString()}`, { replace: true });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
 
     try {
@@ -169,18 +200,22 @@ export const ClientSignUpCardForm = () => {
       }
 
       const success = await signup(userData, formData.role);
-      
+
       if (success) {
         setSuccess(true);
         setTimeout(() => {
-          const signInPath = formData.role === "client" ? "/signin" : `/signin/${formData.role}`;
-          navigate(signInPath, { 
-            state: { 
+          const signInPath =
+            formData.role === "client" ? "/signin" : `/signin/${formData.role}`;
+
+          navigate(signInPath, {
+            state: {
               message: `Registration successful! ${
-                formData.role !== "client" ? "Account may require verification." : ""
+                formData.role !== "client"
+                  ? "Account may require verification."
+                  : ""
               }`,
-              email: formData.email 
-            }
+              email: formData.email,
+            },
           });
         }, 2000);
       }
@@ -197,7 +232,9 @@ export const ClientSignUpCardForm = () => {
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <IconFileCheck className="w-8 h-8 text-green-600" />
             </div>
-            <h2 className="text-2xl font-bold text-green-800 mb-2">Registration Successful!</h2>
+            <h2 className="text-2xl font-bold text-green-800 mb-2">
+              Registration Successful!
+            </h2>
             <p className="text-gray-600 mb-4">
               Your {formData.role} account has been created successfully.
             </p>
@@ -212,7 +249,7 @@ export const ClientSignUpCardForm = () => {
     );
   }
 
-  const selectedRole = roleOptions.find(r => r.key === formData.role);
+  const selectedRole = roleOptions.find((r) => r.key === formData.role);
 
   return (
     <div className="container mx-auto p-8 min-h-screen flex flex-col items-center justify-center relative">
@@ -235,20 +272,20 @@ export const ClientSignUpCardForm = () => {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="flex flex-col w-full mt-6">
+        <form className="flex flex-col w-full mt-6" onSubmit={handleSubmit}>
           {/* Role Selection */}
           <Select
+            className="mb-4"
+            description={selectedRole?.description}
             label="Account Type"
             placeholder="Select your role"
             selectedKeys={[formData.role]}
-            onSelectionChange={(keys) => handleRoleChange(Array.from(keys)[0] as UserRole)}
-            className="mb-4"
-            description={selectedRole?.description}
+            onSelectionChange={(keys) =>
+              handleRoleChange(Array.from(keys)[0] as UserRole)
+            }
           >
             {roleOptions.map((role) => (
-              <SelectItem key={role.key}>
-                {role.label}
-              </SelectItem>
+              <SelectItem key={role.key}>{role.label}</SelectItem>
             ))}
           </Select>
 
@@ -256,143 +293,147 @@ export const ClientSignUpCardForm = () => {
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <Input
+                isRequired
+                errorMessage={validationErrors.first_name}
+                isInvalid={!!validationErrors.first_name}
                 label="First Name"
                 placeholder="First name"
                 startContent={<IconUserFilled />}
                 value={formData.first_name}
                 onChange={(e) => handleChange("first_name", e.target.value)}
-                errorMessage={validationErrors.first_name}
-                isInvalid={!!validationErrors.first_name}
-                isRequired
               />
               <Input
+                isRequired
+                errorMessage={validationErrors.last_name}
+                isInvalid={!!validationErrors.last_name}
                 label="Last Name"
                 placeholder="Last name"
                 startContent={<IconUserFilled />}
                 value={formData.last_name}
                 onChange={(e) => handleChange("last_name", e.target.value)}
-                errorMessage={validationErrors.last_name}
-                isInvalid={!!validationErrors.last_name}
-                isRequired
               />
             </div>
 
             <Input
-              label="Email"
-              placeholder="Email address"
-              type="email"
-              startContent={<IconMailFilled />}
-              value={formData.email}
-              onChange={(e) => handleChange("email", e.target.value)}
+              isRequired
               errorMessage={validationErrors.email}
               isInvalid={!!validationErrors.email}
-              isRequired
+              label="Email"
+              placeholder="Email address"
+              startContent={<IconMailFilled />}
+              type="email"
+              value={formData.email}
+              onChange={(e) => handleChange("email", e.target.value)}
             />
 
             <Input
+              isRequired
+              errorMessage={validationErrors.phone}
+              isInvalid={!!validationErrors.phone}
               label="Phone"
               placeholder="+63XXXXXXXXXX or 09XXXXXXXXX"
               startContent={<IconPhoneFilled />}
               value={formData.phone}
               onChange={(e) => handleChange("phone", e.target.value)}
-              errorMessage={validationErrors.phone}
-              isInvalid={!!validationErrors.phone}
-              isRequired
             />
 
             {/* Role-Specific Fields */}
             {formData.role === "developer" && (
               <Input
+                isRequired
+                errorMessage={validationErrors.company_name}
+                isInvalid={!!validationErrors.company_name}
                 label="Company Name"
                 placeholder="Your company name"
                 startContent={<IconBuilding />}
                 value={formData.company_name || ""}
                 onChange={(e) => handleChange("company_name", e.target.value)}
-                errorMessage={validationErrors.company_name}
-                isInvalid={!!validationErrors.company_name}
-                isRequired
               />
             )}
 
             {(formData.role === "broker" || formData.role === "developer") && (
               <Input
+                description="Helps with faster verification"
                 label="License Number (Optional)"
                 placeholder="Professional license number"
                 startContent={<IconIdBadge2 />}
                 value={formData.license_number || ""}
                 onChange={(e) => handleChange("license_number", e.target.value)}
-                description="Helps with faster verification"
               />
             )}
 
             {formData.role === "broker" && (
               <Input
+                description="Name for your agent team"
                 label="Team Name (Optional)"
                 placeholder="Your team name"
                 startContent={<IconBuilding />}
                 value={formData.team_name || ""}
                 onChange={(e) => handleChange("team_name", e.target.value)}
-                description="Name for your agent team"
               />
             )}
 
             {formData.role === "agent" && (
               <>
                 <Input
+                  description="Continuing Professional Development"
                   label="CPD Certificate (Optional)"
                   placeholder="Certificate number"
                   startContent={<IconIdBadge2 />}
                   value={formData.cpd_certificate || ""}
-                  onChange={(e) => handleChange("cpd_certificate", e.target.value)}
-                  description="Continuing Professional Development"
+                  onChange={(e) =>
+                    handleChange("cpd_certificate", e.target.value)
+                  }
                 />
                 <Input
+                  description="Leave empty if no broker yet"
                   label="Broker ID (Optional)"
                   placeholder="Will be assigned by broker"
                   startContent={<IconIdBadge2 />}
                   value={formData.broker_id || ""}
                   onChange={(e) => handleChange("broker_id", e.target.value)}
-                  description="Leave empty if no broker yet"
                 />
               </>
             )}
 
             {/* Password Fields */}
             <Divider className="my-2" />
-            
+
             <Input
-              label="Password"
-              placeholder="Minimum 8 characters"
-              type="password"
-              startContent={<IconLockFilled />}
-              value={formData.password}
-              onChange={(e) => handleChange("password", e.target.value)}
+              isRequired
               errorMessage={validationErrors.password}
               isInvalid={!!validationErrors.password}
-              isRequired
+              label="Password"
+              placeholder="Minimum 8 characters"
+              startContent={<IconLockFilled />}
+              type="password"
+              value={formData.password}
+              onChange={(e) => handleChange("password", e.target.value)}
             />
 
             <Input
-              label="Confirm Password"
-              placeholder="Confirm password"
-              type="password"
-              startContent={<IconLockFilled />}
-              value={formData.confirmPassword}
-              onChange={(e) => handleChange("confirmPassword", e.target.value)}
+              isRequired
               errorMessage={validationErrors.confirmPassword}
               isInvalid={!!validationErrors.confirmPassword}
-              isRequired
+              label="Confirm Password"
+              placeholder="Confirm password"
+              startContent={<IconLockFilled />}
+              type="password"
+              value={formData.confirmPassword}
+              onChange={(e) => handleChange("confirmPassword", e.target.value)}
             />
           </div>
 
-          <Button 
-            className="mt-6 w-full" 
-            color="primary" 
-            type="submit"
-            isLoading={loading}
+          <Button
+            className="mt-6 w-full"
+            color="primary"
             disabled={loading}
+            isLoading={loading}
+            type="submit"
           >
-            {loading ? "Creating Account..." : `Create ${selectedRole?.label} Account`}
+            {loading
+              ? "Creating Account..."
+              : `Create ${selectedRole?.label} Account`}
           </Button>
         </form>
 
@@ -415,7 +456,9 @@ export const ClientSignUpCardForm = () => {
             <div className="text-xs text-gray-500 space-y-1">
               <p>• Professional accounts may require verification</p>
               <p>• License information helps with faster approval</p>
-              {formData.role === "agent" && <p>• Broker assignment may be required</p>}
+              {formData.role === "agent" && (
+                <p>• Broker assignment may be required</p>
+              )}
             </div>
           </div>
         )}

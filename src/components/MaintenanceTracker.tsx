@@ -15,33 +15,37 @@ import {
   Select,
   SelectItem,
 } from "@heroui/react";
-import { 
-  IconTool, 
-  IconPlus, 
-  IconAlertTriangle, 
+import {
+  IconTool,
+  IconPlus,
+  IconAlertTriangle,
   IconClock,
-  IconUser,
   IconBuilding,
   IconCheck,
   IconX,
 } from "@tabler/icons-react";
-import { useMaintenance, type MaintenancePriority, type MaintenanceStatus } from "../hooks";
+
+import {
+  useMaintenance,
+  type MaintenancePriority,
+  type MaintenanceStatus,
+} from "../hooks";
 
 interface MaintenanceTrackerProps {
   className?: string;
 }
 
 export const MaintenanceTracker = ({ className }: MaintenanceTrackerProps) => {
-  const { 
-    maintenanceRequests, 
-    createMaintenanceRequest, 
-    updateStatus, 
-    getRequestsByStatus, 
+  const {
+    maintenanceRequests,
+    createMaintenanceRequest,
+    updateStatus,
+    getRequestsByStatus,
     getUrgentRequests,
-    loading, 
-    error 
+    loading,
+    error,
   } = useMaintenance();
-  
+
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     property_id: "",
@@ -50,26 +54,27 @@ export const MaintenanceTracker = ({ className }: MaintenanceTrackerProps) => {
     priority: "medium" as MaintenancePriority,
   });
 
-  const priorities: { key: MaintenancePriority; label: string; color: any }[] = [
-    { key: 'low', label: 'Low', color: 'default' },
-    { key: 'medium', label: 'Medium', color: 'primary' },
-    { key: 'high', label: 'High', color: 'warning' },
-    { key: 'urgent', label: 'Urgent', color: 'danger' },
-  ];
+  const priorities: { key: MaintenancePriority; label: string; color: any }[] =
+    [
+      { key: "low", label: "Low", color: "default" },
+      { key: "medium", label: "Medium", color: "primary" },
+      { key: "high", label: "High", color: "warning" },
+      { key: "urgent", label: "Urgent", color: "danger" },
+    ];
 
   const statuses: { key: MaintenanceStatus; label: string; color: any }[] = [
-    { key: 'open', label: 'Open', color: 'warning' },
-    { key: 'in_progress', label: 'In Progress', color: 'primary' },
-    { key: 'completed', label: 'Completed', color: 'success' },
-    { key: 'cancelled', label: 'Cancelled', color: 'danger' },
+    { key: "open", label: "Open", color: "warning" },
+    { key: "in_progress", label: "In Progress", color: "primary" },
+    { key: "completed", label: "Completed", color: "success" },
+    { key: "cancelled", label: "Cancelled", color: "danger" },
   ];
 
   const urgentRequests = getUrgentRequests();
-  const openRequests = getRequestsByStatus('open');
-  const inProgressRequests = getRequestsByStatus('in_progress');
+  const openRequests = getRequestsByStatus("open");
+  const inProgressRequests = getRequestsByStatus("in_progress");
 
   const handleInputChange = (name: string, value: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -88,7 +93,7 @@ export const MaintenanceTracker = ({ className }: MaintenanceTrackerProps) => {
     };
 
     const success = await createMaintenanceRequest(requestData);
-    
+
     if (success) {
       // Reset form
       setFormData({
@@ -97,26 +102,28 @@ export const MaintenanceTracker = ({ className }: MaintenanceTrackerProps) => {
         description: "",
         priority: "medium",
       });
-      
+
       setIsCreateModalOpen(false);
     }
   };
 
   const getPriorityColor = (priority: MaintenancePriority) => {
-    const priorityObj = priorities.find(p => p.key === priority);
-    return priorityObj?.color || 'default';
+    const priorityObj = priorities.find((p) => p.key === priority);
+
+    return priorityObj?.color || "default";
   };
 
   const getStatusColor = (status: MaintenanceStatus) => {
-    const statusObj = statuses.find(s => s.key === status);
-    return statusObj?.color || 'default';
+    const statusObj = statuses.find((s) => s.key === status);
+
+    return statusObj?.color || "default";
   };
 
   const formatDate = (dateStr: string) => {
-    return new Date(dateStr).toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
+    return new Date(dateStr).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
     });
   };
 
@@ -124,7 +131,7 @@ export const MaintenanceTracker = ({ className }: MaintenanceTrackerProps) => {
     return (
       <div className={`flex items-center justify-center h-64 ${className}`}>
         <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto" />
           <p className="mt-2 text-gray-600">Loading maintenance requests...</p>
         </div>
       </div>
@@ -147,7 +154,9 @@ export const MaintenanceTracker = ({ className }: MaintenanceTrackerProps) => {
               <IconTool className="w-6 h-6 text-primary" />
               <div>
                 <h3 className="text-lg font-semibold">Maintenance Tracker</h3>
-                <p className="text-sm text-gray-600">Manage property maintenance requests</p>
+                <p className="text-sm text-gray-600">
+                  Manage property maintenance requests
+                </p>
               </div>
             </div>
             <Button
@@ -165,25 +174,33 @@ export const MaintenanceTracker = ({ className }: MaintenanceTrackerProps) => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         <Card>
           <CardBody className="text-center">
-            <div className="text-2xl font-bold text-orange-600">{openRequests.length}</div>
+            <div className="text-2xl font-bold text-orange-600">
+              {openRequests.length}
+            </div>
             <div className="text-sm text-gray-600">Open Requests</div>
           </CardBody>
         </Card>
         <Card>
           <CardBody className="text-center">
-            <div className="text-2xl font-bold text-blue-600">{inProgressRequests.length}</div>
+            <div className="text-2xl font-bold text-blue-600">
+              {inProgressRequests.length}
+            </div>
             <div className="text-sm text-gray-600">In Progress</div>
           </CardBody>
         </Card>
         <Card>
           <CardBody className="text-center">
-            <div className="text-2xl font-bold text-red-600">{urgentRequests.length}</div>
+            <div className="text-2xl font-bold text-red-600">
+              {urgentRequests.length}
+            </div>
             <div className="text-sm text-gray-600">Urgent</div>
           </CardBody>
         </Card>
         <Card>
           <CardBody className="text-center">
-            <div className="text-2xl font-bold text-gray-600">{maintenanceRequests.length}</div>
+            <div className="text-2xl font-bold text-gray-600">
+              {maintenanceRequests.length}
+            </div>
             <div className="text-sm text-gray-600">Total Requests</div>
           </CardBody>
         </Card>
@@ -200,7 +217,10 @@ export const MaintenanceTracker = ({ className }: MaintenanceTrackerProps) => {
           </CardHeader>
           <CardBody className="pt-0 space-y-3">
             {urgentRequests.slice(0, 3).map((request) => (
-              <div key={request.id} className="flex items-center justify-between p-3 bg-white rounded-lg border">
+              <div
+                key={request.id}
+                className="flex items-center justify-between p-3 bg-white rounded-lg border"
+              >
                 <div>
                   <h5 className="font-medium">{request.title}</h5>
                   <div className="flex items-center gap-2 text-sm text-gray-600 mt-1">
@@ -211,13 +231,13 @@ export const MaintenanceTracker = ({ className }: MaintenanceTrackerProps) => {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Chip size="sm" color="danger" variant="flat">
+                  <Chip color="danger" size="sm" variant="flat">
                     {request.priority}
                   </Chip>
                   <Button
-                    size="sm"
                     color="primary"
-                    onPress={() => updateStatus(request.id, 'in_progress')}
+                    size="sm"
+                    onPress={() => updateStatus(request.id, "in_progress")}
                   >
                     Start Work
                   </Button>
@@ -236,23 +256,36 @@ export const MaintenanceTracker = ({ className }: MaintenanceTrackerProps) => {
         <CardBody className="space-y-4">
           {maintenanceRequests.length > 0 ? (
             maintenanceRequests.map((request) => (
-              <div key={request.id} className="flex items-start justify-between p-4 border rounded-lg hover:bg-gray-50">
+              <div
+                key={request.id}
+                className="flex items-start justify-between p-4 border rounded-lg hover:bg-gray-50"
+              >
                 <div className="flex-1">
                   <div className="flex items-start justify-between mb-2">
                     <div>
                       <h5 className="font-medium">{request.title}</h5>
-                      <p className="text-sm text-gray-600 mt-1">{request.description}</p>
+                      <p className="text-sm text-gray-600 mt-1">
+                        {request.description}
+                      </p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Chip size="sm" color={getPriorityColor(request.priority)} variant="flat">
+                      <Chip
+                        color={getPriorityColor(request.priority)}
+                        size="sm"
+                        variant="flat"
+                      >
                         {request.priority}
                       </Chip>
-                      <Chip size="sm" color={getStatusColor(request.status)} variant="flat">
-                        {request.status.replace('_', ' ')}
+                      <Chip
+                        color={getStatusColor(request.status)}
+                        size="sm"
+                        variant="flat"
+                      >
+                        {request.status.replace("_", " ")}
                       </Chip>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center gap-4 text-sm text-gray-500">
                     <div className="flex items-center gap-1">
                       <IconBuilding className="w-4 h-4" />
@@ -264,35 +297,35 @@ export const MaintenanceTracker = ({ className }: MaintenanceTrackerProps) => {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="flex items-center gap-2 ml-4">
-                  {request.status === 'open' && (
+                  {request.status === "open" && (
                     <Button
-                      size="sm"
                       color="primary"
+                      size="sm"
                       variant="light"
-                      onPress={() => updateStatus(request.id, 'in_progress')}
+                      onPress={() => updateStatus(request.id, "in_progress")}
                     >
                       Start
                     </Button>
                   )}
-                  {request.status === 'in_progress' && (
+                  {request.status === "in_progress" && (
                     <Button
-                      size="sm"
                       color="success"
-                      variant="light"
+                      size="sm"
                       startContent={<IconCheck />}
-                      onPress={() => updateStatus(request.id, 'completed')}
+                      variant="light"
+                      onPress={() => updateStatus(request.id, "completed")}
                     >
                       Complete
                     </Button>
                   )}
                   <Button
-                    size="sm"
                     color="danger"
-                    variant="light"
+                    size="sm"
                     startContent={<IconX />}
-                    onPress={() => updateStatus(request.id, 'cancelled')}
+                    variant="light"
+                    onPress={() => updateStatus(request.id, "cancelled")}
                   >
                     Cancel
                   </Button>
@@ -303,14 +336,20 @@ export const MaintenanceTracker = ({ className }: MaintenanceTrackerProps) => {
             <div className="text-center py-8 text-gray-500">
               <IconTool className="w-12 h-12 mx-auto mb-4 text-gray-300" />
               <p>No maintenance requests</p>
-              <p className="text-sm">Create your first request to get started</p>
+              <p className="text-sm">
+                Create your first request to get started
+              </p>
             </div>
           )}
         </CardBody>
       </Card>
 
       {/* Create Request Modal */}
-      <Modal isOpen={isCreateModalOpen} onOpenChange={setIsCreateModalOpen} size="2xl">
+      <Modal
+        isOpen={isCreateModalOpen}
+        size="2xl"
+        onOpenChange={setIsCreateModalOpen}
+      >
         <ModalContent>
           {(onClose) => (
             <>
@@ -318,19 +357,21 @@ export const MaintenanceTracker = ({ className }: MaintenanceTrackerProps) => {
               <ModalBody>
                 <div className="space-y-4">
                   <Input
+                    required
                     label="Property ID"
                     placeholder="Enter property ID"
                     value={formData.property_id}
-                    onChange={(e) => handleInputChange("property_id", e.target.value)}
-                    required
+                    onChange={(e) =>
+                      handleInputChange("property_id", e.target.value)
+                    }
                   />
 
                   <Input
+                    required
                     label="Request Title"
                     placeholder="Brief description of the issue"
                     value={formData.title}
                     onChange={(e) => handleInputChange("title", e.target.value)}
-                    required
                   />
 
                   <Select
@@ -339,6 +380,7 @@ export const MaintenanceTracker = ({ className }: MaintenanceTrackerProps) => {
                     selectedKeys={formData.priority ? [formData.priority] : []}
                     onSelectionChange={(keys) => {
                       const value = Array.from(keys)[0] as MaintenancePriority;
+
                       handleInputChange("priority", value || "medium");
                     }}
                   >
@@ -350,12 +392,14 @@ export const MaintenanceTracker = ({ className }: MaintenanceTrackerProps) => {
                   </Select>
 
                   <Textarea
+                    required
                     label="Description"
+                    minRows={4}
                     placeholder="Detailed description of the maintenance issue..."
                     value={formData.description}
-                    onChange={(e) => handleInputChange("description", e.target.value)}
-                    minRows={4}
-                    required
+                    onChange={(e) =>
+                      handleInputChange("description", e.target.value)
+                    }
                   />
                 </div>
               </ModalBody>
@@ -365,9 +409,14 @@ export const MaintenanceTracker = ({ className }: MaintenanceTrackerProps) => {
                 </Button>
                 <Button
                   color="primary"
-                  onPress={handleCreateRequest}
+                  disabled={
+                    loading ||
+                    !formData.property_id ||
+                    !formData.title ||
+                    !formData.description
+                  }
                   isLoading={loading}
-                  disabled={loading || !formData.property_id || !formData.title || !formData.description}
+                  onPress={handleCreateRequest}
                 >
                   {loading ? "Creating..." : "Create Request"}
                 </Button>

@@ -31,7 +31,7 @@ interface CardTeamInterface {
 export const BrokerTeams = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedTeam, setSelectedTeam] = useState<CardTeamInterface | null>(
-    null
+    null,
   );
 
   const handleCardClick = (team: CardTeamInterface) => {

@@ -1,5 +1,17 @@
-import { useState, useEffect, useCallback } from 'react';
-import { dataService, type Property, type PropertyCreate } from '../services';
+import { useState, useEffect, useCallback } from "react";
+
+import { dataService, type Property, type PropertyCreate } from "../services";
+
+interface UsePropertiesOptions {
+  filters?: {
+    property_type?: string;
+    status?: string;
+    location?: string;
+    price_min?: number;
+    price_max?: number;
+  };
+  autoFetch?: boolean;
+}
 
 interface UsePropertiesReturn {
   properties: Property[];
@@ -7,13 +19,21 @@ interface UsePropertiesReturn {
   error: string | null;
   fetchProperties: () => Promise<void>;
   createProperty: (propertyData: PropertyCreate) => Promise<Property | null>;
-  updateProperty: (id: string, propertyData: Partial<PropertyCreate>) => Promise<Property | null>;
+  updateProperty: (
+    id: string,
+    propertyData: Partial<PropertyCreate>,
+  ) => Promise<Property | null>;
   deleteProperty: (id: string) => Promise<boolean>;
-  uploadCSV: (file: File) => Promise<boolean>;
+  uploadCSV: (file: File) => Promise<{
+    success_count: number;
+    error_count: number;
+    errors: string[];
+  }>;
   assignToAgent: (propertyId: string, agentId: string) => Promise<boolean>;
 }
 
-export const useProperties = (): UsePropertiesReturn => {
+export const useProperties = (options: UsePropertiesOptions = {}): UsePropertiesReturn => {
+  const { filters, autoFetch = true } = options;
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -23,92 +43,149 @@ export const useProperties = (): UsePropertiesReturn => {
     setError(null);
     try {
       const data = await dataService.getProperties();
-      setProperties(data);
+      
+      // Apply client-side filters if provided
+      let filteredData = data;
+      if (filters) {
+        filteredData = data.filter(property => {
+          if (filters.property_type && property.property_type !== filters.property_type) {
+            return false;
+          }
+          if (filters.status && property.status !== filters.status) {
+            return false;
+          }
+          if (filters.location && !property.location.toLowerCase().includes(filters.location.toLowerCase())) {
+            return false;
+          }
+          if (filters.price_min && property.price < filters.price_min) {
+            return false;
+          }
+          if (filters.price_max && property.price > filters.price_max) {
+            return false;
+          }
+          return true;
+        });
+      }
+      
+      setProperties(filteredData);
     } catch (err: any) {
-      setError(err.message || 'Failed to fetch properties');
+      setError(err.message || "Failed to fetch properties");
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [filters]);
 
-  const createProperty = useCallback(async (propertyData: PropertyCreate): Promise<Property | null> => {
-    setLoading(true);
-    setError(null);
-    try {
-      const newProperty = await dataService.createProperty(propertyData);
-      setProperties(prev => [...prev, newProperty]);
-      return newProperty;
-    } catch (err: any) {
-      setError(err.message || 'Failed to create property');
-      return null;
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const createProperty = useCallback(
+    async (propertyData: PropertyCreate): Promise<Property | null> => {
+      setLoading(true);
+      setError(null);
+      try {
+        const newProperty = await dataService.createProperty(propertyData);
+        setProperties((prev) => [newProperty, ...prev]);
+        return newProperty;
+      } catch (err: any) {
+        setError(err.message || "Failed to create property");
+        return null;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [],
+  );
 
-  const updateProperty = useCallback(async (id: string, propertyData: Partial<PropertyCreate>): Promise<Property | null> => {
-    setLoading(true);
-    setError(null);
-    try {
-      const updatedProperty = await dataService.updateProperty(id, propertyData);
-      setProperties(prev => prev.map(p => p.id === id ? updatedProperty : p));
-      return updatedProperty;
-    } catch (err: any) {
-      setError(err.message || 'Failed to update property');
-      return null;
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const updateProperty = useCallback(
+    async (
+      id: string,
+      propertyData: Partial<PropertyCreate>,
+    ): Promise<Property | null> => {
+      setLoading(true);
+      setError(null);
+      try {
+        const updatedProperty = await dataService.updateProperty(id, propertyData);
+        setProperties((prev) =>
+          prev.map((property) =>
+            property.id === id ? updatedProperty : property,
+          ),
+        );
+        return updatedProperty;
+      } catch (err: any) {
+        setError(err.message || "Failed to update property");
+        return null;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [],
+  );
 
   const deleteProperty = useCallback(async (id: string): Promise<boolean> => {
     setLoading(true);
     setError(null);
     try {
       await dataService.deleteProperty(id);
-      setProperties(prev => prev.filter(p => p.id !== id));
+      setProperties((prev) => prev.filter((property) => property.id !== id));
       return true;
     } catch (err: any) {
-      setError(err.message || 'Failed to delete property');
+      setError(err.message || "Failed to delete property");
       return false;
     } finally {
       setLoading(false);
     }
   }, []);
 
-  const uploadCSV = useCallback(async (file: File): Promise<boolean> => {
+  const uploadCSV = useCallback(async (file: File): Promise<{
+    success_count: number;
+    error_count: number;
+    errors: string[];
+  }> => {
     setLoading(true);
     setError(null);
     try {
-      await dataService.uploadPropertiesCSV(file);
-      await fetchProperties(); // Refresh the list
-      return true;
+      const result = await dataService.uploadPropertiesCSV(file);
+      // Refresh properties after upload
+      await fetchProperties();
+      return result;
     } catch (err: any) {
-      setError(err.message || 'Failed to upload CSV');
-      return false;
+      setError(err.message || "Failed to upload CSV");
+      return {
+        success_count: 0,
+        error_count: 1,
+        errors: [err.message || "Upload failed"]
+      };
     } finally {
       setLoading(false);
     }
   }, [fetchProperties]);
 
-  const assignToAgent = useCallback(async (propertyId: string, agentId: string): Promise<boolean> => {
-    setLoading(true);
-    setError(null);
-    try {
-      await dataService.assignPropertyToAgent(propertyId, agentId);
-      await fetchProperties(); // Refresh the list
-      return true;
-    } catch (err: any) {
-      setError(err.message || 'Failed to assign property');
-      return false;
-    } finally {
-      setLoading(false);
-    }
-  }, [fetchProperties]);
+  const assignToAgent = useCallback(
+    async (propertyId: string, agentId: string): Promise<boolean> => {
+      setLoading(true);
+      setError(null);
+      try {
+        const updatedProperty = await dataService.updateProperty(propertyId, {
+          agent_id: agentId,
+        });
+        setProperties((prev) =>
+          prev.map((property) =>
+            property.id === propertyId ? updatedProperty : property,
+          ),
+        );
+        return true;
+      } catch (err: any) {
+        setError(err.message || "Failed to assign property to agent");
+        return false;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [],
+  );
 
   useEffect(() => {
-    fetchProperties();
-  }, [fetchProperties]);
+    if (autoFetch) {
+      fetchProperties();
+    }
+  }, [autoFetch, fetchProperties]);
 
   return {
     properties,

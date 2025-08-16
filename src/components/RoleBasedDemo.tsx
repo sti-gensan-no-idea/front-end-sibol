@@ -1,7 +1,9 @@
-import React from 'react';
-import { Card, CardBody, CardHeader, Button, Chip } from '@heroui/react';
-import { 
-  PermissionGuard, 
+import React from "react";
+import { Card, CardBody, CardHeader, Button, Chip } from "@heroui/react";
+
+import { useAuth } from "../hooks/useAuth";
+
+import {
   usePermissions,
   ClientOnly,
   AgentOnly,
@@ -14,22 +16,16 @@ import {
   CanManageTeams,
   CanAccessCRM,
   CanViewAnalytics,
-  CanManageUsers
-} from './PermissionGuard';
-import { useAuth } from '../hooks/useAuth';
+  CanManageUsers,
+} from "./PermissionGuard";
 
 /**
  * Demo component showcasing role-based permissions and authentication
  */
 const RoleBasedDemo: React.FC = () => {
-  const { 
-    userRole, 
-    isAuthenticated, 
-    sessionExpiry, 
-    logout, 
-    refreshSession 
-  } = useAuth();
-  
+  const { userRole, isAuthenticated, sessionExpiry, logout, refreshSession } =
+    useAuth();
+
   const {
     isClient,
     isAgent,
@@ -51,18 +47,27 @@ const RoleBasedDemo: React.FC = () => {
   if (!isAuthenticated) {
     return (
       <div className="p-6 text-center">
-        <h2 className="text-xl font-bold mb-4">Please sign in to view role-based features</h2>
-        <p>This demo requires authentication to showcase permission-based rendering.</p>
+        <h2 className="text-xl font-bold mb-4">
+          Please sign in to view role-based features
+        </h2>
+        <p>
+          This demo requires authentication to showcase permission-based
+          rendering.
+        </p>
       </div>
     );
   }
 
-  const timeRemaining = sessionExpiry ? new Date(sessionExpiry - Date.now()).toISOString().substr(11, 8) : 'Unknown';
+  const timeRemaining = sessionExpiry
+    ? new Date(sessionExpiry - Date.now()).toISOString().substr(11, 8)
+    : "Unknown";
 
   return (
     <div className="p-6 max-w-6xl mx-auto space-y-6">
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold mb-2">Role-Based Authentication Demo</h1>
+        <h1 className="text-3xl font-bold mb-2">
+          Role-Based Authentication Demo
+        </h1>
         <div className="flex items-center justify-center space-x-4">
           <Chip color="primary" variant="flat">
             Role: {userRole?.toUpperCase()}
@@ -70,10 +75,10 @@ const RoleBasedDemo: React.FC = () => {
           <Chip color="success" variant="flat">
             Session: {timeRemaining}
           </Chip>
-          <Button size="sm" onClick={refreshSession} variant="ghost">
+          <Button size="sm" variant="ghost" onClick={refreshSession}>
             Extend Session
           </Button>
-          <Button size="sm" color="danger" onClick={logout} variant="ghost">
+          <Button color="danger" size="sm" variant="ghost" onClick={logout}>
             Logout
           </Button>
         </div>
@@ -86,16 +91,40 @@ const RoleBasedDemo: React.FC = () => {
         </CardHeader>
         <CardBody>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-            <PermissionChip label="View Properties" hasPermission={canViewProperties} />
-            <PermissionChip label="Manage Properties" hasPermission={canManageProperties} />
-            <PermissionChip label="Upload Properties" hasPermission={canUploadProperties} />
-            <PermissionChip label="Manage Teams" hasPermission={canManageTeams} />
-            <PermissionChip label="Manage Leads" hasPermission={canManageLeads} />
-            <PermissionChip label="Access CRM" hasPermission={canAccessCRM} />
-            <PermissionChip label="View Analytics" hasPermission={canViewAnalytics} />
-            <PermissionChip label="Manage Users" hasPermission={canManageUsers} />
-            <PermissionChip label="Approve Accounts" hasPermission={canApproveAccounts} />
-            <PermissionChip label="Export Data" hasPermission={canExportData} />
+            <PermissionChip
+              hasPermission={canViewProperties}
+              label="View Properties"
+            />
+            <PermissionChip
+              hasPermission={canManageProperties}
+              label="Manage Properties"
+            />
+            <PermissionChip
+              hasPermission={canUploadProperties}
+              label="Upload Properties"
+            />
+            <PermissionChip
+              hasPermission={canManageTeams}
+              label="Manage Teams"
+            />
+            <PermissionChip
+              hasPermission={canManageLeads}
+              label="Manage Leads"
+            />
+            <PermissionChip hasPermission={canAccessCRM} label="Access CRM" />
+            <PermissionChip
+              hasPermission={canViewAnalytics}
+              label="View Analytics"
+            />
+            <PermissionChip
+              hasPermission={canManageUsers}
+              label="Manage Users"
+            />
+            <PermissionChip
+              hasPermission={canApproveAccounts}
+              label="Approve Accounts"
+            />
+            <PermissionChip hasPermission={canExportData} label="Export Data" />
           </div>
         </CardBody>
       </Card>
@@ -107,23 +136,24 @@ const RoleBasedDemo: React.FC = () => {
         </CardHeader>
         <CardBody>
           <div className="grid grid-cols-5 gap-4">
-            <RoleIndicator label="Client" isActive={isClient} />
-            <RoleIndicator label="Agent" isActive={isAgent} />
-            <RoleIndicator label="Broker" isActive={isBroker} />
-            <RoleIndicator label="Developer" isActive={isDeveloper} />
-            <RoleIndicator label="Admin" isActive={isAdmin} />
+            <RoleIndicator isActive={isClient} label="Client" />
+            <RoleIndicator isActive={isAgent} label="Agent" />
+            <RoleIndicator isActive={isBroker} label="Broker" />
+            <RoleIndicator isActive={isDeveloper} label="Developer" />
+            <RoleIndicator isActive={isAdmin} label="Admin" />
           </div>
         </CardBody>
       </Card>
 
       {/* Role-Specific Content */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        
         {/* Client-Only Features */}
         <ClientOnly>
           <Card className="border-blue-200 bg-blue-50">
             <CardHeader>
-              <h3 className="text-lg font-semibold text-blue-800">Client Features</h3>
+              <h3 className="text-lg font-semibold text-blue-800">
+                Client Features
+              </h3>
             </CardHeader>
             <CardBody>
               <ul className="space-y-2 text-sm text-blue-700">
@@ -141,7 +171,9 @@ const RoleBasedDemo: React.FC = () => {
         <AgentOnly>
           <Card className="border-green-200 bg-green-50">
             <CardHeader>
-              <h3 className="text-lg font-semibold text-green-800">Agent Features</h3>
+              <h3 className="text-lg font-semibold text-green-800">
+                Agent Features
+              </h3>
             </CardHeader>
             <CardBody>
               <ul className="space-y-2 text-sm text-green-700">
@@ -159,7 +191,9 @@ const RoleBasedDemo: React.FC = () => {
         <BrokerOnly>
           <Card className="border-purple-200 bg-purple-50">
             <CardHeader>
-              <h3 className="text-lg font-semibold text-purple-800">Broker Features</h3>
+              <h3 className="text-lg font-semibold text-purple-800">
+                Broker Features
+              </h3>
             </CardHeader>
             <CardBody>
               <ul className="space-y-2 text-sm text-purple-700">
@@ -177,7 +211,9 @@ const RoleBasedDemo: React.FC = () => {
         <DeveloperOnly>
           <Card className="border-orange-200 bg-orange-50">
             <CardHeader>
-              <h3 className="text-lg font-semibold text-orange-800">Developer Features</h3>
+              <h3 className="text-lg font-semibold text-orange-800">
+                Developer Features
+              </h3>
             </CardHeader>
             <CardBody>
               <ul className="space-y-2 text-sm text-orange-700">
@@ -195,7 +231,9 @@ const RoleBasedDemo: React.FC = () => {
         <AdminOnly>
           <Card className="border-red-200 bg-red-50">
             <CardHeader>
-              <h3 className="text-lg font-semibold text-red-800">Admin Features</h3>
+              <h3 className="text-lg font-semibold text-red-800">
+                Admin Features
+              </h3>
             </CardHeader>
             <CardBody>
               <ul className="space-y-2 text-sm text-red-700">
@@ -208,20 +246,21 @@ const RoleBasedDemo: React.FC = () => {
             </CardBody>
           </Card>
         </AdminOnly>
-
       </div>
 
       {/* Multi-Role Content */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        
         <StaffOnly>
           <Card className="border-gray-200 bg-gray-50">
             <CardHeader>
-              <h3 className="text-lg font-semibold text-gray-800">Staff Features</h3>
+              <h3 className="text-lg font-semibold text-gray-800">
+                Staff Features
+              </h3>
             </CardHeader>
             <CardBody>
               <p className="text-sm text-gray-600">
-                This content is visible to all staff members (Agent, Broker, Developer, Admin)
+                This content is visible to all staff members (Agent, Broker,
+                Developer, Admin)
               </p>
             </CardBody>
           </Card>
@@ -230,25 +269,28 @@ const RoleBasedDemo: React.FC = () => {
         <ManagementOnly>
           <Card className="border-indigo-200 bg-indigo-50">
             <CardHeader>
-              <h3 className="text-lg font-semibold text-indigo-800">Management Features</h3>
+              <h3 className="text-lg font-semibold text-indigo-800">
+                Management Features
+              </h3>
             </CardHeader>
             <CardBody>
               <p className="text-sm text-indigo-600">
-                This content is visible to management roles (Broker, Developer, Admin)
+                This content is visible to management roles (Broker, Developer,
+                Admin)
               </p>
             </CardBody>
           </Card>
         </ManagementOnly>
-
       </div>
 
       {/* Permission-Based Features */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        
         <CanUploadProperties>
           <Card className="border-yellow-200 bg-yellow-50">
             <CardBody className="text-center">
-              <p className="text-sm text-yellow-800 font-medium">Can Upload Properties</p>
+              <p className="text-sm text-yellow-800 font-medium">
+                Can Upload Properties
+              </p>
             </CardBody>
           </Card>
         </CanUploadProperties>
@@ -256,7 +298,9 @@ const RoleBasedDemo: React.FC = () => {
         <CanManageTeams>
           <Card className="border-cyan-200 bg-cyan-50">
             <CardBody className="text-center">
-              <p className="text-sm text-cyan-800 font-medium">Can Manage Teams</p>
+              <p className="text-sm text-cyan-800 font-medium">
+                Can Manage Teams
+              </p>
             </CardBody>
           </Card>
         </CanManageTeams>
@@ -264,7 +308,9 @@ const RoleBasedDemo: React.FC = () => {
         <CanAccessCRM>
           <Card className="border-pink-200 bg-pink-50">
             <CardBody className="text-center">
-              <p className="text-sm text-pink-800 font-medium">Can Access CRM</p>
+              <p className="text-sm text-pink-800 font-medium">
+                Can Access CRM
+              </p>
             </CardBody>
           </Card>
         </CanAccessCRM>
@@ -272,52 +318,77 @@ const RoleBasedDemo: React.FC = () => {
         <CanViewAnalytics>
           <Card className="border-teal-200 bg-teal-50">
             <CardBody className="text-center">
-              <p className="text-sm text-teal-800 font-medium">Can View Analytics</p>
+              <p className="text-sm text-teal-800 font-medium">
+                Can View Analytics
+              </p>
             </CardBody>
           </Card>
         </CanViewAnalytics>
-
       </div>
 
       {/* Admin Only - User Management */}
       <CanManageUsers>
         <Card className="border-red-300 bg-red-100">
           <CardHeader>
-            <h3 className="text-lg font-semibold text-red-800">🔒 Admin Only - User Management</h3>
+            <h3 className="text-lg font-semibold text-red-800">
+              🔒 Admin Only - User Management
+            </h3>
           </CardHeader>
           <CardBody>
             <p className="text-red-700 mb-4">
-              This section is only visible to administrators with user management permissions.
+              This section is only visible to administrators with user
+              management permissions.
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-              <Button size="sm" color="danger" variant="flat">Manage Users</Button>
-              <Button size="sm" color="danger" variant="flat">Approve Accounts</Button>
-              <Button size="sm" color="danger" variant="flat">System Settings</Button>
-              <Button size="sm" color="danger" variant="flat">Export Data</Button>
+              <Button color="danger" size="sm" variant="flat">
+                Manage Users
+              </Button>
+              <Button color="danger" size="sm" variant="flat">
+                Approve Accounts
+              </Button>
+              <Button color="danger" size="sm" variant="flat">
+                System Settings
+              </Button>
+              <Button color="danger" size="sm" variant="flat">
+                Export Data
+              </Button>
             </div>
           </CardBody>
         </Card>
       </CanManageUsers>
-
     </div>
   );
 };
 
 // Helper Components
-const PermissionChip: React.FC<{ label: string; hasPermission: boolean }> = ({ label, hasPermission }) => (
-  <Chip 
-    size="sm" 
-    color={hasPermission ? "success" : "default"} 
+const PermissionChip: React.FC<{ label: string; hasPermission: boolean }> = ({
+  label,
+  hasPermission,
+}) => (
+  <Chip
+    color={hasPermission ? "success" : "default"}
+    size="sm"
     variant={hasPermission ? "flat" : "bordered"}
   >
     {hasPermission ? "✓" : "✗"} {label}
   </Chip>
 );
 
-const RoleIndicator: React.FC<{ label: string; isActive: boolean }> = ({ label, isActive }) => (
-  <div className={`p-3 rounded-lg text-center ${isActive ? 'bg-blue-100 border-2 border-blue-300' : 'bg-gray-100 border border-gray-300'}`}>
-    <div className={`w-3 h-3 rounded-full mx-auto mb-2 ${isActive ? 'bg-blue-500' : 'bg-gray-400'}`}></div>
-    <p className={`text-sm font-medium ${isActive ? 'text-blue-800' : 'text-gray-600'}`}>{label}</p>
+const RoleIndicator: React.FC<{ label: string; isActive: boolean }> = ({
+  label,
+  isActive,
+}) => (
+  <div
+    className={`p-3 rounded-lg text-center ${isActive ? "bg-blue-100 border-2 border-blue-300" : "bg-gray-100 border border-gray-300"}`}
+  >
+    <div
+      className={`w-3 h-3 rounded-full mx-auto mb-2 ${isActive ? "bg-blue-500" : "bg-gray-400"}`}
+    />
+    <p
+      className={`text-sm font-medium ${isActive ? "text-blue-800" : "text-gray-600"}`}
+    >
+      {label}
+    </p>
     {isActive && <p className="text-xs text-blue-600">Active</p>}
   </div>
 );

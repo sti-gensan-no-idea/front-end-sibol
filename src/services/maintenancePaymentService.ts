@@ -1,4 +1,4 @@
-import apiService from './apiService';
+import apiService from "./apiService";
 
 export interface MaintenanceRequestResponse {
   id: string;
@@ -43,7 +43,7 @@ export interface PaymentResponse {
   payment_type: string;
   payment_method?: string;
   transaction_id?: string;
-  status: 'pending' | 'completed' | 'failed';
+  status: "pending" | "completed" | "failed";
   receipt_url?: string;
   created_at: string;
   updated_at?: string;
@@ -57,7 +57,7 @@ export interface PaymentCreate {
 }
 
 export interface PaymentUpdate {
-  status?: 'pending' | 'completed' | 'failed';
+  status?: "pending" | "completed" | "failed";
   transaction_id?: string;
   receipt_url?: string;
   notes?: string;
@@ -82,6 +82,7 @@ export class MaintenancePaymentService {
     property_id?: string;
   }): Promise<MaintenanceRequestResponse[]> {
     const queryParams = new URLSearchParams();
+
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
@@ -89,20 +90,28 @@ export class MaintenancePaymentService {
         }
       });
     }
-    
-    const endpoint = `/maintenance${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+
+    const endpoint = `/maintenance${queryParams.toString() ? `?${queryParams.toString()}` : ""}`;
+
     return apiService.get(endpoint);
   }
 
-  async createMaintenanceRequest(request: MaintenanceRequestCreate): Promise<MaintenanceRequestResponse> {
-    return apiService.post('/maintenance/', request);
+  async createMaintenanceRequest(
+    request: MaintenanceRequestCreate,
+  ): Promise<MaintenanceRequestResponse> {
+    return apiService.post("/maintenance/", request);
   }
 
-  async getMaintenanceRequestById(id: string): Promise<MaintenanceRequestResponse> {
+  async getMaintenanceRequestById(
+    id: string,
+  ): Promise<MaintenanceRequestResponse> {
     return apiService.get(`/maintenance/${id}`);
   }
 
-  async updateMaintenanceRequest(id: string, updates: MaintenanceRequestUpdate): Promise<MaintenanceRequestResponse> {
+  async updateMaintenanceRequest(
+    id: string,
+    updates: MaintenanceRequestUpdate,
+  ): Promise<MaintenanceRequestResponse> {
     return apiService.put(`/maintenance/${id}`, updates);
   }
 
@@ -110,12 +119,24 @@ export class MaintenancePaymentService {
     return apiService.delete(`/maintenance/${id}`);
   }
 
-  async assignMaintenanceRequest(id: string, assignedTo: string): Promise<MaintenanceRequestResponse> {
-    return apiService.put(`/maintenance/${id}/assign`, { assigned_to: assignedTo });
+  async assignMaintenanceRequest(
+    id: string,
+    assignedTo: string,
+  ): Promise<MaintenanceRequestResponse> {
+    return apiService.put(`/maintenance/${id}/assign`, {
+      assigned_to: assignedTo,
+    });
   }
 
-  async completeMaintenanceRequest(id: string, actualCost?: number, notes?: string): Promise<MaintenanceRequestResponse> {
-    return apiService.put(`/maintenance/${id}/complete`, { actual_cost: actualCost, notes });
+  async completeMaintenanceRequest(
+    id: string,
+    actualCost?: number,
+    notes?: string,
+  ): Promise<MaintenanceRequestResponse> {
+    return apiService.put(`/maintenance/${id}/complete`, {
+      actual_cost: actualCost,
+      notes,
+    });
   }
 
   // Payments
@@ -125,6 +146,7 @@ export class MaintenancePaymentService {
     property_id?: string;
   }): Promise<PaymentResponse[]> {
     const queryParams = new URLSearchParams();
+
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
@@ -132,29 +154,40 @@ export class MaintenancePaymentService {
         }
       });
     }
-    
-    const endpoint = `/payments${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+
+    const endpoint = `/payments${queryParams.toString() ? `?${queryParams.toString()}` : ""}`;
+
     return apiService.get(endpoint);
   }
 
   async createPayment(payment: PaymentCreate): Promise<PaymentResponse> {
-    return apiService.post('/payments/', payment);
+    return apiService.post("/payments/", payment);
   }
 
   async getPaymentById(id: string): Promise<PaymentResponse> {
     return apiService.get(`/payments/${id}`);
   }
 
-  async updatePaymentStatus(id: string, updates: PaymentUpdate): Promise<PaymentResponse> {
+  async updatePaymentStatus(
+    id: string,
+    updates: PaymentUpdate,
+  ): Promise<PaymentResponse> {
     return apiService.put(`/payments/${id}/status`, updates);
   }
 
-  async getPaymentSchedule(propertyId: string): Promise<PaymentScheduleResponse> {
+  async getPaymentSchedule(
+    propertyId: string,
+  ): Promise<PaymentScheduleResponse> {
     return apiService.get(`/payments/schedule/${propertyId}`);
   }
 
-  async processPayment(id: string, paymentMethod: string): Promise<PaymentResponse> {
-    return apiService.post(`/payments/${id}/process`, { payment_method: paymentMethod });
+  async processPayment(
+    id: string,
+    paymentMethod: string,
+  ): Promise<PaymentResponse> {
+    return apiService.post(`/payments/${id}/process`, {
+      payment_method: paymentMethod,
+    });
   }
 
   async refundPayment(id: string, reason?: string): Promise<PaymentResponse> {
@@ -162,11 +195,11 @@ export class MaintenancePaymentService {
   }
 
   async getClientPayments(): Promise<PaymentResponse[]> {
-    return apiService.get('/payments/client');
+    return apiService.get("/payments/client");
   }
 
   async getDeveloperPayments(): Promise<PaymentResponse[]> {
-    return apiService.get('/payments/developer');
+    return apiService.get("/payments/developer");
   }
 
   // Payment Analytics
@@ -187,6 +220,7 @@ export class MaintenancePaymentService {
     }>;
   }> {
     const queryParams = new URLSearchParams();
+
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
@@ -194,8 +228,9 @@ export class MaintenancePaymentService {
         }
       });
     }
-    
-    const endpoint = `/payments/analytics${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+
+    const endpoint = `/payments/analytics${queryParams.toString() ? `?${queryParams.toString()}` : ""}`;
+
     return apiService.get(endpoint);
   }
 }

@@ -10,9 +10,9 @@ import {
   Textarea,
   Select,
   SelectItem,
-  DatePicker,
 } from "@heroui/react";
 import { IconCalendar } from "@tabler/icons-react";
+
 import { useSiteViewings } from "../hooks";
 
 interface SiteViewingModalProps {
@@ -30,7 +30,8 @@ export const SiteViewingModal = ({
   propertyTitle,
   isGuest = false,
 }: SiteViewingModalProps) => {
-  const { createSiteViewing, createGuestSiteViewing, loading, error } = useSiteViewings();
+  const { createSiteViewing, createGuestSiteViewing, loading, error } =
+    useSiteViewings();
   const [formData, setFormData] = useState({
     property_id: propertyId || "",
     client_name: "",
@@ -51,14 +52,20 @@ export const SiteViewingModal = ({
   ];
 
   const handleInputChange = (name: string, value: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
   const handleSubmit = async () => {
-    if (!formData.property_id || !formData.client_name || !formData.client_email || !formData.preferred_date || !formData.preferred_time) {
+    if (
+      !formData.property_id ||
+      !formData.client_name ||
+      !formData.client_email ||
+      !formData.preferred_date ||
+      !formData.preferred_time
+    ) {
       return;
     }
 
@@ -72,7 +79,7 @@ export const SiteViewingModal = ({
       notes: formData.notes,
     };
 
-    const success = isGuest 
+    const success = isGuest
       ? await createGuestSiteViewing(viewingData)
       : await createSiteViewing(viewingData);
 
@@ -87,9 +94,11 @@ export const SiteViewingModal = ({
         preferred_time: "",
         notes: "",
       });
-      
+
       onOpenChange(false);
-      alert("Site viewing scheduled successfully! We'll contact you soon to confirm.");
+      alert(
+        "Site viewing scheduled successfully! We'll contact you soon to confirm.",
+      );
     }
   };
 
@@ -109,7 +118,9 @@ export const SiteViewingModal = ({
                 Schedule Site Viewing
               </div>
               {propertyTitle && (
-                <p className="text-sm text-gray-600">Property: {propertyTitle}</p>
+                <p className="text-sm text-gray-600">
+                  Property: {propertyTitle}
+                </p>
               )}
             </ModalHeader>
             <ModalBody>
@@ -122,19 +133,23 @@ export const SiteViewingModal = ({
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <Input
+                    required
                     label="Full Name"
                     placeholder="Enter your full name"
                     value={formData.client_name}
-                    onChange={(e) => handleInputChange("client_name", e.target.value)}
-                    required
+                    onChange={(e) =>
+                      handleInputChange("client_name", e.target.value)
+                    }
                   />
                   <Input
-                    label="Email Address"
-                    type="email"
-                    placeholder="Enter your email"
-                    value={formData.client_email}
-                    onChange={(e) => handleInputChange("client_email", e.target.value)}
                     required
+                    label="Email Address"
+                    placeholder="Enter your email"
+                    type="email"
+                    value={formData.client_email}
+                    onChange={(e) =>
+                      handleInputChange("client_email", e.target.value)
+                    }
                   />
                 </div>
 
@@ -142,24 +157,32 @@ export const SiteViewingModal = ({
                   label="Phone Number"
                   placeholder="Enter your phone number"
                   value={formData.client_phone}
-                  onChange={(e) => handleInputChange("client_phone", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("client_phone", e.target.value)
+                  }
                 />
 
                 <div className="grid grid-cols-2 gap-4">
                   <Input
+                    required
+                    required
                     label="Preferred Date"
                     type="date"
                     value={formData.preferred_date}
-                    onChange={(e) => handleInputChange("preferred_date", e.target.value)}
-                    required
+                    onChange={(e) =>
+                      handleInputChange("preferred_date", e.target.value)
+                    }
                   />
-                  
+
                   <Select
                     label="Preferred Time"
                     placeholder="Select time slot"
-                    selectedKeys={formData.preferred_time ? [formData.preferred_time] : []}
+                    selectedKeys={
+                      formData.preferred_time ? [formData.preferred_time] : []
+                    }
                     onSelectionChange={(keys) => {
                       const value = Array.from(keys)[0] as string;
+
                       handleInputChange("preferred_time", value || "");
                     }}
                   >
@@ -173,16 +196,18 @@ export const SiteViewingModal = ({
 
                 <Textarea
                   label="Additional Notes (Optional)"
+                  minRows={3}
                   placeholder="Any specific requirements or questions?"
                   value={formData.notes}
                   onChange={(e) => handleInputChange("notes", e.target.value)}
-                  minRows={3}
                 />
 
                 {isGuest && (
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                     <p className="text-blue-800 text-sm">
-                      <strong>Note:</strong> As a guest visitor, we'll contact you via email or phone to confirm your viewing appointment.
+                      <strong>Note:</strong> As a guest visitor, we'll contact
+                      you via email or phone to confirm your viewing
+                      appointment.
                     </p>
                   </div>
                 )}
@@ -192,11 +217,17 @@ export const SiteViewingModal = ({
               <Button color="danger" variant="light" onPress={onClose}>
                 Cancel
               </Button>
-              <Button 
-                color="primary" 
-                onPress={handleSubmit}
+              <Button
+                color="primary"
+                disabled={
+                  loading ||
+                  !formData.client_name ||
+                  !formData.client_email ||
+                  !formData.preferred_date ||
+                  !formData.preferred_time
+                }
                 isLoading={loading}
-                disabled={loading || !formData.client_name || !formData.client_email || !formData.preferred_date || !formData.preferred_time}
+                onPress={handleSubmit}
               >
                 {loading ? "Scheduling..." : "Schedule Viewing"}
               </Button>

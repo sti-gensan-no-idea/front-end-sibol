@@ -1,4 +1,4 @@
-import apiService from './apiService';
+import apiService from "./apiService";
 
 export interface EventResponse {
   id: string;
@@ -48,6 +48,7 @@ export class EventService {
     property_id?: string;
   }): Promise<EventResponse[]> {
     const queryParams = new URLSearchParams();
+
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
@@ -55,8 +56,9 @@ export class EventService {
         }
       });
     }
-    
-    const endpoint = `/events${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+
+    const endpoint = `/events${queryParams.toString() ? `?${queryParams.toString()}` : ""}`;
+
     return apiService.get(endpoint);
   }
 
@@ -67,7 +69,7 @@ export class EventService {
 
   // Create event
   async createEvent(event: EventCreate): Promise<EventResponse> {
-    return apiService.post('/events/', event);
+    return apiService.post("/events/", event);
   }
 
   // Update event
@@ -86,13 +88,18 @@ export class EventService {
   }
 
   // Get events for calendar view
-  async getCalendarEvents(startDate: string, endDate: string): Promise<EventResponse[]> {
-    return apiService.get(`/events/calendar?start_date=${startDate}&end_date=${endDate}`);
+  async getCalendarEvents(
+    startDate: string,
+    endDate: string,
+  ): Promise<EventResponse[]> {
+    return apiService.get(
+      `/events/calendar?start_date=${startDate}&end_date=${endDate}`,
+    );
   }
 
   // Get user's events
   async getMyEvents(): Promise<EventResponse[]> {
-    return apiService.get('/events/my-events');
+    return apiService.get("/events/my-events");
   }
 
   // Get events by property
@@ -101,17 +108,26 @@ export class EventService {
   }
 
   // Add attendee to event
-  async addAttendee(eventId: string, userId: string): Promise<{ message: string }> {
+  async addAttendee(
+    eventId: string,
+    userId: string,
+  ): Promise<{ message: string }> {
     return apiService.post(`/events/${eventId}/attendees`, { user_id: userId });
   }
 
   // Remove attendee from event
-  async removeAttendee(eventId: string, userId: string): Promise<{ message: string }> {
+  async removeAttendee(
+    eventId: string,
+    userId: string,
+  ): Promise<{ message: string }> {
     return apiService.delete(`/events/${eventId}/attendees/${userId}`);
   }
 
   // Mark event as completed
-  async markEventCompleted(eventId: string, notes?: string): Promise<EventResponse> {
+  async markEventCompleted(
+    eventId: string,
+    notes?: string,
+  ): Promise<EventResponse> {
     return apiService.put(`/events/${eventId}/complete`, { notes });
   }
 

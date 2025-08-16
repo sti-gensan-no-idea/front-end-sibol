@@ -45,7 +45,7 @@ interface UseAnalyticsReturn {
   refreshAll: () => Promise<void>;
   exportData: (
     type: "sales" | "leads" | "inventory" | "revenue",
-    format?: "csv" | "excel"
+    format?: "csv" | "excel",
   ) => Promise<Blob | null>;
 }
 
@@ -68,7 +68,7 @@ interface UseBrokerAnalyticsReturn {
 }
 
 export const useAnalytics = (
-  options: UseAnalyticsOptions = {}
+  options: UseAnalyticsOptions = {},
 ): UseAnalyticsReturn => {
   const { autoFetch = true, refreshInterval } = options;
 
@@ -76,7 +76,7 @@ export const useAnalytics = (
   const [salesData, setSalesData] = useState<SalesAnalytics | null>(null);
   const [leadsData, setLeadsData] = useState<LeadsAnalytics | null>(null);
   const [inventoryData, setInventoryData] = useState<InventoryAnalytics | null>(
-    null
+    null,
   );
   const [revenueData, setRevenueData] = useState<RevenueAnalytics | null>(null);
   const [loading, setLoading] = useState(false);
@@ -114,7 +114,7 @@ export const useAnalytics = (
         setLoading(false);
       }
     },
-    []
+    [],
   );
 
   const fetchLeads = useCallback(
@@ -135,7 +135,7 @@ export const useAnalytics = (
         setLoading(false);
       }
     },
-    []
+    [],
   );
 
   const fetchInventory = useCallback(async () => {
@@ -170,7 +170,7 @@ export const useAnalytics = (
         setLoading(false);
       }
     },
-    []
+    [],
   );
 
   const refreshAll = useCallback(async () => {
@@ -186,7 +186,7 @@ export const useAnalytics = (
   const exportData = useCallback(
     async (
       type: "sales" | "leads" | "inventory" | "revenue",
-      format: "csv" | "excel" = "csv"
+      format: "csv" | "excel" = "csv",
     ): Promise<Blob | null> => {
       setLoading(true);
       setError(null);
@@ -202,7 +202,7 @@ export const useAnalytics = (
         setLoading(false);
       }
     },
-    []
+    [],
   );
 
   // Auto-refresh functionality

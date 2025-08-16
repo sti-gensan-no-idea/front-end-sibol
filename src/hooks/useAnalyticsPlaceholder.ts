@@ -1,5 +1,10 @@
 // Temporary placeholder hook until full analytics integration
-import { useState } from 'react';
+import { useState } from "react";
+
+interface UseAnalyticsOptions {
+  autoFetch?: boolean;
+  refreshInterval?: number;
+}
 
 interface PlaceholderAnalytics {
   loading: boolean;
@@ -8,10 +13,10 @@ interface PlaceholderAnalytics {
   dashboardData: any;
 }
 
-export const useAnalytics = (): PlaceholderAnalytics => {
+export const useAnalytics = (options?: UseAnalyticsOptions): PlaceholderAnalytics => {
   const [loading] = useState(false);
   const [error] = useState<string | null>(null);
-  
+
   const mockData = {
     total_properties: 0,
     active_properties: 0,
@@ -23,7 +28,7 @@ export const useAnalytics = (): PlaceholderAnalytics => {
     total_leads: 0,
     revenue: 0,
     top_performing_agents: [],
-    recent_activities: []
+    recent_activities: [],
   };
 
   return {

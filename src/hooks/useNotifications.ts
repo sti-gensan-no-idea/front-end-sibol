@@ -1,5 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
-import { dataService, type Notification } from '../services';
+import { useState, useEffect, useCallback } from "react";
+
+import { dataService, type Notification } from "../services";
 
 interface UseNotificationsReturn {
   notifications: Notification[];
@@ -23,9 +24,10 @@ export const useNotifications = (): UseNotificationsReturn => {
     setError(null);
     try {
       const data = await dataService.getNotifications();
+
       setNotifications(data);
     } catch (err: any) {
-      setError(err.message || 'Failed to fetch notifications');
+      setError(err.message || "Failed to fetch notifications");
     } finally {
       setLoading(false);
     }
@@ -34,36 +36,39 @@ export const useNotifications = (): UseNotificationsReturn => {
   const markAsRead = useCallback(async (id: string) => {
     try {
       await dataService.markNotificationAsRead(id);
-      setNotifications(prev => 
-        prev.map(notification => 
-          notification.id === id 
+      setNotifications((prev) =>
+        prev.map((notification) =>
+          notification.id === id
             ? { ...notification, read: true }
-            : notification
-        )
+            : notification,
+        ),
       );
     } catch (err: any) {
-      setError(err.message || 'Failed to mark notification as read');
+      setError(err.message || "Failed to mark notification as read");
     }
   }, []);
 
   const markAllAsRead = useCallback(async () => {
     try {
       await dataService.markAllNotificationsAsRead();
-      setNotifications(prev => 
-        prev.map(notification => ({ ...notification, read: true }))
+      setNotifications((prev) =>
+        prev.map((notification) => ({ ...notification, read: true })),
       );
     } catch (err: any) {
-      setError(err.message || 'Failed to mark all notifications as read');
+      setError(err.message || "Failed to mark all notifications as read");
     }
   }, []);
 
   const getUnreadNotifications = useCallback((): Notification[] => {
-    return notifications.filter(notification => !notification.read);
+    return notifications.filter((notification) => !notification.read);
   }, [notifications]);
 
-  const getNotificationsByType = useCallback((type: string): Notification[] => {
-    return notifications.filter(notification => notification.type === type);
-  }, [notifications]);
+  const getNotificationsByType = useCallback(
+    (type: string): Notification[] => {
+      return notifications.filter((notification) => notification.type === type);
+    },
+    [notifications],
+  );
 
   const unreadCount = getUnreadNotifications().length;
 
