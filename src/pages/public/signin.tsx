@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
-import { ClientSignInCardForm } from "@/widget/client-signin-form";
 import { NavBar } from "@/widget/navbar";
+import { SignInCardForm } from "@/widget/signin-form";
 
 export const SignInPage = () => {
   useEffect(() => {
@@ -11,7 +11,7 @@ export const SignInPage = () => {
   return (
     <main>
       <NavBar />
-      <ClientSignInCardForm />
+      <SignInCardForm />
     </main>
   );
 };
