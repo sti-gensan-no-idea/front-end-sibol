@@ -8,6 +8,7 @@ import {
   Chip,
 } from "@heroui/react";
 import { IconFileUpload, IconPlus } from "@tabler/icons-react";
+
 import { useProperties } from "../hooks";
 
 import { ManualAddModal } from "./developer-manual-form-modal";
@@ -22,7 +23,6 @@ export interface UploadModalInterface {
 export const DeveloperUploadModal = ({
   isOpen,
   onOpenChange,
-  onConfirm,
 }: UploadModalInterface) => {
   const [isManualModalOpen, setIsManualModalOpen] = useState(false);
   const [isBulkModalOpen, setIsBulkModalOpen] = useState(false);
@@ -36,13 +36,6 @@ export const DeveloperUploadModal = ({
   const openBulkModal = () => {
     onOpenChange(false);
     setTimeout(() => setIsBulkModalOpen(true), 200);
-  };
-
-  const handleModalSuccess = async () => {
-    await fetchProperties(); // Refresh properties list
-    if (onConfirm) {
-      onConfirm();
-    }
   };
 
   return (
@@ -127,12 +120,10 @@ export const DeveloperUploadModal = ({
       <ManualAddModal
         isOpen={isManualModalOpen}
         onOpenChange={setIsManualModalOpen}
-        onSuccess={handleModalSuccess}
       />
       <BulkUploadModal
         isOpen={isBulkModalOpen}
         onOpenChange={setIsBulkModalOpen}
-        onSuccess={handleModalSuccess}
       />
     </>
   );
