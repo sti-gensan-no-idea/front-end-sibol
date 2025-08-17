@@ -18,12 +18,12 @@ export const initialColumns: Record<string, Column> = {
   scheduled_viewing: {
     id: "scheduled_viewing",
     title: "SCHEDULED VIEWING",
-    leadIds: ["3", "6", "9"],
+    leadIds: ["3", "6"],
   },
   reserved: {
     id: "reserved",
     title: "RESERVED",
-    leadIds: [],
+    leadIds: ["9"],
   },
   qualified: {
     id: "qualified",
