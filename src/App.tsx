@@ -10,6 +10,7 @@ import { DashboardAgentPage } from "@/pages/agent/dashboard-agent";
 import { DashboardBrokerPage } from "@/pages/broker/dashboard-broker";
 import { DashboardAdminPage } from "@/pages/admin/dashboard-admin";
 import { NotFoundPage } from "@/pages/public/not-found";
+import { FindAgents } from "@/pages/public/find-agents";
 
 function App() {
   return (
@@ -18,6 +19,8 @@ function App() {
       <Route element={<SignInPage />} path="/signin" />
       <Route element={<SignUpPage />} path="/signup" />
       <Route element={<AboutUsPage />} path="/about" />
+
+      <Route element={<FindAgents />} path="/agents" />
 
       <Route element={<DashboardClientPage />} path="/profile/client" />
       <Route element={<DashboardDeveloperPage />} path="/profile/developer" />
