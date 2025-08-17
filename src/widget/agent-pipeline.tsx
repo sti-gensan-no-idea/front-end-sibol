@@ -6,18 +6,18 @@ import {
   DropResult,
   DroppableProps,
 } from "react-beautiful-dnd";
-import { Button, Chip } from "@heroui/react";
+import { Chip } from "@heroui/react";
 import {
+  IconActivityHeartbeat,
   IconChecks,
   IconGripVertical,
-  IconPlus,
-  IconRobotFace,
   IconThumbDown,
   IconTrash,
 } from "@tabler/icons-react";
 
 import { initialLeads } from "@/data/crm-leads";
 import { initialColumns } from "@/data/crm-columns";
+import { getTagColor } from "@/utils/agent-pipeline";
 
 const StrictModeDroppable = ({ children, ...props }: DroppableProps) => {
   const [enabled, setEnabled] = useState(false);
@@ -38,7 +38,7 @@ const StrictModeDroppable = ({ children, ...props }: DroppableProps) => {
   return <Droppable {...props}>{children}</Droppable>;
 };
 
-export const AgentAutomation = () => {
+export const AgentPipeline = () => {
   const [leads, setLeads] = useState(initialLeads);
   const [columns, setColumns] = useState(initialColumns);
   const [isDragging, setIsDragging] = useState(false);
@@ -92,7 +92,6 @@ export const AgentAutomation = () => {
         destination.droppableId === "won" ||
         destination.droppableId === "lost"
       ) {
-        // Update lead status
         setLeads((prev) => ({
           ...prev,
           [draggableId]: {
@@ -100,7 +99,6 @@ export const AgentAutomation = () => {
             tag: destination.droppableId,
           },
         }));
-        // Optionally move back to source column or a specific column
         const sourceColumn = columns[source.droppableId];
         const newLeadIds = Array.from(sourceColumn.leadIds).filter(
           (id) => id !== draggableId
@@ -155,33 +153,15 @@ export const AgentAutomation = () => {
     }));
   };
 
-  const getTagColor = (tag: string) => {
-    switch (tag) {
-      case "hot":
-      case "won":
-        return "danger";
-      case "warm":
-        return "warning";
-      case "cold":
-      case "lost":
-        return "primary";
-      default:
-        return "primary";
-    }
-  };
-
   return (
     <div className="flex flex-col p-4 sm:p-6 md:p-8 rounded-large shadow-medium bg-white">
       <div className="mb-4 flex items-center md:items-start justify-between">
         <div className="flex items-center">
-          <IconRobotFace className="text-gray-500" size={26} />
+          <IconActivityHeartbeat className="text-gray-500" size={26} />
           <span className="text-lg font-bold ml-2 text-foreground-700">
-            Automation
+            Sales Pipeline
           </span>
         </div>
-        <Button color="primary" startContent={<IconPlus />} variant="flat">
-          Add Lead
-        </Button>
       </div>
 
       <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
@@ -193,7 +173,7 @@ export const AgentAutomation = () => {
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className={`bg-gray-100 rounded-lg p-4 min-h-[300px] flex-shrink-0 ${
+                  className={`bg-gray-100 rounded-lg p-4 ${
                     snapshot.isDraggingOver ? "bg-gray-200" : ""
                   }`}
                 >
@@ -258,7 +238,7 @@ export const AgentAutomation = () => {
 
         {/* Action buttons */}
         <div
-          className={`grid grid-cols-3 p-8 shadow-medium gap-4 transition-opacity fixed bg-white left-0 right-0 top-0 ${
+          className={`grid grid-cols-3 px-8 py-4 shadow-medium gap-4 transition-opacity fixed bg-white left-0 right-0 top-0 ${
             isDragging ? "opacity-100" : "opacity-0"
           }`}
         >

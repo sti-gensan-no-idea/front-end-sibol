@@ -4,7 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import { AgentSideBar } from "@/widget/agent-sidebar";
 import { TopPerformingAgent } from "@/widget/top-performing-agent.s";
 import { CalendarEvents } from "@/widget/calendar-events";
-import { AgentAutomation } from "@/widget/agent-automation";
+import { AgentPipeline } from "@/widget/agent-pipeline";
 import { Notification } from "@/widget/notification";
 import { AgentWelcome } from "@/widget/agent-welcome";
 import { SiteViewingRequest } from "@/widget/agent-site-viewing-request";
@@ -77,7 +77,7 @@ const AgentsTabContent = () => {
 const AutomationTabContent = () => {
   return (
     <>
-      <AgentAutomation />
+      <AgentPipeline />
     </>
   );
 };
