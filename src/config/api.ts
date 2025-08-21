@@ -8,7 +8,7 @@
 
 /** Default API base URLs */
 const DEFAULT_PROD = "https://api.atuna.org";  // Nginx + TLS (recommended for production)
-const DEFAULT_DEV  = "http://atuna.org:8000";  // Public FastAPI port for local dev/testing
+const DEFAULT_DEV  = "https://atuna.org";  // Public FastAPI port for local dev/testing
 
 /** Raw env var from Vite (compile-time replacement) */
 const RAW_ENV = (import.meta.env?.VITE_API_BASE_URL ?? "").trim();
