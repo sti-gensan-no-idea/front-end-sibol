@@ -1,5 +1,6 @@
-import apiService from './apiService';
-import type { User, UserRole } from '../types/api';
+import type { UserRole } from "../types/api";
+
+import apiService from "./apiService";
 
 export interface UserResponse {
   id: string;
@@ -84,6 +85,7 @@ export class UserManagementService {
     has_prev: boolean;
   }> {
     const queryParams = new URLSearchParams();
+
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
@@ -91,8 +93,9 @@ export class UserManagementService {
         }
       });
     }
-    
-    const endpoint = `/clients${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+
+    const endpoint = `/clients${queryParams.toString() ? `?${queryParams.toString()}` : ""}`;
+
     return apiService.get(endpoint);
   }
 
@@ -122,6 +125,7 @@ export class UserManagementService {
     has_prev: boolean;
   }> {
     const queryParams = new URLSearchParams();
+
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
@@ -129,8 +133,9 @@ export class UserManagementService {
         }
       });
     }
-    
-    const endpoint = `/developers${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+
+    const endpoint = `/developers${queryParams.toString() ? `?${queryParams.toString()}` : ""}`;
+
     return apiService.get(endpoint);
   }
 
@@ -142,11 +147,14 @@ export class UserManagementService {
     return apiService.put(`/developers/${id}/verify`);
   }
 
-  async updateDeveloper(id: string, updates: {
-    company_name?: string;
-    license_to_sell?: string;
-    certificate_of_registration?: string;
-  }): Promise<DeveloperResponse> {
+  async updateDeveloper(
+    id: string,
+    updates: {
+      company_name?: string;
+      license_to_sell?: string;
+      certificate_of_registration?: string;
+    },
+  ): Promise<DeveloperResponse> {
     return apiService.put(`/developers/${id}`, updates);
   }
 
@@ -164,6 +172,7 @@ export class UserManagementService {
     has_prev: boolean;
   }> {
     const queryParams = new URLSearchParams();
+
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
@@ -171,8 +180,9 @@ export class UserManagementService {
         }
       });
     }
-    
-    const endpoint = `/brokers${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+
+    const endpoint = `/brokers${queryParams.toString() ? `?${queryParams.toString()}` : ""}`;
+
     return apiService.get(endpoint);
   }
 
@@ -184,10 +194,13 @@ export class UserManagementService {
     return apiService.put(`/brokers/${id}/verify`);
   }
 
-  async updateBroker(id: string, updates: {
-    license_number?: string;
-    team_name?: string;
-  }): Promise<BrokerResponse> {
+  async updateBroker(
+    id: string,
+    updates: {
+      license_number?: string;
+      team_name?: string;
+    },
+  ): Promise<BrokerResponse> {
     return apiService.put(`/brokers/${id}`, updates);
   }
 
@@ -206,6 +219,7 @@ export class UserManagementService {
     has_prev: boolean;
   }> {
     const queryParams = new URLSearchParams();
+
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
@@ -213,8 +227,9 @@ export class UserManagementService {
         }
       });
     }
-    
-    const endpoint = `/agents${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+
+    const endpoint = `/agents${queryParams.toString() ? `?${queryParams.toString()}` : ""}`;
+
     return apiService.get(endpoint);
   }
 
@@ -222,33 +237,47 @@ export class UserManagementService {
     return apiService.get(`/agents/${id}`);
   }
 
-  async updateAgent(id: string, updates: {
-    broker_id?: string;
-    cpd_certificate?: string;
-    cpd_expiry?: string;
-    is_active_in_team?: boolean;
-  }): Promise<AgentResponse> {
+  async updateAgent(
+    id: string,
+    updates: {
+      broker_id?: string;
+      cpd_certificate?: string;
+      cpd_expiry?: string;
+      is_active_in_team?: boolean;
+    },
+  ): Promise<AgentResponse> {
     return apiService.put(`/agents/${id}`, updates);
   }
 
-  async assignAgentToBroker(agentId: string, brokerId: string): Promise<AgentResponse> {
-    return apiService.put(`/agents/${agentId}/assign-broker`, { broker_id: brokerId });
+  async assignAgentToBroker(
+    agentId: string,
+    brokerId: string,
+  ): Promise<AgentResponse> {
+    return apiService.put(`/agents/${agentId}/assign-broker`, {
+      broker_id: brokerId,
+    });
   }
 
   // Account Management (Admin functions)
   async getPendingAccounts(): Promise<UserPendingResponse[]> {
-    return apiService.get('/accounts/pending');
+    return apiService.get("/accounts/pending");
   }
 
   async approveAccount(userId: string): Promise<UserResponse> {
     return apiService.put(`/accounts/approve/${userId}`);
   }
 
-  async rejectAccount(userId: string, rejection: AccountRejection): Promise<{ message: string }> {
+  async rejectAccount(
+    userId: string,
+    rejection: AccountRejection,
+  ): Promise<{ message: string }> {
     return apiService.put(`/accounts/reject/${userId}`, rejection);
   }
 
-  async banAccount(userId: string, ban: AccountBan): Promise<{ message: string }> {
+  async banAccount(
+    userId: string,
+    ban: AccountBan,
+  ): Promise<{ message: string }> {
     return apiService.put(`/accounts/ban/${userId}`, ban);
   }
 
@@ -258,30 +287,37 @@ export class UserManagementService {
 
   // User Profile Management
   async getCurrentUser(): Promise<UserResponse> {
-    return apiService.get('/users/me');
+    return apiService.get("/users/me");
   }
 
   async updateCurrentUser(updates: UserUpdate): Promise<UserResponse> {
-    return apiService.put('/users/me', updates);
+    return apiService.put("/users/me", updates);
   }
 
-  async changePassword(currentPassword: string, newPassword: string): Promise<{ message: string }> {
-    return apiService.put('/users/change-password', {
+  async changePassword(
+    currentPassword: string,
+    newPassword: string,
+  ): Promise<{ message: string }> {
+    return apiService.put("/users/change-password", {
       current_password: currentPassword,
       new_password: newPassword,
     });
   }
 
-  async uploadProfilePicture(file: File): Promise<{ profile_picture_url: string }> {
-    return apiService.uploadFile('/users/profile-picture', file);
+  async uploadProfilePicture(
+    file: File,
+  ): Promise<{ profile_picture_url: string }> {
+    return apiService.uploadFile("/users/profile-picture", file);
   }
 
   // Search Users
   async searchUsers(query: string, role?: UserRole): Promise<UserResponse[]> {
     const params = new URLSearchParams({ q: query });
+
     if (role) {
-      params.append('role', role);
+      params.append("role", role);
     }
+
     return apiService.get(`/users/search?${params.toString()}`);
   }
 }

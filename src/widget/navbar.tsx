@@ -42,6 +42,7 @@ export const NavBar = () => {
                 href="/properties?tab=properties"
                 title="Properties"
               />
+              <Tab key="/agents" href="/agents?tab=agents" title="Agents" />
               <Tab key="/about" href="/about" title="About Us" />
             </Tabs>
           </div>

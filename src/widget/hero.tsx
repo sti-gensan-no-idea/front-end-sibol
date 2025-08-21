@@ -11,7 +11,7 @@ export const Hero = () => {
   const handleSearch = () => {
     if (!query.trim()) return;
     navigate(
-      `/properties?page=1&tab=search_properties&query=${encodeURIComponent(query)}`
+      `/properties?page=1&tab=search_properties&query=${encodeURIComponent(query)}`,
     );
   };
 

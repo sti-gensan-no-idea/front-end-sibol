@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Divider, Input, Link } from "@heroui/react";
 import { IconLockFilled, IconMailFilled } from "@tabler/icons-react";
+
 import { useAuth } from "../hooks";
 
 export const DeveloperSignInCardForm = () => {
@@ -13,7 +14,7 @@ export const DeveloperSignInCardForm = () => {
   });
 
   const handleInputChange = (name: string, value: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -21,9 +22,9 @@ export const DeveloperSignInCardForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    const success = await signin(formData, 'developer');
-    
+
+    const success = await signin(formData, "developer");
+
     if (success) {
       navigate("/developer/dashboard");
     }
@@ -44,7 +45,7 @@ export const DeveloperSignInCardForm = () => {
           Answers to your real estate questions and concerns
         </span>
 
-        <form onSubmit={handleSubmit} className="flex flex-col w-full">
+        <form className="flex flex-col w-full" onSubmit={handleSubmit}>
           <div className="flex flex-col w-full mt-8">
             {error && (
               <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
@@ -53,6 +54,7 @@ export const DeveloperSignInCardForm = () => {
             )}
 
             <Input
+              required
               className="mt-4"
               label="Email"
               name="email"
@@ -61,9 +63,9 @@ export const DeveloperSignInCardForm = () => {
               type="email"
               value={formData.email}
               onChange={(e) => handleInputChange("email", e.target.value)}
-              required
             />
             <Input
+              required
               className="mt-4"
               label="Password"
               name="password"
@@ -72,7 +74,6 @@ export const DeveloperSignInCardForm = () => {
               type="password"
               value={formData.password}
               onChange={(e) => handleInputChange("password", e.target.value)}
-              required
             />
             <div className="flex justify-end mt-4">
               <Link
@@ -85,12 +86,12 @@ export const DeveloperSignInCardForm = () => {
             </div>
           </div>
 
-          <Button 
-            className="mt-8 w-full" 
-            color="primary" 
-            type="submit"
-            isLoading={loading}
+          <Button
+            className="mt-8 w-full"
+            color="primary"
             disabled={loading}
+            isLoading={loading}
+            type="submit"
           >
             {loading ? "Signing In..." : "Sign In"}
           </Button>

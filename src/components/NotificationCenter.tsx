@@ -1,25 +1,14 @@
+import { Card, CardBody, CardHeader, Button, Chip, Badge } from "@heroui/react";
 import {
-  Card,
-  CardBody,
-  CardHeader,
-  Button,
-  Chip,
-  Badge,
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
-} from "@heroui/react";
-import { 
-  IconBell, 
-  IconCheck, 
+  IconBell,
+  IconCheck,
   IconCheckbox,
-  IconX,
   IconInfo,
   IconAlertTriangle,
   IconCheckCircle,
   IconExclamationCircle,
 } from "@tabler/icons-react";
+
 import { useNotifications } from "../hooks";
 
 interface NotificationCenterProps {
@@ -27,26 +16,26 @@ interface NotificationCenterProps {
 }
 
 export const NotificationCenter = ({ className }: NotificationCenterProps) => {
-  const { 
-    notifications, 
-    unreadCount, 
-    markAsRead, 
+  const {
+    notifications,
+    unreadCount,
+    markAsRead,
     markAllAsRead,
     getUnreadNotifications,
     getNotificationsByType,
-    loading, 
-    error 
+    loading,
+    error,
   } = useNotifications();
 
   const unreadNotifications = getUnreadNotifications();
 
   const getNotificationIcon = (type: string) => {
     switch (type) {
-      case 'success':
+      case "success":
         return <IconCheckCircle className="w-5 h-5 text-green-600" />;
-      case 'warning':
+      case "warning":
         return <IconAlertTriangle className="w-5 h-5 text-orange-600" />;
-      case 'error':
+      case "error":
         return <IconExclamationCircle className="w-5 h-5 text-red-600" />;
       default:
         return <IconInfo className="w-5 h-5 text-blue-600" />;
@@ -55,21 +44,28 @@ export const NotificationCenter = ({ className }: NotificationCenterProps) => {
 
   const getNotificationColor = (type: string) => {
     switch (type) {
-      case 'success': return 'success';
-      case 'warning': return 'warning';
-      case 'error': return 'danger';
-      default: return 'primary';
+      case "success":
+        return "success";
+      case "warning":
+        return "warning";
+      case "error":
+        return "danger";
+      default:
+        return "primary";
     }
   };
 
   const formatTimeAgo = (dateStr: string) => {
     const now = new Date();
     const notificationDate = new Date(dateStr);
-    const diffInMinutes = Math.floor((now.getTime() - notificationDate.getTime()) / (1000 * 60));
+    const diffInMinutes = Math.floor(
+      (now.getTime() - notificationDate.getTime()) / (1000 * 60),
+    );
 
-    if (diffInMinutes < 1) return 'Just now';
+    if (diffInMinutes < 1) return "Just now";
     if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
     if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)}h ago`;
+
     return `${Math.floor(diffInMinutes / 1440)}d ago`;
   };
 
@@ -77,7 +73,7 @@ export const NotificationCenter = ({ className }: NotificationCenterProps) => {
     return (
       <div className={`flex items-center justify-center h-64 ${className}`}>
         <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto" />
           <p className="mt-2 text-gray-600">Loading notifications...</p>
         </div>
       </div>
@@ -97,22 +93,28 @@ export const NotificationCenter = ({ className }: NotificationCenterProps) => {
         <CardHeader>
           <div className="flex items-center justify-between w-full">
             <div className="flex items-center gap-3">
-              <Badge content={unreadCount} color="danger" isInvisible={unreadCount === 0}>
+              <Badge
+                color="danger"
+                content={unreadCount}
+                isInvisible={unreadCount === 0}
+              >
                 <IconBell className="w-6 h-6 text-primary" />
               </Badge>
               <div>
                 <h3 className="text-lg font-semibold">Notifications</h3>
                 <p className="text-sm text-gray-600">
-                  {unreadCount > 0 ? `${unreadCount} unread notifications` : 'All caught up!'}
+                  {unreadCount > 0
+                    ? `${unreadCount} unread notifications`
+                    : "All caught up!"}
                 </p>
               </div>
             </div>
             {unreadCount > 0 && (
               <Button
-                size="sm"
                 color="primary"
-                variant="light"
+                size="sm"
                 startContent={<IconCheckbox />}
+                variant="light"
                 onPress={markAllAsRead}
               >
                 Mark all as read
@@ -133,28 +135,39 @@ export const NotificationCenter = ({ className }: NotificationCenterProps) => {
           </CardHeader>
           <CardBody className="pt-0 space-y-3">
             {unreadNotifications.slice(0, 5).map((notification) => (
-              <div key={notification.id} className="flex items-start gap-3 p-3 bg-white rounded-lg border">
+              <div
+                key={notification.id}
+                className="flex items-start gap-3 p-3 bg-white rounded-lg border"
+              >
                 <div className="flex-shrink-0 mt-1">
                   {getNotificationIcon(notification.type)}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between mb-1">
-                    <h5 className="font-medium text-sm">{notification.title}</h5>
+                    <h5 className="font-medium text-sm">
+                      {notification.title}
+                    </h5>
                     <div className="flex items-center gap-2 ml-2">
                       <span className="text-xs text-gray-500 whitespace-nowrap">
                         {formatTimeAgo(notification.created_at)}
                       </span>
-                      <Chip size="sm" color={getNotificationColor(notification.type)} variant="dot">
+                      <Chip
+                        color={getNotificationColor(notification.type)}
+                        size="sm"
+                        variant="dot"
+                      >
                         {notification.type}
                       </Chip>
                     </div>
                   </div>
-                  <p className="text-sm text-gray-600 mb-2">{notification.message}</p>
+                  <p className="text-sm text-gray-600 mb-2">
+                    {notification.message}
+                  </p>
                   <Button
-                    size="sm"
                     color="primary"
-                    variant="light"
+                    size="sm"
                     startContent={<IconCheck />}
+                    variant="light"
                     onPress={() => markAsRead(notification.id)}
                   >
                     Mark as read
@@ -179,12 +192,12 @@ export const NotificationCenter = ({ className }: NotificationCenterProps) => {
         <CardBody className="space-y-3">
           {notifications.length > 0 ? (
             notifications.map((notification) => (
-              <div 
-                key={notification.id} 
+              <div
+                key={notification.id}
                 className={`flex items-start gap-3 p-3 rounded-lg border transition-colors ${
-                  !notification.read 
-                    ? 'bg-blue-50 border-blue-200' 
-                    : 'bg-gray-50 border-gray-200 opacity-75'
+                  !notification.read
+                    ? "bg-blue-50 border-blue-200"
+                    : "bg-gray-50 border-gray-200 opacity-75"
                 }`}
               >
                 <div className="flex-shrink-0 mt-1">
@@ -192,36 +205,46 @@ export const NotificationCenter = ({ className }: NotificationCenterProps) => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between mb-1">
-                    <h5 className={`text-sm ${!notification.read ? 'font-medium' : 'font-normal'}`}>
+                    <h5
+                      className={`text-sm ${!notification.read ? "font-medium" : "font-normal"}`}
+                    >
                       {notification.title}
                       {!notification.read && (
-                        <span className="inline-block w-2 h-2 bg-blue-600 rounded-full ml-2"></span>
+                        <span className="inline-block w-2 h-2 bg-blue-600 rounded-full ml-2" />
                       )}
                     </h5>
                     <div className="flex items-center gap-2 ml-2">
                       <span className="text-xs text-gray-500 whitespace-nowrap">
                         {formatTimeAgo(notification.created_at)}
                       </span>
-                      <Chip size="sm" color={getNotificationColor(notification.type)} variant="dot">
+                      <Chip
+                        color={getNotificationColor(notification.type)}
+                        size="sm"
+                        variant="dot"
+                      >
                         {notification.type}
                       </Chip>
                     </div>
                   </div>
-                  <p className="text-sm text-gray-600 mb-2">{notification.message}</p>
+                  <p className="text-sm text-gray-600 mb-2">
+                    {notification.message}
+                  </p>
                   <div className="flex items-center gap-2">
                     {!notification.read && (
                       <Button
-                        size="sm"
                         color="primary"
-                        variant="light"
+                        size="sm"
                         startContent={<IconCheck />}
+                        variant="light"
                         onPress={() => markAsRead(notification.id)}
                       >
                         Mark as read
                       </Button>
                     )}
-                    <span className={`text-xs ${notification.read ? 'text-green-600' : 'text-gray-400'}`}>
-                      {notification.read ? 'Read' : 'Unread'}
+                    <span
+                      className={`text-xs ${notification.read ? "text-green-600" : "text-gray-400"}`}
+                    >
+                      {notification.read ? "Read" : "Unread"}
                     </span>
                   </div>
                 </div>
@@ -242,20 +265,24 @@ export const NotificationCenter = ({ className }: NotificationCenterProps) => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
           <Card>
             <CardBody className="text-center">
-              <div className="text-2xl font-bold text-blue-600">{notifications.length}</div>
+              <div className="text-2xl font-bold text-blue-600">
+                {notifications.length}
+              </div>
               <div className="text-sm text-gray-600">Total</div>
             </CardBody>
           </Card>
           <Card>
             <CardBody className="text-center">
-              <div className="text-2xl font-bold text-orange-600">{unreadCount}</div>
+              <div className="text-2xl font-bold text-orange-600">
+                {unreadCount}
+              </div>
               <div className="text-sm text-gray-600">Unread</div>
             </CardBody>
           </Card>
           <Card>
             <CardBody className="text-center">
               <div className="text-2xl font-bold text-green-600">
-                {getNotificationsByType('success').length}
+                {getNotificationsByType("success").length}
               </div>
               <div className="text-sm text-gray-600">Success</div>
             </CardBody>
@@ -263,7 +290,7 @@ export const NotificationCenter = ({ className }: NotificationCenterProps) => {
           <Card>
             <CardBody className="text-center">
               <div className="text-2xl font-bold text-red-600">
-                {getNotificationsByType('error').length}
+                {getNotificationsByType("error").length}
               </div>
               <div className="text-sm text-gray-600">Alerts</div>
             </CardBody>

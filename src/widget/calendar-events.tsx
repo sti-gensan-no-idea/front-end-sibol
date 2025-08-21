@@ -4,6 +4,7 @@ import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 
 import { agentEvents } from "@/data/agent-events";
 import { monthNames } from "@/data/months";
+import { daysInWeek } from "@/data/days-in-week";
 
 const getDaysInMonth = (year: number, month: number) => {
   return new Date(year, month, 0).getDate();
@@ -16,6 +17,11 @@ const getDayOfWeek = (year: number, month: number, day: number) => {
 export const CalendarEvents = () => {
   const [year, setYear] = useState(2025);
   const [month, setMonth] = useState(8);
+
+  const today = new Date();
+  const currentYear = today.getFullYear();
+  const currentMonth = today.getMonth() + 1;
+  const currentDay = today.getDate();
 
   const daysInMonth = getDaysInMonth(year, month);
   const firstDayOfWeek = getDayOfWeek(year, month, 1);
@@ -39,17 +45,25 @@ export const CalendarEvents = () => {
   };
 
   const renderDayCell = (day: number | null, index: number) => {
-    if (!day) return <div key={index} className="p-4 rounded-medium" />;
+    if (!day) return <li key={index} className="p-4 rounded-medium" />;
+
     const dateKey = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
     const dayEvents = agentEvents.filter((e) => e.date === dateKey);
     const maxEventsToShow = 3;
 
+    const isToday =
+      day === currentDay && month === currentMonth && year === currentYear;
+
     return (
-      <div
+      <li
         key={index}
         className="border border-gray-400 p-4 min-h-[110px] flex flex-col rounded-medium"
       >
-        <span className="font-semibold mb-1 text-foreground-700 select-none">
+        <span
+          className={`font-semibold mb-1 select-none w-8 h-8 flex items-center justify-center rounded-full ${
+            isToday ? "bg-primary text-white" : "text-foreground-700"
+          }`}
+        >
           {day}
         </span>
 
@@ -73,7 +87,7 @@ export const CalendarEvents = () => {
             </div>
           )}
         </div>
-      </div>
+      </li>
     );
   };
 
@@ -119,20 +133,16 @@ export const CalendarEvents = () => {
       </div>
 
       {/* Weekday headers */}
-      <div className="grid grid-cols-3 xs:grid-cols-4 sm:grid-cols-7 gap-1 text-center text-xs sm:text-sm font-semibold text-foreground-500 mb-2 bg-gray-100 mx-2 sm:mx-4 py-2 rounded-medium">
-        <span>Sun</span>
-        <span>Mon</span>
-        <span>Tue</span>
-        <span>Wed</span>
-        <span>Thu</span>
-        <span>Fri</span>
-        <span>Sat</span>
-      </div>
+      <ul className="grid grid-cols-3 xs:grid-cols-4 sm:grid-cols-7 gap-1 text-center text-xs sm:text-sm font-semibold text-foreground-500 mb-2 bg-gray-100 mx-2 sm:mx-4 py-2 rounded-medium">
+        {daysInWeek.map((day) => (
+          <li key={day}>{day}</li>
+        ))}
+      </ul>
 
       {/* Days */}
-      <div className="grid grid-cols-3 xs:grid-cols-4 sm:grid-cols-7 gap-1 px-2 sm:px-4 text-xs sm:text-sm">
+      <ul className="grid grid-cols-3 xs:grid-cols-4 sm:grid-cols-7 gap-1 px-2 sm:px-4 text-xs sm:text-sm">
         {cells}
-      </div>
+      </ul>
     </div>
   );
 };

@@ -25,7 +25,7 @@ export const SiteViewingRequest = () => {
 
   const paginatedData = siteViewingReq.slice(
     (page - 1) * ITEMS_PER_PAGE,
-    page * ITEMS_PER_PAGE
+    page * ITEMS_PER_PAGE,
   );
 
   return (

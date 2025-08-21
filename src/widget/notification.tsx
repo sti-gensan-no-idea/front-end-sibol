@@ -14,7 +14,7 @@ export const Notification = () => {
   const queryParams = new URLSearchParams(location.search);
   const initialPage = parseInt(queryParams.get("page") || "1", 10);
   const [page, setPage] = useState<number>(
-    isNaN(initialPage) ? 1 : initialPage
+    isNaN(initialPage) ? 1 : initialPage,
   );
 
   const handlePageChange = (newPage: number) => {

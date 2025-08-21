@@ -1,5 +1,6 @@
-import apiService from './apiService';
-import type { Property, PropertyCreate, PropertyUpdate } from '../types/api';
+import type { PropertyCreate, PropertyUpdate } from "../types/api";
+
+import apiService from "./apiService";
 
 export interface PropertyResponse {
   id: string;
@@ -46,6 +47,7 @@ export class PropertyService {
     has_prev: boolean;
   }> {
     const queryParams = new URLSearchParams();
+
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
@@ -53,8 +55,9 @@ export class PropertyService {
         }
       });
     }
-    
-    const endpoint = `/properties${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+
+    const endpoint = `/properties${queryParams.toString() ? `?${queryParams.toString()}` : ""}`;
+
     return apiService.get(endpoint);
   }
 
@@ -65,7 +68,7 @@ export class PropertyService {
 
   // Create property
   async createProperty(property: PropertyCreate): Promise<PropertyResponse> {
-    return apiService.post('/properties/', property);
+    return apiService.post("/properties/", property);
   }
 
   // Bulk create properties
@@ -73,16 +76,19 @@ export class PropertyService {
     created_count: number;
     properties: PropertyResponse[];
   }> {
-    return apiService.post('/properties/bulk', { properties });
+    return apiService.post("/properties/bulk", { properties });
   }
 
   // Upload properties via CSV
   async uploadPropertiesCSV(file: File): Promise<CSVUploadResponse> {
-    return apiService.uploadFile('/properties/upload-csv', file);
+    return apiService.uploadFile("/properties/upload-csv", file);
   }
 
   // Update property
-  async updateProperty(id: string, updates: PropertyUpdate): Promise<PropertyResponse> {
+  async updateProperty(
+    id: string,
+    updates: PropertyUpdate,
+  ): Promise<PropertyResponse> {
     return apiService.put(`/properties/${id}`, updates);
   }
 
@@ -92,7 +98,10 @@ export class PropertyService {
   }
 
   // Assign property to broker/agent
-  async assignProperty(id: string, assignment: PropertyAssignmentCreate): Promise<{
+  async assignProperty(
+    id: string,
+    assignment: PropertyAssignmentCreate,
+  ): Promise<{
     property_id: string;
     assigned_to: string;
     assigned_to_role: string;
@@ -104,12 +113,12 @@ export class PropertyService {
 
   // Get properties assigned to user
   async getMyProperties(): Promise<PropertyResponse[]> {
-    return apiService.get('/properties/my-properties');
+    return apiService.get("/properties/my-properties");
   }
 
   // Get developer's properties
   async getDeveloperProperties(): Promise<PropertyResponse[]> {
-    return apiService.get('/properties/developer');
+    return apiService.get("/properties/developer");
   }
 
   // Search properties

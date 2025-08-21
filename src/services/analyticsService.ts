@@ -1,4 +1,4 @@
-import apiService from './apiService';
+import apiService from "./apiService";
 
 export interface DashboardAnalytics {
   total_properties: number;
@@ -122,7 +122,7 @@ export interface TeamAnalytics {
 export class AnalyticsService {
   // Dashboard Analytics
   async getDashboardAnalytics(): Promise<DashboardAnalytics> {
-    return apiService.get('/analytics/dashboard');
+    return apiService.get("/analytics/dashboard");
   }
 
   // Sales Analytics
@@ -132,6 +132,7 @@ export class AnalyticsService {
     property_type?: string;
   }): Promise<SalesAnalytics> {
     const queryParams = new URLSearchParams();
+
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
@@ -139,8 +140,9 @@ export class AnalyticsService {
         }
       });
     }
-    
-    const endpoint = `/analytics/sales${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+
+    const endpoint = `/analytics/sales${queryParams.toString() ? `?${queryParams.toString()}` : ""}`;
+
     return apiService.get(endpoint);
   }
 
@@ -151,6 +153,7 @@ export class AnalyticsService {
     agent_id?: string;
   }): Promise<LeadsAnalytics> {
     const queryParams = new URLSearchParams();
+
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
@@ -158,23 +161,25 @@ export class AnalyticsService {
         }
       });
     }
-    
-    const endpoint = `/analytics/leads${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+
+    const endpoint = `/analytics/leads${queryParams.toString() ? `?${queryParams.toString()}` : ""}`;
+
     return apiService.get(endpoint);
   }
 
   // Inventory Analytics
   async getInventoryAnalytics(): Promise<InventoryAnalytics> {
-    return apiService.get('/analytics/inventory');
+    return apiService.get("/analytics/inventory");
   }
 
   // Revenue Analytics
   async getRevenueAnalytics(params?: {
     start_date?: string;
     end_date?: string;
-    period?: 'monthly' | 'quarterly' | 'yearly';
+    period?: "monthly" | "quarterly" | "yearly";
   }): Promise<RevenueAnalytics> {
     const queryParams = new URLSearchParams();
+
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
@@ -182,26 +187,34 @@ export class AnalyticsService {
         }
       });
     }
-    
-    const endpoint = `/analytics/revenue${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+
+    const endpoint = `/analytics/revenue${queryParams.toString() ? `?${queryParams.toString()}` : ""}`;
+
     return apiService.get(endpoint);
   }
 
   // Agent Statistics
   async getAgentStatistics(agentId?: string): Promise<AgentStatistics> {
-    const endpoint = agentId ? `/analytics/agent/${agentId}` : '/analytics/agent/me';
+    const endpoint = agentId
+      ? `/analytics/agent/${agentId}`
+      : "/analytics/agent/me";
+
     return apiService.get(endpoint);
   }
 
   // Broker Statistics
   async getBrokerStatistics(brokerId?: string): Promise<BrokerStatistics> {
-    const endpoint = brokerId ? `/analytics/broker/${brokerId}` : '/analytics/broker/me';
+    const endpoint = brokerId
+      ? `/analytics/broker/${brokerId}`
+      : "/analytics/broker/me";
+
     return apiService.get(endpoint);
   }
 
   // Team Analytics
   async getTeamAnalytics(teamId?: string): Promise<TeamAnalytics[]> {
-    const endpoint = teamId ? `/analytics/teams/${teamId}` : '/analytics/teams';
+    const endpoint = teamId ? `/analytics/teams/${teamId}` : "/analytics/teams";
+
     return apiService.get(endpoint);
   }
 
@@ -240,6 +253,7 @@ export class AnalyticsService {
     }>;
   }> {
     const queryParams = new URLSearchParams();
+
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
@@ -247,24 +261,31 @@ export class AnalyticsService {
         }
       });
     }
-    
-    const endpoint = `/analytics/market-trends${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+
+    const endpoint = `/analytics/market-trends${queryParams.toString() ? `?${queryParams.toString()}` : ""}`;
+
     return apiService.get(endpoint);
   }
 
   // Export Analytics Data
-  async exportAnalyticsData(type: 'sales' | 'leads' | 'inventory' | 'revenue', format: 'csv' | 'excel' = 'csv'): Promise<Blob> {
-    const response = await fetch(`${apiService['baseURL']}/analytics/export/${type}?format=${format}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+  async exportAnalyticsData(
+    type: "sales" | "leads" | "inventory" | "revenue",
+    format: "csv" | "excel" = "csv",
+  ): Promise<Blob> {
+    const response = await fetch(
+      `${apiService["baseURL"]}/analytics/export/${type}?format=${format}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
       },
-    });
-    
+    );
+
     if (!response.ok) {
-      throw new Error('Failed to export data');
+      throw new Error("Failed to export data");
     }
-    
+
     return response.blob();
   }
 }

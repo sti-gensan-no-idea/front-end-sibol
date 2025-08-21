@@ -1,5 +1,12 @@
-import { useState, useEffect, useCallback } from 'react';
-import { dataService, type Payment, type PaymentCreate, type PaymentStatus, type PaymentType } from '../services';
+import { useState, useEffect, useCallback } from "react";
+
+import {
+  dataService,
+  type Payment,
+  type PaymentCreate,
+  type PaymentStatus,
+  type PaymentType,
+} from "../services";
 
 interface UsePaymentsReturn {
   payments: Payment[];
@@ -7,7 +14,10 @@ interface UsePaymentsReturn {
   error: string | null;
   fetchPayments: () => Promise<void>;
   createPayment: (paymentData: PaymentCreate) => Promise<Payment | null>;
-  updatePaymentStatus: (id: string, status: PaymentStatus) => Promise<Payment | null>;
+  updatePaymentStatus: (
+    id: string,
+    status: PaymentStatus,
+  ) => Promise<Payment | null>;
   getPaymentsByStatus: (status: PaymentStatus) => Payment[];
   getPaymentsByType: (type: PaymentType) => Payment[];
   getTotalRevenue: () => number;
@@ -24,61 +34,86 @@ export const usePayments = (): UsePaymentsReturn => {
     setError(null);
     try {
       const data = await dataService.getPayments();
+
       setPayments(data);
     } catch (err: any) {
-      setError(err.message || 'Failed to fetch payments');
+      setError(err.message || "Failed to fetch payments");
     } finally {
       setLoading(false);
     }
   }, []);
 
-  const createPayment = useCallback(async (paymentData: PaymentCreate): Promise<Payment | null> => {
-    setLoading(true);
-    setError(null);
-    try {
-      const newPayment = await dataService.createPayment(paymentData);
-      setPayments(prev => [...prev, newPayment]);
-      return newPayment;
-    } catch (err: any) {
-      setError(err.message || 'Failed to create payment');
-      return null;
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const createPayment = useCallback(
+    async (paymentData: PaymentCreate): Promise<Payment | null> => {
+      setLoading(true);
+      setError(null);
+      try {
+        const newPayment = await dataService.createPayment(paymentData);
 
-  const updatePaymentStatus = useCallback(async (id: string, status: PaymentStatus): Promise<Payment | null> => {
-    setLoading(true);
-    setError(null);
-    try {
-      const updatedPayment = await dataService.updatePaymentStatus(id, status);
-      setPayments(prev => prev.map(p => p.id === id ? updatedPayment : p));
-      return updatedPayment;
-    } catch (err: any) {
-      setError(err.message || 'Failed to update payment status');
-      return null;
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+        setPayments((prev) => [...prev, newPayment]);
 
-  const getPaymentsByStatus = useCallback((status: PaymentStatus): Payment[] => {
-    return payments.filter(payment => payment.status === status);
-  }, [payments]);
+        return newPayment;
+      } catch (err: any) {
+        setError(err.message || "Failed to create payment");
 
-  const getPaymentsByType = useCallback((type: PaymentType): Payment[] => {
-    return payments.filter(payment => payment.payment_type === type);
-  }, [payments]);
+        return null;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [],
+  );
+
+  const updatePaymentStatus = useCallback(
+    async (id: string, status: PaymentStatus): Promise<Payment | null> => {
+      setLoading(true);
+      setError(null);
+      try {
+        const updatedPayment = await dataService.updatePaymentStatus(
+          id,
+          status,
+        );
+
+        setPayments((prev) =>
+          prev.map((p) => (p.id === id ? updatedPayment : p)),
+        );
+
+        return updatedPayment;
+      } catch (err: any) {
+        setError(err.message || "Failed to update payment status");
+
+        return null;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [],
+  );
+
+  const getPaymentsByStatus = useCallback(
+    (status: PaymentStatus): Payment[] => {
+      return payments.filter((payment) => payment.status === status);
+    },
+    [payments],
+  );
+
+  const getPaymentsByType = useCallback(
+    (type: PaymentType): Payment[] => {
+      return payments.filter((payment) => payment.payment_type === type);
+    },
+    [payments],
+  );
 
   const getTotalRevenue = useCallback((): number => {
     return payments
-      .filter(payment => payment.status === 'completed')
+      .filter((payment) => payment.status === "completed")
       .reduce((total, payment) => total + payment.amount, 0);
   }, [payments]);
 
   const getPendingPayments = useCallback((): Payment[] => {
-    return payments.filter(payment => 
-      payment.status === 'pending' || payment.status === 'processing'
+    return payments.filter(
+      (payment) =>
+        payment.status === "pending" || payment.status === "processing",
     );
   }, [payments]);
 

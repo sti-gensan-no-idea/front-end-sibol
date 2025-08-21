@@ -27,7 +27,7 @@ export const LogoutConfirmationModal = ({
             <p>Are you sure you want to log out?</p>
           </ModalBody>
           <ModalFooter>
-            <Button color="default" onPress={onClose} variant="flat">
+            <Button color="default" variant="flat" onPress={onClose}>
               Cancel
             </Button>
             <Button

@@ -1,4 +1,4 @@
-import apiService from './apiService';
+import apiService from "./apiService";
 
 export interface LeadResponse {
   id: string;
@@ -7,7 +7,7 @@ export interface LeadResponse {
   client_email: string;
   client_phone?: string;
   agent_id?: string;
-  status: 'prospecting' | 'contacted' | 'site_viewed' | 'reserved' | 'closed';
+  status: "prospecting" | "contacted" | "site_viewed" | "reserved" | "closed";
   created_at: string;
   updated_at?: string;
 }
@@ -21,7 +21,7 @@ export interface LeadCreate {
 }
 
 export interface LeadUpdate {
-  status?: 'prospecting' | 'contacted' | 'site_viewed' | 'reserved' | 'closed';
+  status?: "prospecting" | "contacted" | "site_viewed" | "reserved" | "closed";
   notes?: string;
   next_followup?: string;
 }
@@ -61,6 +61,7 @@ export class CRMService {
     property_id?: string;
   }): Promise<LeadResponse[]> {
     const queryParams = new URLSearchParams();
+
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
@@ -68,20 +69,24 @@ export class CRMService {
         }
       });
     }
-    
-    const endpoint = `/crm/leads${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+
+    const endpoint = `/crm/leads${queryParams.toString() ? `?${queryParams.toString()}` : ""}`;
+
     return apiService.get(endpoint);
   }
 
   async createLead(lead: LeadCreate): Promise<LeadResponse> {
-    return apiService.post('/crm/leads', lead);
+    return apiService.post("/crm/leads", lead);
   }
 
   async getLeadById(id: string): Promise<LeadResponse> {
     return apiService.get(`/crm/leads/${id}`);
   }
 
-  async updateLeadStatus(id: string, updates: LeadUpdate): Promise<LeadResponse> {
+  async updateLeadStatus(
+    id: string,
+    updates: LeadUpdate,
+  ): Promise<LeadResponse> {
     return apiService.put(`/crm/leads/${id}/status`, updates);
   }
 
@@ -90,7 +95,10 @@ export class CRMService {
   }
 
   async getAgentLeads(agentId?: string): Promise<LeadResponse[]> {
-    const endpoint = agentId ? `/crm/leads/agent/${agentId}` : '/crm/leads/my-leads';
+    const endpoint = agentId
+      ? `/crm/leads/agent/${agentId}`
+      : "/crm/leads/my-leads";
+
     return apiService.get(endpoint);
   }
 
@@ -104,28 +112,30 @@ export class CRMService {
 
   // Bookmarks
   async getBookmarks(): Promise<BookmarkResponse[]> {
-    return apiService.get('/bookmarks');
+    return apiService.get("/bookmarks");
   }
 
   async createBookmark(bookmark: BookmarkCreate): Promise<BookmarkResponse> {
-    return apiService.post('/bookmarks', bookmark);
+    return apiService.post("/bookmarks", bookmark);
   }
 
   async deleteBookmark(id: string): Promise<{ message: string }> {
     return apiService.delete(`/bookmarks/${id}`);
   }
 
-  async toggleBookmark(propertyId: string): Promise<{ bookmarked: boolean; bookmark?: BookmarkResponse }> {
-    return apiService.post('/bookmarks/toggle', { property_id: propertyId });
+  async toggleBookmark(
+    propertyId: string,
+  ): Promise<{ bookmarked: boolean; bookmark?: BookmarkResponse }> {
+    return apiService.post("/bookmarks/toggle", { property_id: propertyId });
   }
 
   // Notifications
   async getNotifications(): Promise<NotificationResponse[]> {
-    return apiService.get('/notifications');
+    return apiService.get("/notifications");
   }
 
   async markAllNotificationsAsRead(): Promise<{ message: string }> {
-    return apiService.put('/notifications');
+    return apiService.put("/notifications");
   }
 
   async markNotificationAsRead(id: string): Promise<NotificationResponse> {
@@ -137,7 +147,7 @@ export class CRMService {
   }
 
   async getUnreadNotificationCount(): Promise<{ count: number }> {
-    return apiService.get('/notifications/unread-count');
+    return apiService.get("/notifications/unread-count");
   }
 }
 

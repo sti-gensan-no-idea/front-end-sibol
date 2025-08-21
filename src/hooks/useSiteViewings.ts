@@ -1,14 +1,26 @@
-import { useState, useEffect, useCallback } from 'react';
-import { dataService, type SiteViewing, type SiteViewingCreate } from '../services';
+import { useState, useEffect, useCallback } from "react";
+
+import {
+  dataService,
+  type SiteViewing,
+  type SiteViewingCreate,
+} from "../services";
 
 interface UseSiteViewingsReturn {
   siteViewings: SiteViewing[];
   loading: boolean;
   error: string | null;
   fetchSiteViewings: () => Promise<void>;
-  createSiteViewing: (viewingData: SiteViewingCreate) => Promise<SiteViewing | null>;
-  createGuestSiteViewing: (viewingData: SiteViewingCreate) => Promise<SiteViewing | null>;
-  updateSiteViewing: (id: string, viewingData: Partial<SiteViewingCreate>) => Promise<SiteViewing | null>;
+  createSiteViewing: (
+    viewingData: SiteViewingCreate,
+  ) => Promise<SiteViewing | null>;
+  createGuestSiteViewing: (
+    viewingData: SiteViewingCreate,
+  ) => Promise<SiteViewing | null>;
+  updateSiteViewing: (
+    id: string,
+    viewingData: Partial<SiteViewingCreate>,
+  ) => Promise<SiteViewing | null>;
   confirmViewing: (id: string) => Promise<boolean>;
   cancelViewing: (id: string) => Promise<boolean>;
 }
@@ -23,66 +35,100 @@ export const useSiteViewings = (): UseSiteViewingsReturn => {
     setError(null);
     try {
       const data = await dataService.getSiteViewings();
+
       setSiteViewings(data);
     } catch (err: any) {
-      setError(err.message || 'Failed to fetch site viewings');
+      setError(err.message || "Failed to fetch site viewings");
     } finally {
       setLoading(false);
     }
   }, []);
 
-  const createSiteViewing = useCallback(async (viewingData: SiteViewingCreate): Promise<SiteViewing | null> => {
-    setLoading(true);
-    setError(null);
-    try {
-      const newViewing = await dataService.createSiteViewing(viewingData);
-      setSiteViewings(prev => [...prev, newViewing]);
-      return newViewing;
-    } catch (err: any) {
-      setError(err.message || 'Failed to create site viewing');
-      return null;
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const createSiteViewing = useCallback(
+    async (viewingData: SiteViewingCreate): Promise<SiteViewing | null> => {
+      setLoading(true);
+      setError(null);
+      try {
+        const newViewing = await dataService.createSiteViewing(viewingData);
 
-  const createGuestSiteViewing = useCallback(async (viewingData: SiteViewingCreate): Promise<SiteViewing | null> => {
-    setLoading(true);
-    setError(null);
-    try {
-      const newViewing = await dataService.createGuestSiteViewing(viewingData);
-      setSiteViewings(prev => [...prev, newViewing]);
-      return newViewing;
-    } catch (err: any) {
-      setError(err.message || 'Failed to create guest site viewing');
-      return null;
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+        setSiteViewings((prev) => [...prev, newViewing]);
 
-  const updateSiteViewing = useCallback(async (id: string, viewingData: Partial<SiteViewingCreate>): Promise<SiteViewing | null> => {
-    setLoading(true);
-    setError(null);
-    try {
-      const updatedViewing = await dataService.updateSiteViewing(id, viewingData);
-      setSiteViewings(prev => prev.map(v => v.id === id ? updatedViewing : v));
-      return updatedViewing;
-    } catch (err: any) {
-      setError(err.message || 'Failed to update site viewing');
-      return null;
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+        return newViewing;
+      } catch (err: any) {
+        setError(err.message || "Failed to create site viewing");
 
-  const confirmViewing = useCallback(async (id: string): Promise<boolean> => {
-    return await updateSiteViewing(id, { status: 'confirmed' }) !== null;
-  }, [updateSiteViewing]);
+        return null;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [],
+  );
 
-  const cancelViewing = useCallback(async (id: string): Promise<boolean> => {
-    return await updateSiteViewing(id, { status: 'cancelled' }) !== null;
-  }, [updateSiteViewing]);
+  const createGuestSiteViewing = useCallback(
+    async (viewingData: SiteViewingCreate): Promise<SiteViewing | null> => {
+      setLoading(true);
+      setError(null);
+      try {
+        const newViewing =
+          await dataService.createGuestSiteViewing(viewingData);
+
+        setSiteViewings((prev) => [...prev, newViewing]);
+
+        return newViewing;
+      } catch (err: any) {
+        setError(err.message || "Failed to create guest site viewing");
+
+        return null;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [],
+  );
+
+  const updateSiteViewing = useCallback(
+    async (
+      id: string,
+      viewingData: Partial<SiteViewingCreate>,
+    ): Promise<SiteViewing | null> => {
+      setLoading(true);
+      setError(null);
+      try {
+        const updatedViewing = await dataService.updateSiteViewing(
+          id,
+          viewingData,
+        );
+
+        setSiteViewings((prev) =>
+          prev.map((v) => (v.id === id ? updatedViewing : v)),
+        );
+
+        return updatedViewing;
+      } catch (err: any) {
+        setError(err.message || "Failed to update site viewing");
+
+        return null;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [],
+  );
+
+  const confirmViewing = useCallback(
+    async (id: string): Promise<boolean> => {
+      return (await updateSiteViewing(id, { status: "confirmed" })) !== null;
+    },
+    [updateSiteViewing],
+  );
+
+  const cancelViewing = useCallback(
+    async (id: string): Promise<boolean> => {
+      return (await updateSiteViewing(id, { status: "cancelled" })) !== null;
+    },
+    [updateSiteViewing],
+  );
 
   useEffect(() => {
     fetchSiteViewings();

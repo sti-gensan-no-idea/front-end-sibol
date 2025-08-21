@@ -4,7 +4,6 @@ import {
   CardBody,
   CardHeader,
   Button,
-  Badge,
   Chip,
   Modal,
   ModalBody,
@@ -16,15 +15,8 @@ import {
   Select,
   SelectItem,
 } from "@heroui/react";
-import { 
-  IconCalendar, 
-  IconClock, 
-  IconUser, 
-  IconBuilding, 
-  IconPlus,
-  IconCheck,
-  IconX,
-} from "@tabler/icons-react";
+import { IconCalendar, IconPlus, IconCheck, IconX } from "@tabler/icons-react";
+
 import { useEvents } from "../hooks";
 
 interface CalendarEventsProps {
@@ -32,9 +24,19 @@ interface CalendarEventsProps {
 }
 
 export const CalendarEvents = ({ className }: CalendarEventsProps) => {
-  const { events, createEvent, updateEvent, deleteEvent, getUpcomingEvents, loading, error } = useEvents();
+  const {
+    events,
+    createEvent,
+    updateEvent,
+    deleteEvent,
+    getUpcomingEvents,
+    loading,
+    error,
+  } = useEvents();
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<string>(new Date().toISOString().split('T')[0]);
+  const [selectedDate, setSelectedDate] = useState<string>(
+    new Date().toISOString().split("T")[0],
+  );
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -55,7 +57,7 @@ export const CalendarEvents = ({ className }: CalendarEventsProps) => {
   const upcomingEvents = getUpcomingEvents(7);
 
   const handleInputChange = (name: string, value: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -76,7 +78,7 @@ export const CalendarEvents = ({ className }: CalendarEventsProps) => {
     };
 
     const success = await createEvent(eventData);
-    
+
     if (success) {
       // Reset form
       setFormData({
@@ -87,33 +89,38 @@ export const CalendarEvents = ({ className }: CalendarEventsProps) => {
         event_type: "meeting",
         property_id: "",
       });
-      
+
       setIsCreateModalOpen(false);
     }
   };
 
   const getEventTypeColor = (type: string) => {
     switch (type) {
-      case 'site_viewing': return 'success';
-      case 'meeting': return 'primary';
-      case 'presentation': return 'warning';
-      case 'follow_up': return 'secondary';
-      default: return 'default';
+      case "site_viewing":
+        return "success";
+      case "meeting":
+        return "primary";
+      case "presentation":
+        return "warning";
+      case "follow_up":
+        return "secondary";
+      default:
+        return "default";
     }
   };
 
   const formatTime = (dateTime: string) => {
-    return new Date(dateTime).toLocaleTimeString('en-US', {
-      hour: '2-digit',
-      minute: '2-digit',
+    return new Date(dateTime).toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
   const formatDate = (dateTime: string) => {
-    return new Date(dateTime).toLocaleDateString('en-US', {
-      weekday: 'short',
-      month: 'short',
-      day: 'numeric',
+    return new Date(dateTime).toLocaleDateString("en-US", {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
     });
   };
 
@@ -121,7 +128,7 @@ export const CalendarEvents = ({ className }: CalendarEventsProps) => {
     return (
       <div className={`flex items-center justify-center h-64 ${className}`}>
         <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto" />
           <p className="mt-2 text-gray-600">Loading events...</p>
         </div>
       </div>
@@ -144,7 +151,9 @@ export const CalendarEvents = ({ className }: CalendarEventsProps) => {
               <IconCalendar className="w-6 h-6 text-primary" />
               <div>
                 <h3 className="text-lg font-semibold">Calendar Events</h3>
-                <p className="text-sm text-gray-600">Manage your appointments and meetings</p>
+                <p className="text-sm text-gray-600">
+                  Manage your appointments and meetings
+                </p>
               </div>
             </div>
             <Button
@@ -166,7 +175,10 @@ export const CalendarEvents = ({ className }: CalendarEventsProps) => {
         <CardBody className="space-y-4">
           {upcomingEvents.length > 0 ? (
             upcomingEvents.map((event) => (
-              <div key={event.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+              <div
+                key={event.id}
+                className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+              >
                 <div className="flex items-center gap-4">
                   <div className="text-center min-w-[60px]">
                     <div className="text-sm font-medium text-gray-900">
@@ -179,30 +191,38 @@ export const CalendarEvents = ({ className }: CalendarEventsProps) => {
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
                       <h5 className="font-medium">{event.title}</h5>
-                      <Chip size="sm" color={getEventTypeColor(event.event_type)} variant="flat">
-                        {event.event_type.replace('_', ' ')}
+                      <Chip
+                        color={getEventTypeColor(event.event_type)}
+                        size="sm"
+                        variant="flat"
+                      >
+                        {event.event_type.replace("_", " ")}
                       </Chip>
                     </div>
                     {event.description && (
-                      <p className="text-sm text-gray-600">{event.description}</p>
+                      <p className="text-sm text-gray-600">
+                        {event.description}
+                      </p>
                     )}
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
                   <Button
-                    size="sm"
                     color="success"
-                    variant="light"
+                    size="sm"
                     startContent={<IconCheck />}
-                    onPress={() => updateEvent(event.id, { status: 'completed' })}
+                    variant="light"
+                    onPress={() =>
+                      updateEvent(event.id, { status: "completed" })
+                    }
                   >
                     Complete
                   </Button>
                   <Button
-                    size="sm"
                     color="danger"
-                    variant="light"
+                    size="sm"
                     startContent={<IconX />}
+                    variant="light"
                     onPress={() => deleteEvent(event.id)}
                   >
                     Cancel
@@ -221,7 +241,11 @@ export const CalendarEvents = ({ className }: CalendarEventsProps) => {
       </Card>
 
       {/* Create Event Modal */}
-      <Modal isOpen={isCreateModalOpen} onOpenChange={setIsCreateModalOpen} size="2xl">
+      <Modal
+        isOpen={isCreateModalOpen}
+        size="2xl"
+        onOpenChange={setIsCreateModalOpen}
+      >
         <ModalContent>
           {(onClose) => (
             <>
@@ -229,19 +253,22 @@ export const CalendarEvents = ({ className }: CalendarEventsProps) => {
               <ModalBody>
                 <div className="space-y-4">
                   <Input
+                    required
                     label="Event Title"
                     placeholder="Enter event title"
                     value={formData.title}
                     onChange={(e) => handleInputChange("title", e.target.value)}
-                    required
                   />
 
                   <Select
                     label="Event Type"
                     placeholder="Select event type"
-                    selectedKeys={formData.event_type ? [formData.event_type] : []}
+                    selectedKeys={
+                      formData.event_type ? [formData.event_type] : []
+                    }
                     onSelectionChange={(keys) => {
                       const value = Array.from(keys)[0] as string;
+
                       handleInputChange("event_type", value || "");
                     }}
                   >
@@ -254,18 +281,22 @@ export const CalendarEvents = ({ className }: CalendarEventsProps) => {
 
                   <div className="grid grid-cols-2 gap-4">
                     <Input
+                      required
                       label="Start Date & Time"
                       type="datetime-local"
                       value={formData.start_time}
-                      onChange={(e) => handleInputChange("start_time", e.target.value)}
-                      required
+                      onChange={(e) =>
+                        handleInputChange("start_time", e.target.value)
+                      }
                     />
                     <Input
+                      required
                       label="End Date & Time"
                       type="datetime-local"
                       value={formData.end_time}
-                      onChange={(e) => handleInputChange("end_time", e.target.value)}
-                      required
+                      onChange={(e) =>
+                        handleInputChange("end_time", e.target.value)
+                      }
                     />
                   </div>
 
@@ -273,15 +304,19 @@ export const CalendarEvents = ({ className }: CalendarEventsProps) => {
                     label="Property ID (Optional)"
                     placeholder="Link to a specific property"
                     value={formData.property_id}
-                    onChange={(e) => handleInputChange("property_id", e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("property_id", e.target.value)
+                    }
                   />
 
                   <Textarea
                     label="Description (Optional)"
+                    minRows={3}
                     placeholder="Add event details..."
                     value={formData.description}
-                    onChange={(e) => handleInputChange("description", e.target.value)}
-                    minRows={3}
+                    onChange={(e) =>
+                      handleInputChange("description", e.target.value)
+                    }
                   />
                 </div>
               </ModalBody>
@@ -291,9 +326,14 @@ export const CalendarEvents = ({ className }: CalendarEventsProps) => {
                 </Button>
                 <Button
                   color="primary"
-                  onPress={handleCreateEvent}
+                  disabled={
+                    loading ||
+                    !formData.title ||
+                    !formData.start_time ||
+                    !formData.end_time
+                  }
                   isLoading={loading}
-                  disabled={loading || !formData.title || !formData.start_time || !formData.end_time}
+                  onPress={handleCreateEvent}
                 >
                   {loading ? "Creating..." : "Create Event"}
                 </Button>

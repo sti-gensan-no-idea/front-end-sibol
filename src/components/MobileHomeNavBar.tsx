@@ -3,13 +3,12 @@ import {
   Navbar,
   NavbarBrand,
   NavbarContent,
-  NavbarItem,
   NavbarMenuToggle,
   NavbarMenu,
   NavbarMenuItem,
   Link,
-  Button,
 } from "@heroui/react";
+
 import ImgLogo from "../assets/images/ic_logo.png";
 
 export default function MobileHomeNavBar() {
@@ -18,7 +17,7 @@ export default function MobileHomeNavBar() {
   const menuItems = ["Home", "Properties", "About Us"];
 
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen} className="bg-auto">
+    <Navbar className="bg-auto" onMenuOpenChange={setIsMenuOpen}>
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}

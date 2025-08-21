@@ -6,11 +6,18 @@ import {
   DropResult,
   DroppableProps,
 } from "react-beautiful-dnd";
-import { Button, Chip } from "@heroui/react";
-import { IconGripVertical, IconPlus, IconRobotFace } from "@tabler/icons-react";
+import { Chip } from "@heroui/react";
+import {
+  IconActivityHeartbeat,
+  IconChecks,
+  IconGripVertical,
+  IconThumbDown,
+  IconTrash,
+} from "@tabler/icons-react";
 
 import { initialLeads } from "@/data/crm-leads";
 import { initialColumns } from "@/data/crm-columns";
+import { getTagColor } from "@/utils/agent-pipeline";
 
 const StrictModeDroppable = ({ children, ...props }: DroppableProps) => {
   const [enabled, setEnabled] = useState(false);
@@ -31,12 +38,19 @@ const StrictModeDroppable = ({ children, ...props }: DroppableProps) => {
   return <Droppable {...props}>{children}</Droppable>;
 };
 
-export const AgentAutomation = () => {
+export const AgentPipeline = () => {
   const [leads, setLeads] = useState(initialLeads);
   const [columns, setColumns] = useState(initialColumns);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const onDragStart = () => {
+    setIsDragging(true);
+  };
 
   const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId } = result;
+
+    setIsDragging(false);
 
     if (!leads[draggableId]) {
       return;
@@ -53,6 +67,53 @@ export const AgentAutomation = () => {
       return;
     }
 
+    // Handle action buttons
+    if (["won", "lost", "delete"].includes(destination.droppableId)) {
+      if (destination.droppableId === "delete") {
+        // Remove lead from leads state
+        setLeads((prev) => {
+          const newLeads = { ...prev };
+
+          delete newLeads[draggableId];
+
+          return newLeads;
+        });
+        // Remove lead from source column
+        const sourceColumn = columns[source.droppableId];
+        const newLeadIds = Array.from(sourceColumn.leadIds).filter(
+          (id) => id !== draggableId
+        );
+
+        setColumns((prev) => ({
+          ...prev,
+          [sourceColumn.id]: { ...sourceColumn, leadIds: newLeadIds },
+        }));
+      } else if (
+        destination.droppableId === "won" ||
+        destination.droppableId === "lost"
+      ) {
+        setLeads((prev) => ({
+          ...prev,
+          [draggableId]: {
+            ...prev[draggableId],
+            tag: destination.droppableId,
+          },
+        }));
+        const sourceColumn = columns[source.droppableId];
+        const newLeadIds = Array.from(sourceColumn.leadIds).filter(
+          (id) => id !== draggableId
+        );
+
+        setColumns((prev) => ({
+          ...prev,
+          [sourceColumn.id]: { ...sourceColumn, leadIds: newLeadIds },
+        }));
+      }
+
+      return;
+    }
+
+    // Handle column-to-column drag
     const startColumn = columns[source.droppableId];
     const finishColumn = columns[destination.droppableId];
 
@@ -65,19 +126,16 @@ export const AgentAutomation = () => {
 
       newLeadIds.splice(source.index, 1);
       newLeadIds.splice(destination.index, 0, draggableId);
-
       const newColumn = { ...startColumn, leadIds: newLeadIds };
 
-      setColumns((prev) => {
-        const newColumns = { ...prev, [newColumn.id]: newColumn };
-
-        return newColumns;
-      });
+      setColumns((prev) => ({
+        ...prev,
+        [newColumn.id]: newColumn,
+      }));
 
       return;
     }
 
-    // Moving to different column
     const startLeadIds = Array.from(startColumn.leadIds);
 
     startLeadIds.splice(source.index, 1);
@@ -88,45 +146,26 @@ export const AgentAutomation = () => {
     finishLeadIds.splice(destination.index, 0, draggableId);
     const newFinish = { ...finishColumn, leadIds: finishLeadIds };
 
-    setColumns((prev) => {
-      const newColumns = {
-        ...prev,
-        [newStart.id]: newStart,
-        [newFinish.id]: newFinish,
-      };
-
-      return newColumns;
-    });
-  };
-
-  const getTagColor = (tag: string) => {
-    switch (tag) {
-      case "hot":
-        return "danger";
-      case "warm":
-        return "warning";
-      case "cold":
-        return "primary";
-      default:
-        return "primary";
-    }
+    setColumns((prev) => ({
+      ...prev,
+      [newStart.id]: newStart,
+      [newFinish.id]: newFinish,
+    }));
   };
 
   return (
-    <div className="flex flex-col p-4 sm:p-6 md:p-8 rounded-large shadow-medium bg-white over">
+    <div className="flex flex-col p-4 sm:p-6 md:p-8 rounded-large shadow-medium bg-white">
       <div className="mb-4 flex items-center md:items-start justify-between">
         <div className="flex items-center">
-          <IconRobotFace className="text-gray-500" size={26} />
+          <IconActivityHeartbeat className="text-gray-500" size={26} />
           <span className="text-lg font-bold ml-2 text-foreground-700">
-            Automation
+            Sales Pipeline
           </span>
         </div>
-        <Button color="primary" startContent={<IconPlus />} variant="flat">
-          Add Lead
-        </Button>
       </div>
 
-      <DragDropContext onDragEnd={onDragEnd}>
+      <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
+        {/* Columns */}
         <div className="grid grid-cols-5 gap-4">
           {Object.values(columns).map((column) => (
             <StrictModeDroppable key={column.id} droppableId={column.id}>
@@ -134,10 +173,9 @@ export const AgentAutomation = () => {
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className={`bg-gray-100 rounded-lg p-4 min-h-[300px] flex-shrink-0 ${
+                  className={`bg-gray-100 rounded-lg p-4 ${
                     snapshot.isDraggingOver ? "bg-gray-200" : ""
                   }`}
-                  style={{ position: "relative" }}
                 >
                   <h2 className="font-semibold mb-4 text-foreground-700">
                     {column.title}
@@ -158,22 +196,18 @@ export const AgentAutomation = () => {
                               ref={provided.innerRef}
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
-                              className={`bg-white p-3 flex items-center select-none rounded-small shadow-small mb-2 cursor-grab relative ${
+                              className={`bg-white p-3 flex items-center select-none relative rounded-small shadow-small mb-2 cursor-grab ${
                                 snapshot.isDragging
                                   ? "bg-green-50 shadow-lg"
                                   : ""
                               }`}
-                              style={{
-                                position: "relative",
-                                ...provided.draggableProps.style,
-                              }}
                             >
                               <IconGripVertical
-                                className="mr-2 text-gray-400 w-fit"
+                                className="mr-2 text-gray-400"
                                 size={18}
                               />
                               <div className="flex flex-col w-full">
-                                <span className="flex mr-10 font-medium bg text-ellipsis whitespace-nowrap overflow-x-hidden">
+                                <span className="flex mr-10 font-medium text-ellipsis whitespace-nowrap overflow-x-hidden">
                                   {lead.name}
                                 </span>
                                 <span className="flex w-full text-sm text-gray-500 overflow-x-hidden">
@@ -195,6 +229,41 @@ export const AgentAutomation = () => {
                         </Draggable>
                       );
                     })}
+                  {provided.placeholder}
+                </div>
+              )}
+            </StrictModeDroppable>
+          ))}
+        </div>
+
+        {/* Action buttons */}
+        <div
+          className={`grid grid-cols-3 px-8 py-4 shadow-medium gap-4 transition-opacity fixed bg-white left-0 right-0 top-0 ${
+            isDragging ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          {["won", "lost", "delete"].map((action) => (
+            <StrictModeDroppable key={action} droppableId={action}>
+              {(provided, snapshot) => (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  className={`px-4 h-14 flex items-center justify-center rounded-small border-3 border-dotted border-gray-300 ${
+                    snapshot.isDraggingOver ? "bg-gray-200" : ""
+                  }`}
+                >
+                  {action === "won" && (
+                    <IconChecks className="text-green-500" />
+                  )}
+                  {action === "lost" && (
+                    <IconThumbDown className="text-orange-500" />
+                  )}
+                  {action === "delete" && (
+                    <IconTrash className="text-red-500" />
+                  )}
+                  <span className="ml-2 text-foreground-700 font-semibold">
+                    {action.toUpperCase()}
+                  </span>
                   {provided.placeholder}
                 </div>
               )}

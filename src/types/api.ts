@@ -33,7 +33,7 @@ export interface User {
   office_verified?: boolean;
 }
 
-export type UserRole = 'client' | 'developer' | 'agent' | 'broker' | 'admin';
+export type UserRole = "client" | "developer" | "agent" | "broker" | "admin";
 
 // Registration Types
 export interface ClientRegister {
@@ -42,7 +42,7 @@ export interface ClientRegister {
   first_name?: string;
   last_name?: string;
   phone?: string;
-  role: 'client';
+  role: "client";
 }
 
 export interface DeveloperRegister {
@@ -51,7 +51,7 @@ export interface DeveloperRegister {
   first_name?: string;
   last_name?: string;
   phone?: string;
-  role: 'developer';
+  role: "developer";
   company_name: string;
   license_to_sell?: string;
   certificate_of_registration?: string;
@@ -63,7 +63,7 @@ export interface BrokerRegister {
   first_name?: string;
   last_name?: string;
   phone?: string;
-  role: 'broker';
+  role: "broker";
   license_number?: string;
   team_name?: string;
 }
@@ -74,7 +74,7 @@ export interface AgentRegister {
   first_name?: string;
   last_name?: string;
   phone?: string;
-  role: 'agent';
+  role: "agent";
   cpd_certificate?: string;
   cpd_expiry?: string;
   broker_id?: string;
@@ -99,7 +99,7 @@ export interface Property {
   images?: string[];
 }
 
-export type PropertyStatus = 'available' | 'reserved' | 'sold' | 'pending';
+export type PropertyStatus = "available" | "reserved" | "sold" | "pending";
 
 export interface PropertyCreate {
   title: string;
@@ -107,6 +107,19 @@ export interface PropertyCreate {
   price: number;
   location: string;
   property_type: string;
+  bedrooms?: number;
+  bathrooms?: number;
+  area?: number;
+  agent_id?: string;
+}
+
+export interface PropertyUpdate {
+  title?: string;
+  description?: string;
+  price?: number;
+  location?: string;
+  property_type?: string;
+  status?: PropertyStatus;
   bedrooms?: number;
   bathrooms?: number;
   area?: number;
@@ -149,7 +162,7 @@ export interface Event {
   created_at: string;
 }
 
-export type EventStatus = 'scheduled' | 'completed' | 'cancelled';
+export type EventStatus = "scheduled" | "completed" | "cancelled";
 
 export interface EventCreate {
   title: string;
@@ -158,6 +171,8 @@ export interface EventCreate {
   end_time: string;
   event_type: string;
   property_id?: string;
+  scheduled_date?: string;
+  status?: EventStatus;
 }
 
 // Site Viewing Types
@@ -175,7 +190,11 @@ export interface SiteViewing {
   created_at: string;
 }
 
-export type SiteViewingStatus = 'pending' | 'confirmed' | 'completed' | 'cancelled';
+export type SiteViewingStatus =
+  | "pending"
+  | "confirmed"
+  | "completed"
+  | "cancelled";
 
 export interface SiteViewingCreate {
   property_id: string;
@@ -185,6 +204,8 @@ export interface SiteViewingCreate {
   preferred_date: string;
   preferred_time: string;
   notes?: string;
+  scheduled_date?: string;
+  status?: SiteViewingStatus;
 }
 
 // Analytics Types
@@ -229,7 +250,7 @@ export interface Notification {
   created_at: string;
 }
 
-export type NotificationType = 'info' | 'success' | 'warning' | 'error';
+export type NotificationType = "info" | "success" | "warning" | "error";
 
 // Bookmark Types
 export interface Bookmark {
@@ -259,7 +280,15 @@ export interface Lead {
   updated_at: string;
 }
 
-export type LeadStatus = 'new' | 'contacted' | 'qualified' | 'proposal' | 'negotiation' | 'reserved' | 'closed' | 'lost';
+export type LeadStatus =
+  | "new"
+  | "contacted"
+  | "qualified"
+  | "proposal"
+  | "negotiation"
+  | "reserved"
+  | "closed"
+  | "lost";
 
 export interface LeadCreate {
   client_name: string;
@@ -284,8 +313,12 @@ export interface MaintenanceRequest {
   updated_at: string;
 }
 
-export type MaintenancePriority = 'low' | 'medium' | 'high' | 'urgent';
-export type MaintenanceStatus = 'open' | 'in_progress' | 'completed' | 'cancelled';
+export type MaintenancePriority = "low" | "medium" | "high" | "urgent";
+export type MaintenanceStatus =
+  | "open"
+  | "in_progress"
+  | "completed"
+  | "cancelled";
 
 export interface MaintenanceRequestCreate {
   property_id: string;
@@ -307,8 +340,17 @@ export interface Payment {
   updated_at: string;
 }
 
-export type PaymentType = 'reservation' | 'downpayment' | 'monthly' | 'maintenance';
-export type PaymentStatus = 'pending' | 'processing' | 'completed' | 'failed' | 'cancelled';
+export type PaymentType =
+  | "reservation"
+  | "downpayment"
+  | "monthly"
+  | "maintenance";
+export type PaymentStatus =
+  | "pending"
+  | "processing"
+  | "completed"
+  | "failed"
+  | "cancelled";
 
 export interface PaymentCreate {
   property_id: string;

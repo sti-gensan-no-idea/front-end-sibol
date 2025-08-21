@@ -1,4 +1,4 @@
-import apiService from './apiService';
+import apiService from "./apiService";
 
 export interface TeamResponse {
   id: string;
@@ -53,7 +53,7 @@ export interface TeamMemberResponse {
 export class TeamService {
   // Get all teams (broker's teams)
   async getTeams(): Promise<TeamResponse[]> {
-    return apiService.get('/teams/');
+    return apiService.get("/teams/");
   }
 
   // Get team by ID
@@ -63,7 +63,7 @@ export class TeamService {
 
   // Create team
   async createTeam(team: TeamCreate): Promise<TeamResponse> {
-    return apiService.post('/teams/', team);
+    return apiService.post("/teams/", team);
   }
 
   // Update team
@@ -77,12 +77,18 @@ export class TeamService {
   }
 
   // Add member to team
-  async addTeamMember(teamId: string, member: TeamMemberCreate): Promise<TeamMemberResponse> {
+  async addTeamMember(
+    teamId: string,
+    member: TeamMemberCreate,
+  ): Promise<TeamMemberResponse> {
     return apiService.post(`/teams/${teamId}/members`, member);
   }
 
   // Remove member from team
-  async removeTeamMember(teamId: string, userId: string): Promise<{ message: string }> {
+  async removeTeamMember(
+    teamId: string,
+    userId: string,
+  ): Promise<{ message: string }> {
     return apiService.delete(`/teams/${teamId}/members/${userId}`);
   }
 
@@ -106,20 +112,28 @@ export class TeamService {
 
   // Get available agents for team assignment
   async getAvailableAgents(): Promise<AgentResponse[]> {
-    return apiService.get('/teams/available-agents');
+    return apiService.get("/teams/available-agents");
   }
 
   // Assign property to team
-  async assignPropertyToTeam(teamId: string, propertyId: string): Promise<{
+  async assignPropertyToTeam(
+    teamId: string,
+    propertyId: string,
+  ): Promise<{
     team_id: string;
     property_id: string;
     assigned_date: string;
   }> {
-    return apiService.post(`/teams/${teamId}/assign-property`, { property_id: propertyId });
+    return apiService.post(`/teams/${teamId}/assign-property`, {
+      property_id: propertyId,
+    });
   }
 
   // Get team performance metrics
-  async getTeamPerformance(teamId: string, period?: string): Promise<{
+  async getTeamPerformance(
+    teamId: string,
+    period?: string,
+  ): Promise<{
     leads_generated: number;
     conversions: number;
     revenue: number;
@@ -127,7 +141,8 @@ export class TeamService {
     average_deal_size: number;
     period: string;
   }> {
-    const params = period ? `?period=${period}` : '';
+    const params = period ? `?period=${period}` : "";
+
     return apiService.get(`/teams/${teamId}/performance${params}`);
   }
 }

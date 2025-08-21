@@ -24,21 +24,25 @@ export const Chatbot = () => {
     const message = inputMessage.current?.value?.trim();
 
     if (!message) return;
+    
+    // TODO: Implement actual chatbot API call here
+    // You can integrate with your backend's chatbot endpoint
+    console.log("Sending message:", message);
+    
     inputMessage.current!.value = "";
   };
 
   return (
     <>
       <Button
-        isIconOnly
-        className="fixed right-8 bottom-8 z-50"
-        color="primary"
+        className="fixed right-8 bottom-8 z-50 bg-white"
         radius="full"
         size="lg"
+        startContent={<IconMessageChatbot />}
         variant="shadow"
         onPress={handleOpen}
       >
-        <IconMessageChatbot />
+        Chat with AI
       </Button>
 
       {/* Modal */}
@@ -61,7 +65,6 @@ export const Chatbot = () => {
               <ModalFooter>
                 <form
                   className="flex items-center w-full"
-                  method="post"
                   onSubmit={handleSubmit}
                 >
                   <Input
