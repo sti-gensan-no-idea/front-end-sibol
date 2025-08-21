@@ -1,6 +1,10 @@
-// API Configuration and Base Service
+// src/services/apiService.ts
+// -----------------------------------------------------------------------------
+// Base API service with token handling and JSON/file helpers.
+// Uses API_BASE_URL from src/config/api.ts (no hard-coded localhost).
+// -----------------------------------------------------------------------------
 
-const API_BASE_URL = "http://localhost:8000";
+import { API_BASE_URL } from "../config/api";
 
 export class ApiError extends Error {
   constructor(
@@ -18,7 +22,8 @@ class ApiService {
   private token: string | null = null;
 
   constructor(baseURL: string = API_BASE_URL) {
-    this.baseURL = baseURL;
+    // normalize base URL: strip trailing slash if present
+    this.baseURL = baseURL.replace(/\/+$/, "");
     this.token = localStorage.getItem("access_token");
   }
 
@@ -46,59 +51,64 @@ class ApiService {
 
   private async handleResponse<T>(response: Response): Promise<T> {
     if (!response.ok) {
+      // Try to parse JSON error; if not JSON, fall back to empty object
       const errorData = await response.json().catch(() => ({}));
 
       throw new ApiError(
-        errorData.detail || errorData.message || "An error occurred",
+        (errorData as any)?.detail ||
+          (errorData as any)?.message ||
+          "An error occurred",
         response.status,
         errorData,
       );
     }
 
-    const contentType = response.headers.get("content-type");
-
-    if (contentType && contentType.includes("application/json")) {
-      return response.json();
+    const contentType = response.headers.get("content-type") || "";
+    if (contentType.includes("application/json")) {
+      return response.json() as Promise<T>;
     }
 
-    return response.text() as unknown as T;
+    // Non-JSON: return text as T (caller must handle)
+    return (response.text() as unknown) as T;
+  }
+
+  /** Join base + endpoint safely */
+  private url(endpoint: string): string {
+    const path = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
+    return `${this.baseURL}${path}`;
   }
 
   async get<T>(endpoint: string): Promise<T> {
-    const response = await fetch(`${this.baseURL}${endpoint}`, {
+    const response = await fetch(this.url(endpoint), {
       method: "GET",
       headers: this.getHeaders(),
     });
-
     return this.handleResponse<T>(response);
   }
 
   async post<T>(endpoint: string, data?: any): Promise<T> {
-    const response = await fetch(`${this.baseURL}${endpoint}`, {
+    const response = await fetch(this.url(endpoint), {
       method: "POST",
       headers: this.getHeaders(),
-      body: data ? JSON.stringify(data) : undefined,
+      body: data !== undefined ? JSON.stringify(data) : undefined,
     });
-
     return this.handleResponse<T>(response);
   }
 
   async put<T>(endpoint: string, data?: any): Promise<T> {
-    const response = await fetch(`${this.baseURL}${endpoint}`, {
+    const response = await fetch(this.url(endpoint), {
       method: "PUT",
       headers: this.getHeaders(),
-      body: data ? JSON.stringify(data) : undefined,
+      body: data !== undefined ? JSON.stringify(data) : undefined,
     });
-
     return this.handleResponse<T>(response);
   }
 
   async delete<T>(endpoint: string): Promise<T> {
-    const response = await fetch(`${this.baseURL}${endpoint}`, {
+    const response = await fetch(this.url(endpoint), {
       method: "DELETE",
       headers: this.getHeaders(),
     });
-
     return this.handleResponse<T>(response);
   }
 
@@ -108,7 +118,6 @@ class ApiService {
     additionalData?: Record<string, any>,
   ): Promise<T> {
     const formData = new FormData();
-
     formData.append("file", file);
 
     if (additionalData) {
@@ -118,12 +127,11 @@ class ApiService {
     }
 
     const headers: HeadersInit = {};
-
     if (this.token) {
       headers.Authorization = `Bearer ${this.token}`;
     }
 
-    const response = await fetch(`${this.baseURL}${endpoint}`, {
+    const response = await fetch(this.url(endpoint), {
       method: "POST",
       headers,
       body: formData,
