@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Avatar,
   Button,
@@ -42,6 +43,19 @@ export const TeamModal = ({
   onClose: () => void;
   team: CardTeamInterface;
 }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    // TODO: Implement search functionality with API call
+    console.log("Searching for:", searchTerm);
+  };
+
+  const handleAddAgent = () => {
+    // TODO: Implement add agent functionality with API call
+    console.log("Add agent clicked");
+  };
+
   return (
     <Modal
       backdrop="blur"
@@ -132,14 +146,15 @@ export const TeamModal = ({
 
                 <div className="rounded-large bg-white shadow-small p-4 mt-8 flex items-center">
                   <form
-                    action="#"
                     className="flex items-center w-full"
-                    method="get"
+                    onSubmit={handleSearch}
                   >
                     <Input
                       placeholder="Search agent..."
                       size="lg"
                       startContent={<IconSearch />}
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
                     />
                     <Button isIconOnly className="hidden" type="submit">
                       <IconSearch />
@@ -149,6 +164,7 @@ export const TeamModal = ({
                     className="ml-4"
                     color="primary"
                     startContent={<IconPlus />}
+                    onPress={handleAddAgent}
                   >
                     Add Agent
                   </Button>
@@ -190,7 +206,7 @@ export const TeamModal = ({
                       </TableCell>
                     </TableRow>
 
-                    <TableRow key="1">
+                    <TableRow key="2">
                       <TableCell className="flex gap-5">
                         <Avatar
                           radius="full"
@@ -214,7 +230,7 @@ export const TeamModal = ({
                       </TableCell>
                     </TableRow>
 
-                    <TableRow key="1">
+                    <TableRow key="3">
                       <TableCell className="flex gap-5">
                         <Avatar
                           radius="full"
@@ -238,7 +254,7 @@ export const TeamModal = ({
                       </TableCell>
                     </TableRow>
 
-                    <TableRow key="1">
+                    <TableRow key="4">
                       <TableCell className="flex gap-5">
                         <Avatar
                           radius="full"
@@ -262,7 +278,7 @@ export const TeamModal = ({
                       </TableCell>
                     </TableRow>
 
-                    <TableRow key="1">
+                    <TableRow key="5">
                       <TableCell className="flex gap-5">
                         <Avatar
                           radius="full"
@@ -285,7 +301,7 @@ export const TeamModal = ({
                         <Switch size="sm" />
                       </TableCell>
                     </TableRow>
-                    <TableRow key="1">
+                    <TableRow key="6">
                       <TableCell className="flex gap-5">
                         <Avatar
                           radius="full"
@@ -308,7 +324,7 @@ export const TeamModal = ({
                         <Switch size="sm" />
                       </TableCell>
                     </TableRow>
-                    <TableRow key="1">
+                    <TableRow key="7">
                       <TableCell className="flex gap-5">
                         <Avatar
                           radius="full"

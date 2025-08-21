@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import {
   Button,
   Divider,
@@ -14,8 +14,12 @@ import {
   IconUserFilled,
 } from "@tabler/icons-react";
 
+import { useAuth } from "../hooks";
+
 export const SignInCardForm = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const { signin, loading, error } = useAuth();
 
   const validRoles = ["client", "developer", "agent", "broker"];
 
@@ -23,6 +27,12 @@ export const SignInCardForm = () => {
   const defaultRole = validRoles.includes(roleFromUrl || "")
     ? roleFromUrl
     : "client";
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    role: defaultRole || "client",
+  });
 
   useEffect(() => {
     if (!roleFromUrl || !validRoles.includes(roleFromUrl)) {
@@ -33,9 +43,38 @@ export const SignInCardForm = () => {
 
   const handleRoleChange = (keys: any) => {
     const value = Array.from(keys)[0] as string;
-
+    
+    setFormData((prev) => ({ ...prev, role: value }));
     searchParams.set("role", value.toString());
     setSearchParams(searchParams);
+  };
+
+  const handleInputChange = (name: string, value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const success = await signin(
+      { email: formData.email, password: formData.password },
+      formData.role
+    );
+
+    if (success) {
+      // Redirect to appropriate dashboard based on role
+      const dashboardRoutes = {
+        client: "/client/dashboard",
+        developer: "/developer/dashboard",
+        agent: "/agent/dashboard",
+        broker: "/broker/dashboard",
+      };
+      
+      navigate(dashboardRoutes[formData.role as keyof typeof dashboardRoutes] || "/client/dashboard");
+    }
   };
 
   return (
@@ -48,17 +87,23 @@ export const SignInCardForm = () => {
       <div className="w-lg mx-auto bg-white rounded-2xl shadow-large shadow-gray-300 p-8 flex flex-col items-center justify-center z-10">
         <span className="text-foreground-700 text-4xl mt-4 font-bold">
           Welcome Back,{" "}
-          {defaultRole?.charAt(0).toUpperCase()! + defaultRole?.slice(1)}!
+          {formData.role?.charAt(0).toUpperCase()! + formData.role?.slice(1)}!
         </span>
         <span className="text-foreground-700 mt-3">
           Answers to your real estate questions and concerns
         </span>
 
-        <form action="#" className="flex flex-col w-full" method="post">
+        <form className="flex flex-col w-full" onSubmit={handleSubmit}>
           <div className="flex flex-col w-full mt-8">
+            {error && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                {error}
+              </div>
+            )}
+
             <Select
               className="w-full"
-              defaultSelectedKeys={[defaultRole ?? "client"]}
+              selectedKeys={[formData.role]}
               label="Role"
               placeholder="Choose a role"
               startContent={<IconUserFilled />}
@@ -71,20 +116,26 @@ export const SignInCardForm = () => {
             </Select>
 
             <Input
+              required
               className="mt-4"
               label="Email"
               name="email"
               placeholder="Email address"
               startContent={<IconMailFilled />}
               type="email"
+              value={formData.email}
+              onChange={(e) => handleInputChange("email", e.target.value)}
             />
             <Input
+              required
               className="mt-4"
               label="Password"
               name="password"
               placeholder="Password"
               startContent={<IconLockFilled />}
               type="password"
+              value={formData.password}
+              onChange={(e) => handleInputChange("password", e.target.value)}
             />
             <div className="flex justify-end mt-4">
               <Link
@@ -97,8 +148,14 @@ export const SignInCardForm = () => {
             </div>
           </div>
 
-          <Button className="mt-8 w-full" color="primary" type="submit">
-            Sign In
+          <Button 
+            className="mt-8 w-full" 
+            color="primary" 
+            type="submit"
+            disabled={loading}
+            isLoading={loading}
+          >
+            {loading ? "Signing In..." : "Sign In"}
           </Button>
         </form>
 

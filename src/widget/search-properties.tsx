@@ -128,9 +128,20 @@ export const SearchProperties = () => {
 };
 
 const SearchBar = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    // TODO: Implement search functionality with API call
+    console.log("Searching properties:", searchTerm);
+  };
+
   return (
     <div className="w-full">
-      <form action="#" className="flex items-center w-full" method="get">
+      <form 
+        className="flex items-center w-full" 
+        onSubmit={handleSearch}
+      >
         <Input
           className="flex-1"
           endContent={
@@ -155,6 +166,8 @@ const SearchBar = () => {
           placeholder="Search properties..."
           size="lg"
           startContent={<IconSearch />}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
       </form>
     </div>

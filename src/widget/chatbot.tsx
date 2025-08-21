@@ -24,6 +24,11 @@ export const Chatbot = () => {
     const message = inputMessage.current?.value?.trim();
 
     if (!message) return;
+    
+    // TODO: Implement actual chatbot API call here
+    // You can integrate with your backend's chatbot endpoint
+    console.log("Sending message:", message);
+    
     inputMessage.current!.value = "";
   };
 
@@ -60,7 +65,6 @@ export const Chatbot = () => {
               <ModalFooter>
                 <form
                   className="flex items-center w-full"
-                  method="post"
                   onSubmit={handleSubmit}
                 >
                   <Input

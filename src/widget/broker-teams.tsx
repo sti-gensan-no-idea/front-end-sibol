@@ -39,11 +39,21 @@ export const BrokerTeams = () => {
     onOpen();
   };
 
+  const handleCreateTeam = () => {
+    // TODO: Implement create team functionality with API call
+    console.log("Create team clicked");
+  };
+
   return (
     <div className="flex flex-col bg-white p-8 rounded-large shadow-medium">
       <div className="flex items-center gap-8">
         <SearchBar />
-        <Button color="primary" startContent={<IconPlus />} variant="flat">
+        <Button 
+          color="primary" 
+          startContent={<IconPlus />} 
+          variant="flat"
+          onPress={handleCreateTeam}
+        >
           Create Team
         </Button>
       </div>
@@ -66,9 +76,20 @@ export const BrokerTeams = () => {
 };
 
 const SearchBar = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    // TODO: Implement search functionality with API call
+    console.log("Searching teams:", searchTerm);
+  };
+
   return (
     <div className="flex items-center w-full">
-      <form action="#" className="flex items-center w-full" method="get">
+      <form 
+        className="flex items-center w-full" 
+        onSubmit={handleSearch}
+      >
         <Input
           endContent={
             <Dropdown>
@@ -92,6 +113,8 @@ const SearchBar = () => {
           placeholder="Search team..."
           size="lg"
           startContent={<IconSearch />}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
         <Button isIconOnly className="hidden" type="submit">
           <IconSearch />
