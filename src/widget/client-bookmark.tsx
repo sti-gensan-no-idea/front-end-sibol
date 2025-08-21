@@ -1,4 +1,4 @@
-import { Button, Chip } from "@heroui/react";
+import { Button, Chip, Divider, Pagination } from "@heroui/react";
 import {
   Icon360View,
   IconBookmark,
@@ -7,74 +7,108 @@ import {
 } from "@tabler/icons-react";
 
 import { properties } from "@/data/properties";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+const ITEMS_PER_PAGE = 16;
 
 export const ClientBookmark = () => {
-  return (
-    <div className="p-4 sm:p-6 md:p-8 rounded-large shadow-medium bg-white">
-      {/* Header */}
-      <div className="flex items-center md:items-start justify-between">
-        <div className="flex items-center">
-          <IconBookmark className="text-gray-500" size={26} />
-          <span className="text-lg font-bold ml-2 text-foreground-700">
-            Bookmark
-          </span>
-        </div>
-      </div>
+  const location = useLocation();
+  const navigate = useNavigate();
 
-      <ul className="mt-4 space-y-6">
-        {properties.map((item, index) => (
-          <li key={index} className="flex h-48 justify-start items-start gap-4">
-            <div className="relative h-full aspect-video">
+  const queryParams = new URLSearchParams(location.search);
+  const initialPage = parseInt(queryParams.get("page") || "1", 10);
+  const [page, setPage] = useState<number>(
+    isNaN(initialPage) ? 1 : initialPage
+  );
+
+  useEffect(() => {
+    setPage(1);
+    queryParams.set("page", String(1));
+  }, []);
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+    queryParams.set("page", String(newPage));
+    navigate(`${location.pathname}?${queryParams.toString()}`);
+  };
+
+  const totalPages = Math.ceil(properties.length / ITEMS_PER_PAGE);
+  const startIndex = (page - 1) * ITEMS_PER_PAGE;
+  const currentItems = properties.slice(
+    startIndex,
+    startIndex + ITEMS_PER_PAGE
+  );
+
+  return (
+    <div className="container mx-auto w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {currentItems.map((item, index) => (
+          <div
+            key={index}
+            className="bg-white rounded-2xl shadow-small overflow-hidden flex flex-col"
+          >
+            <div className="relative h-48">
               <img
                 alt={item.title}
-                className="bg-gray-100 rounded-medium w-full h-full object-cover"
+                className="w-full h-full object-cover bg-gray-300"
                 src={item.image}
               />
-              <div className="absolute bottom-0 right-0 px-4 py-2 bg-black/75 text-white rounded-br-large rounded-tl-large">
-                <Icon360View />
+              <div className="absolute bottom-0 right-0 px-3 py-2 bg-black/70 text-white rounded-tl-xl">
+                <Icon360View size={20} />
               </div>
             </div>
-            <div className="flex flex-col w-full">
-              <span className="text-foreground-700 font-semibold text-lg">
+
+            <div className="p-4 flex flex-col flex-1">
+              <span className="text-lg font-semibold text-gray-800">
                 {item.title}
               </span>
-              <span className="text-foreground-500 text-sm">
-                {item.address}
-              </span>
-              <div className="flex items-center gap-2 text-foreground-500 text-sm mt-2">
-                <Chip color="success" size="sm" variant="flat">
+              <span className="text-sm text-gray-500">{item.address}</span>
+
+              <div className="flex items-center gap-2 text-sm mt-2">
+                <Chip
+                  color={item.status === "Available" ? "success" : "danger"}
+                  size="sm"
+                  variant="flat"
+                >
                   {item.status}
                 </Chip>
-                <span>{item.details}</span>
+                <span className="text-gray-500">{item.details}</span>
               </div>
-              <span className="text-2xl text-foreground-700 mt-4 font-semibold">
+
+              <span className="text-xl font-bold text-primary mt-3">
                 {item.price}
               </span>
 
               {/* Action buttons */}
-              <div className="flex items-center gap-2 mt-2">
-                <Button isIconOnly variant="flat">
+              <Divider className="mt-4" />
+              <div className="flex items-center gap-2 mt-4">
+                <Button isIconOnly radius="full" variant="flat">
                   <IconBookmark />
                 </Button>
-                <Button
-                  className="w-fit"
-                  startContent={<IconCalendar />}
-                  variant="flat"
-                >
-                  Schedule Viewing
-                </Button>
-                <Button
-                  className="w-fit"
-                  startContent={<IconPhone />}
-                  variant="flat"
-                >
-                  Contact Agent
-                </Button>
+                <div className="grid grid-cols-2 gap-2 w-full">
+                  <Button startContent={<IconCalendar />} variant="flat">
+                    Schedule
+                  </Button>
+                  <Button startContent={<IconPhone />} variant="flat">
+                    Contact
+                  </Button>
+                </div>
               </div>
             </div>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
+
+      <div className="mt-8 flex justify-center">
+        <Pagination
+          color="primary"
+          page={page}
+          size="lg"
+          total={totalPages}
+          onChange={handlePageChange}
+        />
+      </div>
     </div>
   );
 };

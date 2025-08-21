@@ -1,4 +1,3 @@
-import { Chatbot } from "@/widget/chatbot";
 import { Hero } from "@/widget/hero";
 import { NavBar } from "@/widget/navbar";
 import { Features } from "@/widget/features";
@@ -13,7 +12,6 @@ export const IndexPage = () => {
       <Features />
       <AboutUs />
       <Footer />
-      <Chatbot />
     </main>
   );
 };

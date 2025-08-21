@@ -5,7 +5,7 @@ export const PropertiesPage = () => {
   return (
     <>
       <NavBar />
-      <main className="flex bg-white mx-auto min-h-screen">
+      <main className="flex bg-gradient-to-b from-white to-transparent mx-auto min-h-screen">
         <SearchProperties />
       </main>
     </>

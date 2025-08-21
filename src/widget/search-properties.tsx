@@ -1,11 +1,15 @@
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Button,
   Chip,
+  Divider,
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
   Input,
+  Pagination,
 } from "@heroui/react";
 import {
   Icon360View,
@@ -18,80 +22,123 @@ import {
 
 import { properties } from "@/data/properties";
 
+const ITEMS_PER_PAGE = 16;
+
 export const SearchProperties = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const queryParams = new URLSearchParams(location.search);
+  const initialPage = parseInt(queryParams.get("page") || "1", 10);
+  const [page, setPage] = useState<number>(
+    isNaN(initialPage) ? 1 : initialPage
+  );
+
+  useEffect(() => {
+    setPage(1);
+    queryParams.set("page", String(1));
+  }, []);
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+    queryParams.set("page", String(newPage));
+    navigate(`${location.pathname}?${queryParams.toString()}`);
+  };
+
+  const totalPages = Math.ceil(properties.length / ITEMS_PER_PAGE);
+  const startIndex = (page - 1) * ITEMS_PER_PAGE;
+  const currentItems = properties.slice(
+    startIndex,
+    startIndex + ITEMS_PER_PAGE
+  );
+
   return (
-    <div className="p-4 sm:p-6 md:p-8 container mx-auto bg-white w-full">
+    <div className="p-4 sm:p-6 md:p-8 container mx-auto w-full">
       <SearchBar />
 
-      <ul className="mt-8 space-y-6">
-        {properties.map((item, index) => (
-          <li key={index} className="flex h-48 justify-start items-start gap-4">
-            <div className="relative h-full aspect-video">
+      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {currentItems.map((item, index) => (
+          <div
+            key={index}
+            className="bg-white rounded-2xl shadow-small overflow-hidden flex flex-col"
+          >
+            <div className="relative h-48">
               <img
                 alt={item.title}
-                className="bg-gray-100 rounded-medium w-full h-full object-cover"
+                className="w-full h-full object-cover bg-gray-300"
                 src={item.image}
               />
-              <div className="absolute bottom-0 right-0 px-4 py-2 bg-black/75 text-white rounded-br-large rounded-tl-large">
-                <Icon360View />
+              <div className="absolute bottom-0 right-0 px-3 py-2 bg-black/70 text-white rounded-tl-xl">
+                <Icon360View size={20} />
               </div>
             </div>
-            <div className="flex flex-col w-full">
-              <span className="text-foreground-700 font-semibold text-lg">
+
+            <div className="p-4 flex flex-col flex-1">
+              <span className="text-lg font-semibold text-gray-800">
                 {item.title}
               </span>
-              <span className="text-foreground-500 text-sm">
-                {item.address}
-              </span>
-              <div className="flex items-center gap-2 text-foreground-500 text-sm mt-2">
-                <Chip color="success" size="sm" variant="flat">
+              <span className="text-sm text-gray-500">{item.address}</span>
+
+              <div className="flex items-center gap-2 text-sm mt-2">
+                <Chip
+                  color={item.status === "Available" ? "success" : "danger"}
+                  size="sm"
+                  variant="flat"
+                >
                   {item.status}
                 </Chip>
-                <span>{item.details}</span>
+                <span className="text-gray-500">{item.details}</span>
               </div>
-              <span className="text-2xl text-foreground-700 mt-4 font-semibold">
+
+              <span className="text-xl font-bold text-primary mt-3">
                 {item.price}
               </span>
 
               {/* Action buttons */}
-              <div className="flex items-center gap-2 mt-2">
-                <Button isIconOnly variant="flat">
+              <Divider className="mt-4" />
+              <div className="flex items-center gap-2 mt-4">
+                <Button isIconOnly radius="full" variant="flat">
                   <IconBookmark />
                 </Button>
-                <Button
-                  className="w-fit"
-                  startContent={<IconCalendar />}
-                  variant="flat"
-                >
-                  Schedule Viewing
-                </Button>
-                <Button
-                  className="w-fit"
-                  startContent={<IconPhone />}
-                  variant="flat"
-                >
-                  Contact Agent
-                </Button>
+                <div className="grid grid-cols-2 gap-2 w-full">
+                  <Button startContent={<IconCalendar />} variant="flat">
+                    Schedule
+                  </Button>
+                  <Button startContent={<IconPhone />} variant="flat">
+                    Contact
+                  </Button>
+                </div>
               </div>
             </div>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
+
+      <div className="mt-8 flex justify-center">
+        <Pagination
+          color="primary"
+          page={page}
+          size="lg"
+          total={totalPages}
+          onChange={handlePageChange}
+        />
+      </div>
     </div>
   );
 };
 
 const SearchBar = () => {
   return (
-    <div className="flex items-center w-full">
+    <div className="w-full">
       <form action="#" className="flex items-center w-full" method="get">
         <Input
+          className="flex-1"
           endContent={
             <Dropdown>
               <DropdownTrigger>
                 <Button
                   isIconOnly
-                  className="ml-4"
+                  className="ml-2"
                   radius="full"
                   variant="light"
                 >
@@ -109,9 +156,6 @@ const SearchBar = () => {
           size="lg"
           startContent={<IconSearch />}
         />
-        <Button isIconOnly className="hidden" type="submit">
-          <IconSearch />
-        </Button>
       </form>
     </div>
   );

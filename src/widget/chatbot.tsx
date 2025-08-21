@@ -30,15 +30,14 @@ export const Chatbot = () => {
   return (
     <>
       <Button
-        isIconOnly
-        className="fixed right-8 bottom-8 z-50"
-        color="primary"
+        className="fixed right-8 bottom-8 z-50 bg-white"
         radius="full"
         size="lg"
+        startContent={<IconMessageChatbot />}
         variant="shadow"
         onPress={handleOpen}
       >
-        <IconMessageChatbot />
+        Chat with AI
       </Button>
 
       {/* Modal */}
