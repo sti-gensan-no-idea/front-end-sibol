@@ -32,7 +32,7 @@ export const AboutUs = () => {
             <span className="mt-6 text-lg sm:text-xl font-bold text-foreground-700">
               {member.name}
             </span>
-            <span className="text-primary">{member.role}</span>
+            <span className="text-primary text-center">{member.role}</span>
             <p className="text-center mt-4 text-foreground-700">
               {member.description}
             </p>
