@@ -10,8 +10,13 @@ import {
   Textarea,
   Select,
   SelectItem,
+  Alert,
 } from "@heroui/react";
-import { IconBuilding, IconMapPin, IconCurrencyPeso } from "@tabler/icons-react";
+import {
+  IconBuilding,
+  IconMapPin,
+  IconCurrencyPeso,
+} from "@tabler/icons-react";
 
 import { useProperties } from "../hooks";
 
@@ -67,8 +72,12 @@ export const ManualAddModal = ({
       bedrooms: formData.bedrooms ? parseInt(formData.bedrooms) : 0,
       bathrooms: formData.bathrooms ? parseInt(formData.bathrooms) : 0,
       area: formData.area ? parseFloat(formData.area) : 0,
-      parking_slots: formData.parking_slots ? parseInt(formData.parking_slots) : 0,
-      amenities: formData.amenities ? formData.amenities.split(",").map(a => a.trim()) : [],
+      parking_slots: formData.parking_slots
+        ? parseInt(formData.parking_slots)
+        : 0,
+      amenities: formData.amenities
+        ? formData.amenities.split(",").map((a) => a.trim())
+        : [],
     };
 
     const success = await createProperty(propertyData);
@@ -98,8 +107,8 @@ export const ManualAddModal = ({
       backdrop="blur"
       isDismissable={false}
       isOpen={isOpen}
-      size="4xl"
       scrollBehavior="inside"
+      size="4xl"
       onOpenChange={onOpenChange}
     >
       <ModalContent>
@@ -109,9 +118,7 @@ export const ManualAddModal = ({
             <form onSubmit={handleSubmit}>
               <ModalBody>
                 {error && (
-                  <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                    {error}
-                  </div>
+                  <Alert color="danger" title={error} variant="solid" />
                 )}
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -120,19 +127,22 @@ export const ManualAddModal = ({
                     label="Project/Property Name"
                     placeholder="Enter project name"
                     startContent={<IconBuilding />}
-                    variant="flat"
                     value={formData.name}
+                    variant="flat"
                     onChange={(e) => handleInputChange("name", e.target.value)}
                   />
-                  
+
                   <Select
                     isRequired
                     label="Property Type"
                     placeholder="Select property type"
                     selectedKeys={[formData.property_type]}
                     variant="flat"
-                    onSelectionChange={(keys) => 
-                      handleInputChange("property_type", Array.from(keys)[0] as string)
+                    onSelectionChange={(keys) =>
+                      handleInputChange(
+                        "property_type",
+                        Array.from(keys)[0] as string
+                      )
                     }
                   >
                     {propertyTypes.map((type) => (
@@ -145,17 +155,19 @@ export const ManualAddModal = ({
                     label="Address"
                     placeholder="Enter full address"
                     startContent={<IconMapPin />}
-                    variant="flat"
                     value={formData.address}
-                    onChange={(e) => handleInputChange("address", e.target.value)}
+                    variant="flat"
+                    onChange={(e) =>
+                      handleInputChange("address", e.target.value)
+                    }
                   />
 
                   <Input
                     isRequired
                     label="City"
                     placeholder="Enter city"
-                    variant="flat"
                     value={formData.city}
+                    variant="flat"
                     onChange={(e) => handleInputChange("city", e.target.value)}
                   />
 
@@ -163,9 +175,11 @@ export const ManualAddModal = ({
                     isRequired
                     label="Province"
                     placeholder="Enter province"
-                    variant="flat"
                     value={formData.province}
-                    onChange={(e) => handleInputChange("province", e.target.value)}
+                    variant="flat"
+                    onChange={(e) =>
+                      handleInputChange("province", e.target.value)
+                    }
                   />
 
                   <Input
@@ -174,8 +188,8 @@ export const ManualAddModal = ({
                     placeholder="Enter price"
                     startContent={<IconCurrencyPeso />}
                     type="number"
-                    variant="flat"
                     value={formData.price}
+                    variant="flat"
                     onChange={(e) => handleInputChange("price", e.target.value)}
                   />
 
@@ -183,26 +197,30 @@ export const ManualAddModal = ({
                     label="Bedrooms"
                     placeholder="Number of bedrooms"
                     type="number"
-                    variant="flat"
                     value={formData.bedrooms}
-                    onChange={(e) => handleInputChange("bedrooms", e.target.value)}
+                    variant="flat"
+                    onChange={(e) =>
+                      handleInputChange("bedrooms", e.target.value)
+                    }
                   />
 
                   <Input
                     label="Bathrooms"
                     placeholder="Number of bathrooms"
                     type="number"
-                    variant="flat"
                     value={formData.bathrooms}
-                    onChange={(e) => handleInputChange("bathrooms", e.target.value)}
+                    variant="flat"
+                    onChange={(e) =>
+                      handleInputChange("bathrooms", e.target.value)
+                    }
                   />
 
                   <Input
                     label="Area (sqm)"
                     placeholder="Total area in square meters"
                     type="number"
-                    variant="flat"
                     value={formData.area}
+                    variant="flat"
                     onChange={(e) => handleInputChange("area", e.target.value)}
                   />
 
@@ -210,37 +228,43 @@ export const ManualAddModal = ({
                     label="Parking Slots (optional)"
                     placeholder="Number of parking slots"
                     type="number"
-                    variant="flat"
                     value={formData.parking_slots}
-                    onChange={(e) => handleInputChange("parking_slots", e.target.value)}
+                    variant="flat"
+                    onChange={(e) =>
+                      handleInputChange("parking_slots", e.target.value)
+                    }
                   />
                 </div>
 
                 <Textarea
                   label="Description"
                   placeholder="Enter property description"
-                  variant="flat"
                   value={formData.description}
-                  onChange={(e) => handleInputChange("description", e.target.value)}
+                  variant="flat"
+                  onChange={(e) =>
+                    handleInputChange("description", e.target.value)
+                  }
                 />
 
                 <Textarea
                   label="Amenities (optional)"
                   placeholder="Enter amenities separated by commas (e.g., Swimming pool, Gym, Garden)"
-                  variant="flat"
                   value={formData.amenities}
-                  onChange={(e) => handleInputChange("amenities", e.target.value)}
+                  variant="flat"
+                  onChange={(e) =>
+                    handleInputChange("amenities", e.target.value)
+                  }
                 />
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
                   Cancel
                 </Button>
-                <Button 
-                  color="primary" 
-                  type="submit"
-                  isLoading={loading}
+                <Button
+                  color="primary"
                   disabled={loading}
+                  isLoading={loading}
+                  type="submit"
                 >
                   {loading ? "Adding..." : "Add Property"}
                 </Button>

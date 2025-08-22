@@ -1,50 +1,50 @@
-# Vite & HeroUI Template
+# Atuna
 
-This is a template for creating applications using Vite and HeroUI (v2).
-
-[Try it on CodeSandbox](https://githubbox.com/frontio-ai/vite-template)
+Discover exceptional properties in prime locations with our AI powered search and expert guidance.
 
 ## Technologies Used
 
-- [Vite](https://vitejs.dev/guide/)
-- [HeroUI](https://heroui.com)
-- [Tailwind CSS](https://tailwindcss.com)
-- [Tailwind Variants](https://tailwind-variants.org)
-- [TypeScript](https://www.typescriptlang.org)
-- [Framer Motion](https://www.framer.com/motion)
+- [ReactJS](https://react.dev)
+- [Vite](https://vite.dev)
+- [HeroUI](https://www.heroui.com)
+- [TailwindCSS](https://tailwindcss.com)
+- [Tabler Icons](https://tabler.io/icons)
 
-## How to Use
+## Requirements
 
-To clone the project, run the following command:
+- [NodeJS](https://nodejs.org/en/download)
+- [Git](https://git-scm.com/downloads)
 
-```bash
-git clone https://github.com/frontio-ai/vite-template.git
-```
+## Getting Started
 
-### Install dependencies
+1. Put all required files in the project root directory.
 
-You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
+2. Install dependencies:
 
-```bash
-npm install
-```
+   ```bash
+   npm install
+   ```
 
-### Run the development server
+3. Run the project:
 
-```bash
-npm run dev
-```
+   ```bash
+   npm run dev
+   ```
 
-### Setup pnpm (optional)
+4. Open <http://localhost:5173> on your browser.
 
-If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
+## Deployment
 
-```bash
-public-hoist-pattern[]=*@heroui/*
-```
+1. Build the project:
 
-After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
+   ```bash
+   npm run build
+   ```
 
-## License
+2. Run the build project:
 
-Licensed under the [MIT license](https://github.com/frontio-ai/vite-template/blob/main/LICENSE).
+   If you haven't install the `serve` package, You need to install using this command: `npm install -g serve`
+
+   ```bash
+   serve serve -s dist
+   ```
