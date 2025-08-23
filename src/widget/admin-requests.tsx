@@ -71,13 +71,13 @@ export const AdminRequests = () => {
       <Table
         removeWrapper
         aria-label="Example static collection table"
-        className="mt-4 overflow-x-scroll"
+        className="mt-4"
       >
         <TableHeader>
           <TableColumn>NAME</TableColumn>
           <TableColumn>ROLE</TableColumn>
           <TableColumn>DATE</TableColumn>
-          <TableColumn>ACTION</TableColumn>
+          <TableColumn align="end">ACTION</TableColumn>
         </TableHeader>
         <TableBody>
           {paginatedRequests.map((item) => (
@@ -99,8 +99,8 @@ export const AdminRequests = () => {
                 </Chip>
               </TableCell>
               <TableCell>{item.date}</TableCell>
-              <TableCell className="flex gap-2">
-                <Button color="danger" size="sm" variant="flat">
+              <TableCell className="flex gap-2 justify-end">
+                <Button color="danger" size="sm" variant="light">
                   <IconThumbDown />
                   Reject
                 </Button>
