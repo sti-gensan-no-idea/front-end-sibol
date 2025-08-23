@@ -31,7 +31,7 @@ export const SearchProperties = () => {
   const queryParams = new URLSearchParams(location.search);
   const initialPage = parseInt(queryParams.get("page") || "1", 10);
   const [page, setPage] = useState<number>(
-    isNaN(initialPage) ? 1 : initialPage
+    isNaN(initialPage) ? 1 : initialPage,
   );
 
   useEffect(() => {
@@ -49,7 +49,7 @@ export const SearchProperties = () => {
   const startIndex = (page - 1) * ITEMS_PER_PAGE;
   const currentItems = properties.slice(
     startIndex,
-    startIndex + ITEMS_PER_PAGE
+    startIndex + ITEMS_PER_PAGE,
   );
 
   return (
@@ -138,10 +138,7 @@ const SearchBar = () => {
 
   return (
     <div className="w-full">
-      <form 
-        className="flex items-center w-full" 
-        onSubmit={handleSearch}
-      >
+      <form className="flex items-center w-full" onSubmit={handleSearch}>
         <Input
           className="flex-1"
           endContent={
