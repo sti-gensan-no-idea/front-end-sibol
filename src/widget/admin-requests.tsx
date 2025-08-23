@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
+  addToast,
   Avatar,
   Button,
   Chip,
@@ -100,12 +101,36 @@ export const AdminRequests = () => {
               </TableCell>
               <TableCell>{item.date}</TableCell>
               <TableCell className="flex gap-2 justify-end">
-                <Button color="danger" size="sm" variant="light">
+                <Button
+                  color="danger"
+                  size="sm"
+                  variant="light"
+                  onPress={() => {
+                    addToast({
+                      title: "Rejected",
+                      description: `${item.name} request rejected.`,
+                      variant: "solid",
+                      color: "danger",
+                    });
+                  }}
+                >
                   <IconThumbDown />
                   Reject
                 </Button>
-                <Button color="primary" size="sm" variant="flat">
-                  <IconThumbUp />
+                <Button
+                  color="primary"
+                  size="sm"
+                  startContent={<IconThumbUp />}
+                  variant="flat"
+                  onPress={() => {
+                    addToast({
+                      title: "Accepted",
+                      description: `${item.name} request accepted.`,
+                      variant: "solid",
+                      color: "primary",
+                    });
+                  }}
+                >
                   Accept
                 </Button>
               </TableCell>
