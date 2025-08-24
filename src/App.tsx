@@ -12,6 +12,7 @@ import { DashboardAdminPage } from "@/pages/admin/dashboard-admin";
 import { NotFoundPage } from "@/pages/public/not-found";
 import { FindAgents } from "@/pages/public/find-agents";
 import { PropertiesPage } from "@/pages/public/properties";
+import { SignUpRoutes } from "@/features/signup/SignUpRoutes";
 
 function App() {
   return (
@@ -22,6 +23,9 @@ function App() {
       <Route element={<AboutUsPage />} path="/about" />
       <Route element={<SignInPage />} path="/signin" />
       <Route element={<SignUpPage />} path="/signup" />
+      
+      {/* New Multi-Role Signup Routes */}
+      <Route path="/signup/:role/*" element={<SignUpRoutes />} />
 
       <Route element={<DashboardClientPage />} path="/profile/client" />
       <Route element={<DashboardDeveloperPage />} path="/profile/developer" />
