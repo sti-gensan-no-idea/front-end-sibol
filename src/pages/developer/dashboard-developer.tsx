@@ -5,6 +5,7 @@ import { DeveloperSideBar } from "@/widget/developer-sidebar";
 import { Notification } from "@/widget/notification";
 import { DeveloperWelcome } from "@/widget/developer-welcome";
 import { DeveloperManageProperties } from "@/widget/developer-manage-properties";
+import { TopPerformingAgent } from "@/widget/top-performing-agent.s";
 
 export const DashboardDeveloperPage = () => {
   const [searchParams] = useSearchParams();
@@ -43,6 +44,12 @@ const DashboardTabContent = () => {
   return (
     <div className="flex flex-col gap-4">
       <DeveloperWelcome />
+      <div className="grid grid-cols-3 gap-4">
+        <div className="col-span-2">
+          <DeveloperManageProperties />
+        </div>
+        <TopPerformingAgent />
+      </div>
     </div>
   );
 };

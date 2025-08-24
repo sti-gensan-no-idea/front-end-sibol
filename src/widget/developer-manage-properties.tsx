@@ -60,7 +60,11 @@ export const DeveloperManageProperties = () => {
         <SearchBar />
 
         {/* Properties */}
-        <Table removeWrapper aria-label="Properties Table">
+        <Table
+          removeWrapper
+          aria-label="Properties Table"
+          className="overflow-x-scroll"
+        >
           <TableHeader columns={devPropTableColumns}>
             {(column) => (
               <TableColumn key={column.key}>{column.label}</TableColumn>
@@ -113,10 +117,7 @@ const SearchBar = () => {
 
   return (
     <div className="flex items-center w-full">
-      <form 
-        className="flex items-center w-full" 
-        onSubmit={handleSearch}
-      >
+      <form className="flex items-center w-full" onSubmit={handleSearch}>
         <Input
           endContent={
             <Dropdown>

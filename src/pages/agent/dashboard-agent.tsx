@@ -50,7 +50,12 @@ const DashboardTabContent = () => {
   return (
     <div className="flex flex-col gap-4">
       <AgentWelcome />
-      <SiteViewingRequest />
+      <div className="grid grid-cols-3 gap-4">
+        <div className="col-span-2">
+          <SiteViewingRequest />
+        </div>
+        <TopPerformingAgent />
+      </div>
     </div>
   );
 };
