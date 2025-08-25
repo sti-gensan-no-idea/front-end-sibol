@@ -9,6 +9,7 @@ interface SignupState {
   otpData: { code: string } | null;
   filesData: Record<string, File> | null;
   emailVerified: boolean;
+  mobileVerified: boolean;
   
   // Actions
   setRole: (role: Role) => void;
@@ -18,6 +19,7 @@ interface SignupState {
   setFileData: (key: string, file: File) => void;
   removeFileData: (key: string) => void;
   setEmailVerified: (verified: boolean) => void;
+  setMobileVerified: (verified: boolean) => void;
   reset: () => void;
 }
 
@@ -28,6 +30,7 @@ export const useSignupStore = create<SignupState>((set) => ({
   otpData: null,
   filesData: null,
   emailVerified: false,
+  mobileVerified: false,
 
   setRole: (role) => set({ role }),
   setCurrentStep: (step) => set({ currentStep: step }),
@@ -44,6 +47,7 @@ export const useSignupStore = create<SignupState>((set) => ({
       return { filesData: newFiles };
     }),
   setEmailVerified: (verified) => set({ emailVerified: verified }),
+  setMobileVerified: (verified) => set({ mobileVerified: verified }),
   reset: () => set({
     role: null,
     currentStep: 1,
@@ -51,5 +55,6 @@ export const useSignupStore = create<SignupState>((set) => ({
     otpData: null,
     filesData: null,
     emailVerified: false,
+    mobileVerified: false,
   }),
 }));
