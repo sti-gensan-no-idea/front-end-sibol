@@ -13,29 +13,33 @@ import { NotFoundPage } from "@/pages/public/not-found";
 import { FindAgents } from "@/pages/public/find-agents";
 import { PropertiesPage } from "@/pages/public/properties";
 import { SignUpRoutes } from "@/features/signup/SignUpRoutes";
+import { ChatbaseBootstrap } from "@/lib/chatbase/bootstrap";
 
 function App() {
   return (
-    <Routes>
-      <Route element={<IndexPage />} path="/" />
-      <Route element={<PropertiesPage />} path="/properties" />
-      <Route element={<FindAgents />} path="/agents" />
-      <Route element={<AboutUsPage />} path="/about" />
-      <Route element={<SignInPage />} path="/signin" />
-      <Route element={<SignUpPage />} path="/signup" />
-      
-      {/* New Multi-Role Signup Routes */}
-      <Route path="/signup/:role/*" element={<SignUpRoutes />} />
+    <>
+      <ChatbaseBootstrap />
+      <Routes>
+        <Route element={<IndexPage />} path="/" />
+        <Route element={<PropertiesPage />} path="/properties" />
+        <Route element={<FindAgents />} path="/agents" />
+        <Route element={<AboutUsPage />} path="/about" />
+        <Route element={<SignInPage />} path="/signin" />
+        <Route element={<SignUpPage />} path="/signup" />
+        
+        {/* New Multi-Role Signup Routes */}
+        <Route path="/signup/:role/*" element={<SignUpRoutes />} />
 
-      <Route element={<DashboardClientPage />} path="/profile/client" />
-      <Route element={<DashboardDeveloperPage />} path="/profile/developer" />
-      <Route element={<DashboardAgentPage />} path="/profile/agent" />
-      <Route element={<DashboardBrokerPage />} path="/profile/broker" />
-      <Route element={<DashboardAdminPage />} path="/profile/admin" />
+        <Route element={<DashboardClientPage />} path="/profile/client" />
+        <Route element={<DashboardDeveloperPage />} path="/profile/developer" />
+        <Route element={<DashboardAgentPage />} path="/profile/agent" />
+        <Route element={<DashboardBrokerPage />} path="/profile/broker" />
+        <Route element={<DashboardAdminPage />} path="/profile/admin" />
 
-      {/* 404 Page */}
-      <Route element={<NotFoundPage />} path="*" />
-    </Routes>
+        {/* 404 Page */}
+        <Route element={<NotFoundPage />} path="*" />
+      </Routes>
+    </>
   );
 }
 

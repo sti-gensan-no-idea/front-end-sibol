@@ -14,12 +14,12 @@ import {
   IconUserFilled,
 } from "@tabler/icons-react";
 
-import { useAuth } from "../hooks";
+import { useAuth } from "../lib/auth/useAuth";
 
 export const SignInCardForm = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { signin, loading, error } = useAuth();
+  const { signin, isLoading, error } = useAuth();
 
   const validRoles = ["client", "developer", "agent", "broker"];
 
@@ -59,21 +59,24 @@ export const SignInCardForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const success = await signin(
-      { email: formData.email, password: formData.password },
-      formData.role
-    );
+    try {
+      await signin({
+        credentials: { email: formData.email, password: formData.password },
+        role: formData.role
+      });
 
-    if (success) {
       // Redirect to appropriate dashboard based on role
       const dashboardRoutes = {
         client: "/client/dashboard",
         developer: "/developer/dashboard",
         agent: "/agent/dashboard",
         broker: "/broker/dashboard",
+        admin: "/admin/dashboard",
       };
       
       navigate(dashboardRoutes[formData.role as keyof typeof dashboardRoutes] || "/client/dashboard");
+    } catch (err) {
+      // Error is handled by the useAuth hook
     }
   };
 
@@ -152,10 +155,10 @@ export const SignInCardForm = () => {
             className="mt-8 w-full" 
             color="primary" 
             type="submit"
-            disabled={loading}
-            isLoading={loading}
+            disabled={isLoading}
+            isLoading={isLoading}
           >
-            {loading ? "Signing In..." : "Sign In"}
+            {isLoading ? "Signing In..." : "Sign In"}
           </Button>
         </form>
 
