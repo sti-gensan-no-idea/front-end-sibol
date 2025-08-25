@@ -14,6 +14,8 @@ import {
   ModalContent,
   ModalHeader,
   Pagination,
+  Tab,
+  Tabs,
 } from "@heroui/react";
 import {
   Icon360View,
@@ -222,61 +224,30 @@ export const SearchProperties = () => {
           <ModalContent>
             <ModalHeader>{selectedProperty.title}</ModalHeader>
             <ModalBody>
-              <img
-                alt={selectedProperty.title}
-                className="w-full h-64 object-cover rounded-lg"
-                src={selectedProperty.image}
-              />
-              <div className="mt-4">
-                <p className="text-gray-800 font-semibold">Address:</p>
-                <p className="text-gray-600">{selectedProperty.address}</p>
-              </div>
-              <div className="mt-2">
-                <p className="text-gray-800 font-semibold">Status:</p>
-                <Chip
-                  color={
-                    selectedProperty.status === "Available"
-                      ? "success"
-                      : "danger"
-                  }
-                  size="sm"
-                  variant="flat"
-                >
-                  {selectedProperty.status}
-                </Chip>
-              </div>
-              <div className="mt-2">
-                <p className="text-gray-800 font-semibold">Details:</p>
-                <p className="text-gray-600">{selectedProperty.details}</p>
-              </div>
-              <div className="mt-2">
-                <p className="text-gray-800 font-semibold">Price:</p>
-                <p className="text-primary font-bold">
-                  {selectedProperty.price}
-                </p>
-              </div>
-              {selectedProperty.date && (
-                <div className="mt-2">
-                  <p className="text-gray-800 font-semibold">Date:</p>
-                  <p className="text-gray-600">{selectedProperty.date}</p>
-                </div>
-              )}
-              <div className="mt-4 flex gap-2">
-                <Button
-                  startContent={<IconCalendar />}
-                  variant="flat"
-                  onClick={closeModal}
-                >
-                  Schedule
-                </Button>
-                <Button
-                  startContent={<IconPhone />}
-                  variant="flat"
-                  onClick={closeModal}
-                >
-                  Contact
-                </Button>
-              </div>
+              <Tabs
+                aria-label="Disabled Options"
+                color="primary"
+                variant="underlined"
+              >
+                <Tab key="room" title="Rooms">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat.
+                </Tab>
+                <Tab key="bedroom" title="Bedrooms">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat.
+                </Tab>
+                <Tab key="bathroom" title="Bathrooms">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat.
+                </Tab>
+              </Tabs>
             </ModalBody>
           </ModalContent>
         </Modal>
