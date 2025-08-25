@@ -62,22 +62,15 @@ export const ManualAddModal = ({
     e.preventDefault();
 
     const propertyData = {
-      name: formData.name,
+      title: formData.name,
       description: formData.description,
-      address: formData.address,
-      city: formData.city,
-      province: formData.province,
+      location: `${formData.address}, ${formData.city}, ${formData.province}`,
       price: parseFloat(formData.price),
       property_type: formData.property_type,
-      bedrooms: formData.bedrooms ? parseInt(formData.bedrooms) : 0,
-      bathrooms: formData.bathrooms ? parseInt(formData.bathrooms) : 0,
-      area: formData.area ? parseFloat(formData.area) : 0,
-      parking_slots: formData.parking_slots
-        ? parseInt(formData.parking_slots)
-        : 0,
-      amenities: formData.amenities
-        ? formData.amenities.split(",").map((a) => a.trim())
-        : [],
+      project_name: formData.name, // Using name as project name
+      expected_downpayment: 0, // Default value
+      // Note: bedrooms, bathrooms, area, parking_slots, amenities 
+      // are not part of PropertyCreate interface - may need backend update
     };
 
     const success = await createProperty(propertyData);

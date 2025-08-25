@@ -61,10 +61,10 @@ export const SignInCardForm = () => {
     e.preventDefault();
 
     try {
-      await signin({
-        credentials: { email: formData.email, password: formData.password },
-        role: formData.role
-      });
+      await signin(
+        { email: formData.email, password: formData.password },
+        formData.role
+      );
 
       // Handle redirect after successful login
       if (redirectUrl) {
