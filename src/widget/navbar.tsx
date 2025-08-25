@@ -43,7 +43,7 @@ export const NavBar = () => {
                 title="Properties"
               />
               <Tab key="/agents" href="/agents?tab=agents" title="Agents" />
-              <Tab key="/about" href="/about" title="About Us" />
+              {/* <Tab key="/about" href="/about" title="About Us" /> */}
             </Tabs>
           </div>
         </div>

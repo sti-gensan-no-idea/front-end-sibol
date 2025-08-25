@@ -3,7 +3,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { IndexPage } from "@/pages/public";
 import { SignInPage } from "@/pages/public/signin";
 import { SignUpPage } from "@/pages/public/signup";
-import { AboutUsPage } from "@/pages/public/about-us";
+// import { AboutUsPage } from "@/pages/public/about-us";
 import { DashboardClientPage } from "@/pages/client/dashboard-client";
 import { DashboardDeveloperPage } from "@/pages/developer/dashboard-developer";
 import { DashboardAgentPage } from "@/pages/agent/dashboard-agent";
@@ -15,13 +15,13 @@ import { PropertiesPage } from "@/pages/public/properties";
 import { SignUpRoutes } from "@/features/signup/SignUpRoutes";
 import { ChatbaseBootstrap } from "@/lib/chatbase/bootstrap";
 import { useAuth } from "@/lib/auth/useAuth";
-import { 
+import {
   RequireClient,
   RequireDeveloper,
   RequireAgent,
   RequireBroker,
   RequireAdmin,
-  ProtectedRoute 
+  ProtectedRoute,
 } from "@/lib/auth/ProtectedRoute";
 
 function App() {
@@ -33,67 +33,67 @@ function App() {
         <Route path="/" element={<IndexPage />} />
         <Route path="/properties" element={<PropertiesPage />} />
         <Route path="/agents" element={<FindAgents />} />
-        <Route path="/about" element={<AboutUsPage />} />
+        {/* <Route path="/about" element={<AboutUsPage />} /> */}
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/signup" element={<SignUpPage />} />
-        
+
         {/* Multi-Role Signup Routes */}
         <Route path="/signup/:role/*" element={<SignUpRoutes />} />
 
         {/* Protected Dashboard Routes */}
-        <Route 
-          path="/profile/client/*" 
+        <Route
+          path="/profile/client/*"
           element={
             <RequireClient>
               <DashboardClientPage />
             </RequireClient>
-          } 
+          }
         />
-        
-        <Route 
-          path="/profile/developer/*" 
+
+        <Route
+          path="/profile/developer/*"
           element={
             <RequireDeveloper>
               <DashboardDeveloperPage />
             </RequireDeveloper>
-          } 
+          }
         />
-        
-        <Route 
-          path="/profile/agent/*" 
+
+        <Route
+          path="/profile/agent/*"
           element={
             <RequireAgent>
               <DashboardAgentPage />
             </RequireAgent>
-          } 
+          }
         />
-        
-        <Route 
-          path="/profile/broker/*" 
+
+        <Route
+          path="/profile/broker/*"
           element={
             <RequireBroker>
               <DashboardBrokerPage />
             </RequireBroker>
-          } 
+          }
         />
-        
-        <Route 
-          path="/profile/admin/*" 
+
+        <Route
+          path="/profile/admin/*"
           element={
             <RequireAdmin>
               <DashboardAdminPage />
             </RequireAdmin>
-          } 
+          }
         />
 
         {/* Catch-all protected routes */}
-        <Route 
-          path="/dashboard/*" 
+        <Route
+          path="/dashboard/*"
           element={
             <ProtectedRoute>
               <DashboardRedirect />
             </ProtectedRoute>
-          } 
+          }
         />
 
         {/* 404 Page */}
@@ -106,13 +106,13 @@ function App() {
 // Component to redirect users to their appropriate dashboard
 const DashboardRedirect = () => {
   const { user } = useAuth();
-  
+
   const dashboardRoutes: Record<string, string> = {
     client: "/profile/client",
     developer: "/profile/developer",
-    agent: "/profile/agent", 
+    agent: "/profile/agent",
     broker: "/profile/broker",
-    admin: "/profile/admin"
+    admin: "/profile/admin",
   };
 
   const userRole = user?.role;

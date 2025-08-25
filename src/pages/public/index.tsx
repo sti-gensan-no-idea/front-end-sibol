@@ -2,7 +2,7 @@ import { Hero } from "@/widget/hero";
 import { NavBar } from "@/widget/navbar";
 import { Features } from "@/widget/features";
 import { Footer } from "@/widget/footer";
-import { AboutUs } from "@/widget/about-us";
+// import { AboutUs } from "@/widget/about-us";
 
 export const IndexPage = () => {
   return (
@@ -10,7 +10,7 @@ export const IndexPage = () => {
       <NavBar />
       <Hero />
       <Features />
-      <AboutUs />
+      {/* <AboutUs /> */}
       <Footer />
     </main>
   );
