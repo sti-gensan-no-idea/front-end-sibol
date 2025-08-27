@@ -10,6 +10,11 @@ import {
   DropdownTrigger,
   Input,
   Pagination,
+  useDisclosure,
+  Card,
+  CardBody,
+  CardHeader,
+  Tooltip,
 } from "@heroui/react";
 import {
   Icon360View,
@@ -18,9 +23,14 @@ import {
   IconCalendar,
   IconPhone,
   IconSearch,
+  IconEye,
+  IconHeart,
+  IconMapPin,
 } from "@tabler/icons-react";
 
 import { properties } from "@/data/properties";
+import { SiteViewingModal } from "@/components/SiteViewingModal";
+import { PanoramaViewer } from "@/components/PanoramaViewer";
 
 const ITEMS_PER_PAGE = 16;
 
@@ -34,6 +44,14 @@ export const SearchProperties = () => {
     isNaN(initialPage) ? 1 : initialPage
   );
 
+  // Modal states
+  const { isOpen: isScheduleOpen, onOpen: onScheduleOpen, onOpenChange: onScheduleOpenChange } = useDisclosure();
+  const { isOpen: is360Open, onOpen: on360Open, onOpenChange: on360OpenChange } = useDisclosure();
+  
+  // Currently selected property
+  const [selectedProperty, setSelectedProperty] = useState<any>(null);
+  const [bookmarkedProperties, setBookmarkedProperties] = useState<Set<number>>(new Set());
+
   useEffect(() => {
     setPage(1);
     queryParams.set("page", String(1));
@@ -43,6 +61,26 @@ export const SearchProperties = () => {
     setPage(newPage);
     queryParams.set("page", String(newPage));
     navigate(`${location.pathname}?${queryParams.toString()}`);
+  };
+
+  const handleScheduleViewing = (property: any) => {
+    setSelectedProperty(property);
+    onScheduleOpen();
+  };
+
+  const handle360View = (property: any) => {
+    setSelectedProperty(property);
+    on360Open();
+  };
+
+  const handleBookmark = (propertyIndex: number) => {
+    const newBookmarked = new Set(bookmarkedProperties);
+    if (newBookmarked.has(propertyIndex)) {
+      newBookmarked.delete(propertyIndex);
+    } else {
+      newBookmarked.add(propertyIndex);
+    }
+    setBookmarkedProperties(newBookmarked);
   };
 
   const totalPages = Math.ceil(properties.length / ITEMS_PER_PAGE);
@@ -56,120 +94,265 @@ export const SearchProperties = () => {
     <div className="p-4 sm:p-6 md:p-8 container mx-auto w-full">
       <SearchBar />
 
-      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {currentItems.map((item, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-2xl shadow-small overflow-hidden flex flex-col"
-          >
-            <div className="relative h-48">
-              <img
-                alt={item.title}
-                className="w-full h-full object-cover bg-gray-300"
-                src={item.image}
-              />
-              <div className="absolute bottom-0 right-0 px-3 py-2 bg-black/70 text-white rounded-tl-xl">
-                <Icon360View size={20} />
-              </div>
-            </div>
+      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {currentItems.map((item, index) => {
+          const globalIndex = startIndex + index;
+          const isBookmarked = bookmarkedProperties.has(globalIndex);
+          
+          return (
+            <Card
+              key={globalIndex}
+              className="bg-white shadow-medium hover:shadow-large transition-all duration-300 group"
+              isPressable
+              onPress={() => console.log('View property details:', item.title)}
+            >
+              <CardHeader className="p-0 relative">
+                <div className="relative h-48 w-full overflow-hidden">
+                  <img
+                    alt={item.title}
+                    className="w-full h-full object-cover bg-gray-300 group-hover:scale-105 transition-transform duration-300"
+                    src={item.image}
+                  />
+                  
+                  {/* 360 View Badge */}
+                  <div className="absolute top-3 left-3">
+                    <Chip
+                      variant="solid"
+                      color="primary"
+                      size="sm"
+                      startContent={<Icon360View size={14} />}
+                      className="bg-blue-600/90 text-white backdrop-blur-sm"
+                    >
+                      360° View
+                    </Chip>
+                  </div>
 
-            <div className="p-4 flex flex-col flex-1">
-              <span className="text-lg font-semibold text-gray-800">
-                {item.title}
-              </span>
-              <span className="text-sm text-gray-500">{item.address}</span>
+                  {/* Bookmark Button */}
+                  <Tooltip content={isBookmarked ? "Remove from favorites" : "Add to favorites"}>
+                    <Button
+                      isIconOnly
+                      variant="flat"
+                      size="sm"
+                      className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm"
+                      onPress={(e) => {
+                        e.stopPropagation();
+                        handleBookmark(globalIndex);
+                      }}
+                    >
+                      <IconHeart 
+                        size={16} 
+                        className={isBookmarked ? "text-red-500 fill-current" : "text-gray-600"} 
+                      />
+                    </Button>
+                  </Tooltip>
 
-              <div className="flex items-center gap-2 text-sm mt-2">
-                <Chip
-                  color={item.status === "Available" ? "success" : "danger"}
-                  size="sm"
-                  variant="flat"
-                >
-                  {item.status}
-                </Chip>
-                <span className="text-gray-500">{item.details}</span>
-              </div>
+                  {/* Status Badge */}
+                  <div className="absolute bottom-3 left-3">
+                    <Chip
+                      color={item.status === "Available" ? "success" : "warning"}
+                      size="sm"
+                      variant="solid"
+                      className="backdrop-blur-sm"
+                    >
+                      {item.status}
+                    </Chip>
+                  </div>
+                </div>
+              </CardHeader>
 
-              <span className="text-xl font-bold text-primary mt-3">
-                {item.price}
-              </span>
+              <CardBody className="p-4 flex flex-col gap-3">
+                <div className="flex flex-col gap-1">
+                  <h3 className="text-lg font-semibold text-gray-900 line-clamp-1">
+                    {item.title}
+                  </h3>
+                  <div className="flex items-center gap-1 text-gray-500">
+                    <IconMapPin size={14} />
+                    <span className="text-sm line-clamp-1">{item.address}</span>
+                  </div>
+                </div>
 
-              {/* Action buttons */}
-              <Divider className="mt-4" />
-              <div className="flex items-center gap-2 mt-4">
-                <Button isIconOnly radius="full" variant="flat">
-                  <IconBookmark />
-                </Button>
-                <div className="grid grid-cols-2 gap-2 w-full">
-                  <Button startContent={<IconCalendar />} variant="flat">
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <span>{item.details}</span>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <span className="text-xl font-bold text-primary">
+                    {item.price}
+                  </span>
+                  <Chip variant="flat" size="sm" color="secondary">
+                    {item.type || "House"}
+                  </Chip>
+                </div>
+
+                <Divider />
+
+                {/* Action buttons */}
+                <div className="flex gap-2">
+                  <Tooltip content="View 360° tour">
+                    <Button
+                      isIconOnly
+                      variant="flat"
+                      color="primary"
+                      onPress={(e) => {
+                        e.stopPropagation();
+                        handle360View(item);
+                      }}
+                    >
+                      <Icon360View size={18} />
+                    </Button>
+                  </Tooltip>
+                  
+                  <Button
+                    startContent={<IconCalendar size={16} />}
+                    variant="flat"
+                    color="primary"
+                    className="flex-1"
+                    onPress={(e) => {
+                      e.stopPropagation();
+                      handleScheduleViewing(item);
+                    }}
+                  >
                     Schedule
                   </Button>
-                  <Button startContent={<IconPhone />} variant="flat">
-                    Contact
-                  </Button>
+                  
+                  <Tooltip content="Contact agent">
+                    <Button
+                      isIconOnly
+                      variant="flat"
+                      color="secondary"
+                      onPress={(e) => {
+                        e.stopPropagation();
+                        window.open(`tel:+639123456789`, '_self');
+                      }}
+                    >
+                      <IconPhone size={16} />
+                    </Button>
+                  </Tooltip>
                 </div>
-              </div>
-            </div>
-          </div>
-        ))}
+              </CardBody>
+            </Card>
+          );
+        })}
       </div>
 
+      {/* Pagination */}
       <div className="mt-8 flex justify-center">
         <Pagination
           color="primary"
           page={page}
           size="lg"
           total={totalPages}
+          showControls
           onChange={handlePageChange}
         />
       </div>
+
+      {/* Modals */}
+      <SiteViewingModal
+        isOpen={isScheduleOpen}
+        onOpenChange={onScheduleOpenChange}
+        propertyId={selectedProperty?.id}
+        propertyTitle={selectedProperty?.title}
+        isGuest={true}
+      />
+
+      <PanoramaViewer
+        isOpen={is360Open}
+        onOpenChange={on360OpenChange}
+        propertyTitle={selectedProperty?.title}
+      />
     </div>
   );
 };
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [filterBy, setFilterBy] = useState("name");
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     // TODO: Implement search functionality with API call
-    console.log("Searching properties:", searchTerm);
+    console.log("Searching properties:", { searchTerm, filterBy });
   };
 
+  const filterOptions = [
+    { key: "name", label: "Name" },
+    { key: "location", label: "Location" },
+    { key: "price", label: "Price Range" },
+    { key: "type", label: "Property Type" },
+    { key: "status", label: "Status" },
+  ];
+
   return (
-    <div className="w-full">
-      <form 
-        className="flex items-center w-full" 
-        onSubmit={handleSearch}
-      >
-        <Input
-          className="flex-1"
-          endContent={
-            <Dropdown>
-              <DropdownTrigger>
-                <Button
-                  isIconOnly
-                  className="ml-2"
-                  radius="full"
-                  variant="light"
-                >
-                  <IconAdjustmentsHorizontal />
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu aria-label="Filter Options">
-                <DropdownItem key="name">Name</DropdownItem>
-                <DropdownItem key="location">Location</DropdownItem>
-                <DropdownItem key="date">Date</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          }
-          placeholder="Search properties..."
-          size="lg"
-          startContent={<IconSearch />}
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </form>
+    <div className="w-full space-y-4">
+      <div className="flex flex-col sm:flex-row gap-4">
+        <form 
+          className="flex items-center flex-1" 
+          onSubmit={handleSearch}
+        >
+          <Input
+            className="flex-1"
+            placeholder={`Search properties by ${filterBy}...`}
+            size="lg"
+            startContent={<IconSearch className="text-gray-400" />}
+            value={searchTerm}
+            variant="bordered"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            endContent={
+              <Button
+                type="submit"
+                color="primary"
+                size="sm"
+                className="mr-1"
+              >
+                Search
+              </Button>
+            }
+          />
+        </form>
+
+        <Dropdown>
+          <DropdownTrigger>
+            <Button
+              variant="bordered"
+              startContent={<IconAdjustmentsHorizontal size={18} />}
+              className="min-w-40"
+            >
+              Filter by {filterOptions.find(f => f.key === filterBy)?.label}
+            </Button>
+          </DropdownTrigger>
+          <DropdownMenu 
+            aria-label="Filter Options"
+            selectedKeys={[filterBy]}
+            onSelectionChange={(keys) => {
+              const selected = Array.from(keys)[0] as string;
+              if (selected) setFilterBy(selected);
+            }}
+          >
+            {filterOptions.map((option) => (
+              <DropdownItem key={option.key}>
+                {option.label}
+              </DropdownItem>
+            ))}
+          </DropdownMenu>
+        </Dropdown>
+      </div>
+
+      {/* Quick filters */}
+      <div className="flex flex-wrap gap-2">
+        <Chip variant="flat" color="primary" className="cursor-pointer">
+          Available Now
+        </Chip>
+        <Chip variant="flat" color="secondary" className="cursor-pointer">
+          Under ₱5M
+        </Chip>
+        <Chip variant="flat" color="success" className="cursor-pointer">
+          3+ Bedrooms
+        </Chip>
+        <Chip variant="flat" color="warning" className="cursor-pointer">
+          With 360° Tour
+        </Chip>
+      </div>
     </div>
   );
 };

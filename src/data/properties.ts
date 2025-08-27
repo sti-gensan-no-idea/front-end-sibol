@@ -1,406 +1,198 @@
-export const properties = [
+export interface Property {
+  id: string;
+  title: string;
+  address: string;
+  image: string;
+  panoramaImage: string; // For 360 view
+  details: string;
+  price: string;
+  status: 'Available' | 'Sold';
+  amenities?: string[];
+  description?: string;
+  agent?: {
+    name: string;
+    phone: string;
+    email: string;
+  };
+}
+
+export const properties: Property[] = [
   {
+    id: "prop-001",
     title: "Lakeside Villa",
-    address:
-      "Zone 5-B Provido Village, City Heights, General Santos City, South Cotabato, Philippines",
+    address: "Zone 5-B Provido Village, City Heights, General Santos City, South Cotabato, Philippines",
     image: "https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg",
+    panoramaImage: "/src/assets/images/panorama_living_room.jpg",
     details: "2 beds • 3 bath • 2,400 sqm.",
     price: "₱850,000",
     status: "Available",
+    amenities: ["Swimming Pool", "Garden", "Garage", "Security"],
+    description: "Beautiful lakeside villa with stunning water views and modern amenities.",
+    agent: { name: "Sarah Miller", phone: "(+63) 9023396053", email: "sarah.miller@atuna.com" }
   },
   {
+    id: "prop-002", 
     title: "Modern Loft",
     address: "Pioneer Avenue, General Santos City, South Cotabato, Philippines",
     image: "https://images.pexels.com/photos/259950/pexels-photo-259950.jpeg",
+    panoramaImage: "/src/assets/images/panorama_bed_room.jpg",
     details: "1 bed • 1 bath • 80 sqm.",
     price: "₱2,500,000",
     status: "Available",
+    amenities: ["City View", "Modern Design", "Parking", "Balcony"],
+    description: "Contemporary loft in the heart of the city with modern fixtures.",
+    agent: { name: "David Chen", phone: "(+63) 902 339 6053", email: "david.chen@atuna.com" }
   },
   {
-    title: "Cozy Bungalow",
+    id: "prop-003",
+    title: "Cozy Bungalow", 
     address: "Lagao Road, General Santos City, South Cotabato, Philippines",
     image: "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg",
+    panoramaImage: "/src/assets/images/panorama_kitchen.jpg",
     details: "2 beds • 2 bath • 120 sqm.",
     price: "₱1,200,000",
     status: "Sold",
+    amenities: ["Garden", "Covered Parking", "Security Gate"],
+    description: "Charming bungalow perfect for small families.",
+    agent: { name: "Emily Rodriguez", phone: "(+63) 902 339 6053", email: "emily.rodriguez@atuna.com" }
   },
   {
+    id: "prop-004",
     title: "Penthouse Suite",
-    address:
-      "Jose Catolico Avenue, General Santos City, South Cotabato, Philippines",
+    address: "Jose Catolico Avenue, General Santos City, South Cotabato, Philippines",
     image: "https://images.pexels.com/photos/271643/pexels-photo-271643.jpeg",
+    panoramaImage: "/src/assets/images/panorama_1.jpg",
     details: "3 beds • 4 bath • 300 sqm.",
     price: "₱15,000,000",
     status: "Available",
+    amenities: ["Rooftop Terrace", "City Views", "Premium Finishes", "2 Parking Spaces"],
+    description: "Luxury penthouse with panoramic city views and premium amenities.",
+    agent: { name: "Michael Johnson", phone: "(+63) 902 339 6053", email: "michael.johnson@atuna.com" }
   },
   {
+    id: "prop-005",
     title: "Suburban House",
     address: "San Isidro, General Santos City, South Cotabato, Philippines",
     image: "https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg",
+    panoramaImage: "/src/assets/images/panorama_living_room.jpg",
     details: "4 beds • 3 bath • 500 sqm.",
     price: "₱5,600,000",
     status: "Available",
+    amenities: ["Large Garden", "2-Car Garage", "Family Room", "Security"],
+    description: "Spacious suburban house perfect for growing families.",
+    agent: { name: "Sarah Miller", phone: "(+63) 9023396053", email: "sarah.miller@atuna.com" }
   },
   {
+    id: "prop-006",
     title: "Beachfront Cottage",
     address: "Gumasa Beach, Glan, Sarangani Province, Philippines",
     image: "https://images.pexels.com/photos/210617/pexels-photo-210617.jpeg",
+    panoramaImage: "/src/assets/images/panorama_bed_room.jpg",
     details: "2 beds • 2 bath • 200 sqm.",
     price: "₱3,400,000",
     status: "Available",
+    amenities: ["Beach Access", "Ocean View", "Deck", "BBQ Area"],
+    description: "Charming beachfront cottage with direct access to pristine beach.",
+    agent: { name: "David Chen", phone: "(+63) 902 339 6053", email: "david.chen@atuna.com" }
   },
   {
+    id: "prop-007",
     title: "Luxury Mansion",
     address: "Lagao Heights, General Santos City, South Cotabato, Philippines",
     image: "https://images.pexels.com/photos/186077/pexels-photo-186077.jpeg",
+    panoramaImage: "/src/assets/images/panorama_kitchen.jpg",
     details: "6 beds • 8 bath • 1,200 sqm.",
     price: "₱45,000,000",
     status: "Available",
+    amenities: ["Swimming Pool", "Home Theater", "Wine Cellar", "3-Car Garage", "Maid's Quarters"],
+    description: "Opulent luxury mansion with world-class amenities and finishes.",
+    agent: { name: "Emily Rodriguez", phone: "(+63) 902 339 6053", email: "emily.rodriguez@atuna.com" }
   },
   {
+    id: "prop-008",
     title: "Countryside Farmhouse",
     address: "Polomolok, South Cotabato, Philippines",
     image: "https://images.pexels.com/photos/259597/pexels-photo-259597.jpeg",
+    panoramaImage: "/src/assets/images/panorama_1.jpg",
     details: "3 beds • 2 bath • 2,000 sqm.",
     price: "₱7,800,000",
     status: "Sold",
-  },
+    amenities: ["Large Lot", "Fruit Trees", "Barn", "Well Water"],
+    description: "Rustic farmhouse with extensive land perfect for agricultural use.",
+    agent: { name: "Michael Johnson", phone: "(+63) 902 339 6053", email: "michael.johnson@atuna.com" }
+  }
+];
+
+// Add more properties with cycling through the available panorama images
+const additionalProperties: Property[] = [
   {
+    id: "prop-009",
     title: "Minimalist Studio",
     address: "City Heights, General Santos City, South Cotabato, Philippines",
     image: "https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg",
+    panoramaImage: "/src/assets/images/panorama_living_room.jpg",
     details: "1 bed • 1 bath • 40 sqm.",
     price: "₱950,000",
     status: "Available",
+    amenities: ["Modern Design", "Balcony", "Security"],
+    description: "Compact and efficient studio perfect for young professionals.",
+    agent: { name: "Sarah Miller", phone: "(+63) 9023396053", email: "sarah.miller@atuna.com" }
   },
   {
+    id: "prop-010",
     title: "Mountain View Cabin",
     address: "Malungon, Sarangani Province, Philippines",
     image: "https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg",
+    panoramaImage: "/src/assets/images/panorama_bed_room.jpg",
     details: "2 beds • 1 bath • 150 sqm.",
     price: "₱2,300,000",
     status: "Available",
-  },
-
-  // ---- Additional 40 properties ----
-  {
-    title: "Seaside Villa",
-    address: "Tambler, General Santos City, Philippines",
-    image: "https://picsum.photos/seed/property11/400/300",
-    details: "3 beds • 3 bath • 320 sqm.",
-    price: "₱6,800,000",
-    status: "Available",
-  },
-  {
-    title: "Garden House",
-    address: "Mabuhay Road, General Santos City, Philippines",
-    image: "https://picsum.photos/seed/property12/400/300",
-    details: "2 beds • 1 bath • 180 sqm.",
-    price: "₱2,400,000",
-    status: "Sold",
-  },
-  {
-    title: "Urban Apartment",
-    address: "Downtown, General Santos City, Philippines",
-    image: "https://picsum.photos/seed/property13/400/300",
-    details: "1 bed • 1 bath • 60 sqm.",
-    price: "₱1,100,000",
-    status: "Available",
-  },
-  {
-    title: "Rustic Cottage",
-    address: "Polomolok, South Cotabato, Philippines",
-    image: "https://picsum.photos/seed/property14/400/300",
-    details: "2 beds • 1 bath • 100 sqm.",
-    price: "₱1,600,000",
-    status: "Available",
-  },
-  {
-    title: "Cliffside Retreat",
-    address: "Maasim, Sarangani Province, Philippines",
-    image: "https://picsum.photos/seed/property15/400/300",
-    details: "3 beds • 2 bath • 250 sqm.",
-    price: "₱4,200,000",
-    status: "Sold",
-  },
-  {
-    title: "Cityview Penthouse",
-    address: "National Highway, General Santos City, Philippines",
-    image: "https://picsum.photos/seed/property16/400/300",
-    details: "4 beds • 4 bath • 450 sqm.",
-    price: "₱18,500,000",
-    status: "Available",
-  },
-  {
-    title: "Hillside Bungalow",
-    address: "Conel Road, General Santos City, Philippines",
-    image: "https://picsum.photos/seed/property17/400/300",
-    details: "3 beds • 2 bath • 210 sqm.",
-    price: "₱3,300,000",
-    status: "Available",
-  },
-  {
-    title: "Sunset Residence",
-    address: "Mabuhay, General Santos City, Philippines",
-    image: "https://picsum.photos/seed/property18/400/300",
-    details: "5 beds • 3 bath • 600 sqm.",
-    price: "₱9,900,000",
-    status: "Available",
-  },
-  {
-    title: "Modern Duplex",
-    address: "Lagao, General Santos City, Philippines",
-    image: "https://picsum.photos/seed/property19/400/300",
-    details: "4 beds • 3 bath • 280 sqm.",
-    price: "₱5,700,000",
-    status: "Sold",
-  },
-  {
-    title: "Riverside House",
-    address: "Alabel, Sarangani Province, Philippines",
-    image: "https://picsum.photos/seed/property20/400/300",
-    details: "3 beds • 2 bath • 350 sqm.",
-    price: "₱4,800,000",
-    status: "Available",
-  },
-  {
-    title: "Skyline Apartment",
-    address: "City Center, General Santos City, Philippines",
-    image: "https://picsum.photos/seed/property21/400/300",
-    details: "2 beds • 2 bath • 95 sqm.",
-    price: "₱3,200,000",
-    status: "Available",
-  },
-  {
-    title: "Country Lodge",
-    address: "Tupi, South Cotabato, Philippines",
-    image: "https://picsum.photos/seed/property22/400/300",
-    details: "6 beds • 4 bath • 1,100 sqm.",
-    price: "₱12,400,000",
-    status: "Available",
-  },
-  {
-    title: "Palm Grove Villa",
-    address: "Glan, Sarangani Province, Philippines",
-    image: "https://picsum.photos/seed/property23/400/300",
-    details: "3 beds • 2 bath • 280 sqm.",
-    price: "₱6,200,000",
-    status: "Sold",
-  },
-  {
-    title: "Modern Studio",
-    address: "Pioneer Ave, General Santos City, Philippines",
-    image: "https://picsum.photos/seed/property24/400/300",
-    details: "1 bed • 1 bath • 55 sqm.",
-    price: "₱1,000,000",
-    status: "Available",
-  },
-  {
-    title: "Tropical Escape",
-    address: "Gumasa Beach, Glan, Philippines",
-    image: "https://picsum.photos/seed/property25/400/300",
-    details: "4 beds • 3 bath • 420 sqm.",
-    price: "₱8,800,000",
-    status: "Available",
-  },
-  {
-    title: "Lagao Heights Mansion",
-    address: "Lagao, General Santos City, Philippines",
-    image: "https://picsum.photos/seed/property26/400/300",
-    details: "7 beds • 6 bath • 1,500 sqm.",
-    price: "₱25,000,000",
-    status: "Available",
-  },
-  {
-    title: "Countryside Villa",
-    address: "Tupi, South Cotabato, Philippines",
-    image: "https://picsum.photos/seed/property27/400/300",
-    details: "3 beds • 2 bath • 300 sqm.",
-    price: "₱4,700,000",
-    status: "Sold",
-  },
-  {
-    title: "Urban Condo",
-    address: "General Santos City Center, Philippines",
-    image: "https://picsum.photos/seed/property28/400/300",
-    details: "2 beds • 1 bath • 70 sqm.",
-    price: "₱2,200,000",
-    status: "Available",
-  },
-  {
-    title: "Retreat House",
-    address: "Malungon, Sarangani Province, Philippines",
-    image: "https://picsum.photos/seed/property29/400/300",
-    details: "2 beds • 2 bath • 190 sqm.",
-    price: "₱2,800,000",
-    status: "Available",
-  },
-  {
-    title: "Executive Suite",
-    address: "Downtown GSC, Philippines",
-    image: "https://picsum.photos/seed/property30/400/300",
-    details: "3 beds • 3 bath • 230 sqm.",
-    price: "₱6,300,000",
-    status: "Sold",
-  },
-  {
-    title: "Highland Villa",
-    address: "Polomolok, South Cotabato, Philippines",
-    image: "https://picsum.photos/seed/property31/400/300",
-    details: "5 beds • 4 bath • 700 sqm.",
-    price: "₱14,600,000",
-    status: "Available",
-  },
-  {
-    title: "Sunrise Cottage",
-    address: "Alabel, Sarangani Province, Philippines",
-    image: "https://picsum.photos/seed/property32/400/300",
-    details: "2 beds • 1 bath • 150 sqm.",
-    price: "₱1,900,000",
-    status: "Available",
-  },
-  {
-    title: "Lagoon House",
-    address: "Mabuhay Road, General Santos City, Philippines",
-    image: "https://picsum.photos/seed/property33/400/300",
-    details: "3 beds • 3 bath • 400 sqm.",
-    price: "₱7,500,000",
-    status: "Available",
-  },
-  {
-    title: "Eco Retreat",
-    address: "Maasim, Sarangani Province, Philippines",
-    image: "https://picsum.photos/seed/property34/400/300",
-    details: "2 beds • 2 bath • 220 sqm.",
-    price: "₱3,200,000",
-    status: "Sold",
-  },
-  {
-    title: "Beachview Apartment",
-    address: "Glan Beach, Philippines",
-    image: "https://picsum.photos/seed/property35/400/300",
-    details: "1 bed • 1 bath • 65 sqm.",
-    price: "₱1,500,000",
-    status: "Available",
-  },
-  {
-    title: "Forest Lodge",
-    address: "Malungon, Sarangani Province, Philippines",
-    image: "https://picsum.photos/seed/property36/400/300",
-    details: "4 beds • 3 bath • 380 sqm.",
-    price: "₱6,900,000",
-    status: "Available",
-  },
-  {
-    title: "City Towers Unit",
-    address: "San Isidro, GSC, Philippines",
-    image: "https://picsum.photos/seed/property37/400/300",
-    details: "2 beds • 1 bath • 75 sqm.",
-    price: "₱2,000,000",
-    status: "Sold",
-  },
-  {
-    title: "Hidden Paradise Villa",
-    address: "Tupi, South Cotabato, Philippines",
-    image: "https://picsum.photos/seed/property38/400/300",
-    details: "5 beds • 4 bath • 900 sqm.",
-    price: "₱16,500,000",
-    status: "Available",
-  },
-  {
-    title: "Downtown Studio",
-    address: "General Santos City Center, Philippines",
-    image: "https://picsum.photos/seed/property39/400/300",
-    details: "1 bed • 1 bath • 45 sqm.",
-    price: "₱980,000",
-    status: "Available",
-  },
-  {
-    title: "Golden Hills Residence",
-    address: "Conel, General Santos City, Philippines",
-    image: "https://picsum.photos/seed/property40/400/300",
-    details: "4 beds • 3 bath • 500 sqm.",
-    price: "₱8,200,000",
-    status: "Available",
-  },
-  {
-    title: "Sky Tower Loft",
-    address: "Downtown GSC, Philippines",
-    image: "https://picsum.photos/seed/property41/400/300",
-    details: "2 beds • 2 bath • 120 sqm.",
-    price: "₱3,800,000",
-    status: "Available",
-  },
-  {
-    title: "Tranquil Bungalow",
-    address: "Mabuhay Road, GSC, Philippines",
-    image: "https://picsum.photos/seed/property42/400/300",
-    details: "3 beds • 2 bath • 200 sqm.",
-    price: "₱3,900,000",
-    status: "Sold",
-  },
-  {
-    title: "Horizon Villa",
-    address: "Lagao Heights, GSC, Philippines",
-    image: "https://picsum.photos/seed/property43/400/300",
-    details: "6 beds • 5 bath • 1,100 sqm.",
-    price: "₱20,000,000",
-    status: "Available",
-  },
-  {
-    title: "Pearl Beach Cottage",
-    address: "Glan, Sarangani Province, Philippines",
-    image: "https://picsum.photos/seed/property44/400/300",
-    details: "2 beds • 1 bath • 160 sqm.",
-    price: "₱2,400,000",
-    status: "Available",
-  },
-  {
-    title: "Vista Condo Unit",
-    address: "Pioneer Avenue, GSC, Philippines",
-    image: "https://picsum.photos/seed/property45/400/300",
-    details: "1 bed • 1 bath • 55 sqm.",
-    price: "₱1,200,000",
-    status: "Available",
-  },
-  {
-    title: "Sunlit Duplex",
-    address: "San Isidro, General Santos City, Philippines",
-    image: "https://picsum.photos/seed/property46/400/300",
-    details: "4 beds • 3 bath • 300 sqm.",
-    price: "₱5,500,000",
-    status: "Available",
-  },
-  {
-    title: "Highrise Penthouse",
-    address: "City Heights, GSC, Philippines",
-    image: "https://picsum.photos/seed/property47/400/300",
-    details: "5 beds • 4 bath • 600 sqm.",
-    price: "₱22,000,000",
-    status: "Available",
-  },
-  {
-    title: "Emerald Retreat",
-    address: "Polomolok, South Cotabato, Philippines",
-    image: "https://picsum.photos/seed/property48/400/300",
-    details: "3 beds • 3 bath • 280 sqm.",
-    price: "₱6,000,000",
-    status: "Sold",
-  },
-  {
-    title: "Blue Horizon House",
-    address: "Tambler, GSC, Philippines",
-    image: "https://picsum.photos/seed/property49/400/300",
-    details: "4 beds • 3 bath • 400 sqm.",
-    price: "₱7,700,000",
-    status: "Available",
-  },
-  {
-    title: "Lagao Dream Home",
-    address: "Lagao, General Santos City, Philippines",
-    image: "https://picsum.photos/seed/property50/400/300",
-    details: "3 beds • 2 bath • 250 sqm.",
-    price: "₱4,500,000",
-    status: "Available",
-  },
+    amenities: ["Mountain Views", "Fireplace", "Deck", "Nature Trail"],
+    description: "Peaceful mountain retreat with breathtaking views.",
+    agent: { name: "David Chen", phone: "(+63) 902 339 6053", email: "david.chen@atuna.com" }
+  }
 ];
+
+// Generate more properties programmatically
+for (let i = 11; i <= 50; i++) {
+  const panoramaImages = [
+    "/src/assets/images/panorama_living_room.jpg",
+    "/src/assets/images/panorama_bed_room.jpg", 
+    "/src/assets/images/panorama_kitchen.jpg",
+    "/src/assets/images/panorama_1.jpg"
+  ];
+  
+  const agents = [
+    { name: "Sarah Miller", phone: "(+63) 9023396053", email: "sarah.miller@atuna.com" },
+    { name: "David Chen", phone: "(+63) 902 339 6053", email: "david.chen@atuna.com" },
+    { name: "Emily Rodriguez", phone: "(+63) 902 339 6053", email: "emily.rodriguez@atuna.com" },
+    { name: "Michael Johnson", phone: "(+63) 902 339 6053", email: "michael.johnson@atuna.com" }
+  ];
+
+  const propertyTypes = [
+    { title: "Modern Apartment", details: "2 beds • 1 bath • 85 sqm.", amenities: ["Balcony", "Parking", "Security"] },
+    { title: "Family House", details: "3 beds • 2 bath • 200 sqm.", amenities: ["Garden", "Garage", "Security Gate"] },
+    { title: "Luxury Condo", details: "1 bed • 2 bath • 95 sqm.", amenities: ["Gym", "Pool", "Concierge"] },
+    { title: "Suburban Villa", details: "4 beds • 3 bath • 350 sqm.", amenities: ["Pool", "Garden", "2-Car Garage"] }
+  ];
+
+  const type = propertyTypes[(i - 11) % propertyTypes.length];
+  const agent = agents[(i - 11) % agents.length];
+  const panorama = panoramaImages[(i - 11) % panoramaImages.length];
+  
+  additionalProperties.push({
+    id: `prop-${String(i).padStart(3, '0')}`,
+    title: `${type.title} ${i}`,
+    address: `Property Address ${i}, General Santos City, Philippines`,
+    image: `https://picsum.photos/seed/property${i}/400/300`,
+    panoramaImage: panorama,
+    details: type.details,
+    price: `₱${(Math.random() * 10000000 + 500000).toLocaleString('en-PH').replace(/,/g, ',')}`,
+    status: Math.random() > 0.8 ? "Sold" : "Available",
+    amenities: type.amenities,
+    description: `Beautiful ${type.title.toLowerCase()} with modern amenities and great location.`,
+    agent: agent
+  });
+}
+
+properties.push(...additionalProperties);

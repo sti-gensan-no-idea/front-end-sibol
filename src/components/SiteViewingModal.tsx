@@ -165,7 +165,6 @@ export const SiteViewingModal = ({
                 <div className="grid grid-cols-2 gap-4">
                   <Input
                     required
-                    required
                     label="Preferred Date"
                     type="date"
                     value={formData.preferred_date}

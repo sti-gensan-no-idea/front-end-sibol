@@ -10,15 +10,15 @@ import { teamMembers } from "@/data/about-us";
 export const AboutUs = () => {
   return (
     <div className="min-h-screen p-6 sm:p-8 flex flex-col items-center justify-center">
-      <h1 className="text-4xl sm:text-5xl md:text-6xl text-center font-bold text-foreground-700">
+      {/* <h1 className="text-4xl sm:text-5xl md:text-6xl text-center font-bold text-foreground-700">
         About Us
       </h1>
       <div className="w-24 sm:w-30 h-2 mt-4 bg-gray-300 rounded-full" />
       <p className="text-lg sm:text-xl text-center mt-8 max-w-xl text-foreground-700">
         Meet the team behind Atuna
-      </p>
+      </p> */}
 
-      <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full max-w-7xl">
+      {/* <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full max-w-7xl">
         {teamMembers.map((member, index) => (
           <div
             key={index}
@@ -70,7 +70,7 @@ export const AboutUs = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };
