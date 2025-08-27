@@ -15,14 +15,6 @@ import { PropertiesPage } from "@/pages/public/properties";
 import { SignUpRoutes } from "@/features/signup/SignUpRoutes";
 import { ChatbaseBootstrap } from "@/lib/chatbase/bootstrap";
 import { useAuth } from "@/lib/auth/useAuth";
-import {
-  RequireClient,
-  RequireDeveloper,
-  RequireAgent,
-  RequireBroker,
-  RequireAdmin,
-  ProtectedRoute,
-} from "@/lib/auth/ProtectedRoute";
 
 function App() {
   return (
@@ -30,80 +22,34 @@ function App() {
       <ChatbaseBootstrap />
       <Routes>
         {/* Public Routes */}
-        <Route path="/" element={<IndexPage />} />
-        <Route path="/properties" element={<PropertiesPage />} />
-        <Route path="/agents" element={<FindAgents />} />
+        <Route element={<IndexPage />} path="/" />
+        <Route element={<PropertiesPage />} path="/properties" />
+        <Route element={<FindAgents />} path="/agents" />
         {/* <Route path="/about" element={<AboutUsPage />} /> */}
-        <Route path="/signin" element={<SignInPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
+        <Route element={<SignInPage />} path="/signin" />
+        <Route element={<SignUpPage />} path="/signup" />
 
         {/* Multi-Role Signup Routes */}
-        <Route path="/signup/:role/*" element={<SignUpRoutes />} />
+        <Route element={<SignUpRoutes />} path="/signup/:role/*" />
 
-        {/* Protected Dashboard Routes */}
-        <Route
-          path="/profile/client/*"
-          element={
-            <RequireClient>
-              <DashboardClientPage />
-            </RequireClient>
-          }
-        />
+        {/* Dashboard Routes - no protection */}
+        <Route element={<DashboardClientPage />} path="/profile/client/*" />
+        <Route element={<DashboardDeveloperPage />} path="/profile/developer/*" />
+        <Route element={<DashboardAgentPage />} path="/profile/agent/*" />
+        <Route element={<DashboardBrokerPage />} path="/profile/broker/*" />
+        <Route element={<DashboardAdminPage />} path="/profile/admin/*" />
 
-        <Route
-          path="/profile/developer/*"
-          element={
-            <RequireDeveloper>
-              <DashboardDeveloperPage />
-            </RequireDeveloper>
-          }
-        />
-
-        <Route
-          path="/profile/agent/*"
-          element={
-            <RequireAgent>
-              <DashboardAgentPage />
-            </RequireAgent>
-          }
-        />
-
-        <Route
-          path="/profile/broker/*"
-          element={
-            <RequireBroker>
-              <DashboardBrokerPage />
-            </RequireBroker>
-          }
-        />
-
-        <Route
-          path="/profile/admin/*"
-          element={
-            <RequireAdmin>
-              <DashboardAdminPage />
-            </RequireAdmin>
-          }
-        />
-
-        {/* Catch-all protected routes */}
-        <Route
-          path="/dashboard/*"
-          element={
-            <ProtectedRoute>
-              <DashboardRedirect />
-            </ProtectedRoute>
-          }
-        />
+        {/* Generic dashboard redirect */}
+        <Route element={<DashboardRedirect />} path="/dashboard/*" />
 
         {/* 404 Page */}
-        <Route path="*" element={<NotFoundPage />} />
+        <Route element={<NotFoundPage />} path="*" />
       </Routes>
     </>
   );
 }
 
-// Component to redirect users to their appropriate dashboard
+// Simple redirect logic (kept, but no ProtectedRoute)
 const DashboardRedirect = () => {
   const { user } = useAuth();
 
@@ -118,7 +64,7 @@ const DashboardRedirect = () => {
   const userRole = user?.role;
   const redirectPath = userRole ? dashboardRoutes[userRole] : "/";
 
-  return <Navigate to={redirectPath} replace />;
+  return <Navigate replace to={redirectPath} />;
 };
 
 export default App;
