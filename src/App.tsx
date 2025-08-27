@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { IndexPage } from "@/pages/public";
 import { SignInPage } from "@/pages/public/signin";
 import { SignUpPage } from "@/pages/public/signup";
-import { AboutUsPage } from "@/pages/public/about-us";
+// import { AboutUsPage } from "@/pages/public/about-us";
 import { DashboardClientPage } from "@/pages/client/dashboard-client";
 import { DashboardDeveloperPage } from "@/pages/developer/dashboard-developer";
 import { DashboardAgentPage } from "@/pages/agent/dashboard-agent";
@@ -19,7 +19,7 @@ function App() {
       <Route element={<IndexPage />} path="/" />
       <Route element={<PropertiesPage />} path="/properties" />
       <Route element={<FindAgents />} path="/agents" />
-      <Route element={<AboutUsPage />} path="/about" />
+      {/* <Route element={<AboutUsPage />} path="/about" /> */}
       <Route element={<SignInPage />} path="/signin" />
       <Route element={<SignUpPage />} path="/signup" />
 

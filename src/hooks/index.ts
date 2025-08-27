@@ -10,6 +10,7 @@ export { usePayments } from "./usePayments";
 export { useNotifications } from "./useNotifications";
 export { useBookmarks } from "./useBookmarks";
 export { useAnalytics } from "./useAnalyticsPlaceholder";
+export { useChatbase } from "./useChatbase";
 
 // Re-export types from services that are used in components
 export type {

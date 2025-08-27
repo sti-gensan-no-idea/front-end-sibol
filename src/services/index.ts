@@ -4,6 +4,7 @@ export { apiService, ApiError } from "./apiService";
 export { dataService, DataService } from "./dataService";
 export { default as propertyService, PropertyService } from "./propertyService";
 export { analyticsService, AnalyticsService } from "./analyticsService";
+export { default as chatbaseService } from "./chatbaseService";
 
 // Export all analytics types
 export type {
