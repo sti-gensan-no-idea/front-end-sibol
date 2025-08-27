@@ -6,7 +6,7 @@ import agent1 from "@/assets/images/agent1.png";
 import agent2 from "@/assets/images/agent2.png";
 import agent3 from "@/assets/images/agent3.png";
 import agent4 from "@/assets/images/agent4.png";
-import { AgentsTabAgentsCard } from "@/widget/agents-tab-agents-card";
+import AgentModal from "@/widget/agents-tab-agent-modal";
 
 export const FindAgents = () => {
   const sampleData = [
@@ -14,41 +14,49 @@ export const FindAgents = () => {
       name: "Sarah Miller",
       number: "(+63) 9023396053",
       img: agent1,
+      email: "SarahMiller@gmail.com",
     },
     {
       name: "David Chen",
       number: "(+63) 902 339 6053",
       img: agent2,
+      email: "DavidChen@gmail.com",
     },
     {
       name: "Emily Rodriguez",
       number: "(+63) 902 339 6053 ",
       img: agent3,
+      email: "EmilyRodriguez@gmail.com",
     },
     {
       name: "Michael Johnson",
       number: "(+63) 902 339 6053",
       img: agent4,
+      email: "MichaelJohnson@gmail.com",
     },
     {
       name: "Sarah Miller",
       number: "(+63) 9023396053",
       img: agent1,
+      email: "SarahMiller@gmail.com",
     },
     {
       name: "David Chen",
       number: "(+63) 902 339 6053",
       img: agent2,
+      email: "DavidChen@gmail.com",
     },
     {
       name: "Emily Rodriguez",
       number: "(+63) 902 339 6053 ",
       img: agent3,
+      email: "EmilyRodriguez@gmail.com",
     },
     {
       name: "Michael Johnson",
       number: "(+63) 902 339 6053",
       img: agent4,
+      email: "MichaelJohnson@gmail.com",
     },
   ];
 
@@ -72,11 +80,12 @@ export const FindAgents = () => {
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5">
           {sampleData.map((data, index) => (
-            <AgentsTabAgentsCard
+            <AgentModal
               name={data.name}
               number={data.number}
               img={data.img}
               key={index}
+              email={data.email}
             />
           ))}
         </div>

@@ -5,7 +5,7 @@ import ImgArmada from "../assets/images/img_armada.jpg";
 
 export const teamMembers = [
   {
-    name: "Rolando Ferrer",
+    name: "Rolando Ferrer Jr.",
     role: "Web Security / Back-end Developer",
     image: ImgFerrer,
     description:

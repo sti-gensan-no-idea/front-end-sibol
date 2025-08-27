@@ -14,16 +14,17 @@ import {
   IconUserFilled,
 } from "@tabler/icons-react";
 
-import { useAuth } from "../hooks";
+import { useAuth } from "../lib/auth/useAuth";
 
 export const SignInCardForm = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { signin, loading, error } = useAuth();
+  const { signin, isLoading, error } = useAuth();
 
   const validRoles = ["client", "developer", "agent", "broker"];
 
   const roleFromUrl = searchParams.get("role");
+  const redirectUrl = searchParams.get("redirect");
   const defaultRole = validRoles.includes(roleFromUrl || "")
     ? roleFromUrl
     : "client";
@@ -59,21 +60,29 @@ export const SignInCardForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const success = await signin(
-      { email: formData.email, password: formData.password },
-      formData.role
-    );
+    try {
+      await signin(
+        { email: formData.email, password: formData.password },
+        formData.role
+      );
 
-    if (success) {
-      // Redirect to appropriate dashboard based on role
-      const dashboardRoutes = {
-        client: "/client/dashboard",
-        developer: "/developer/dashboard",
-        agent: "/agent/dashboard",
-        broker: "/broker/dashboard",
-      };
-      
-      navigate(dashboardRoutes[formData.role as keyof typeof dashboardRoutes] || "/client/dashboard");
+      // Handle redirect after successful login
+      if (redirectUrl) {
+        navigate(redirectUrl);
+      } else {
+        // Default dashboard routes based on role
+        const dashboardRoutes = {
+          client: "/profile/client",
+          developer: "/profile/developer",
+          agent: "/profile/agent",
+          broker: "/profile/broker",
+          admin: "/profile/admin",
+        };
+        
+        navigate(dashboardRoutes[formData.role as keyof typeof dashboardRoutes] || "/profile/client");
+      }
+    } catch (err) {
+      // Error is handled by the useAuth hook
     }
   };
 
@@ -152,10 +161,10 @@ export const SignInCardForm = () => {
             className="mt-8 w-full" 
             color="primary" 
             type="submit"
-            disabled={loading}
-            isLoading={loading}
+            disabled={isLoading}
+            isLoading={isLoading}
           >
-            {loading ? "Signing In..." : "Sign In"}
+            {isLoading ? "Signing In..." : "Sign In"}
           </Button>
         </form>
 
@@ -165,13 +174,39 @@ export const SignInCardForm = () => {
           <span className="text-foreground-700">
             Don&apos;t have an account?
           </span>
-          <Link
-            className="ml-3 cursor-pointer"
-            href="/signup"
-            underline="hover"
-          >
-            Create an Account
-          </Link>
+          <div className="ml-3 flex gap-2">
+            <Link
+              className="cursor-pointer"
+              href="/signup/client"
+              underline="hover"
+            >
+              Client
+            </Link>
+            <span className="text-default-400">|</span>
+            <Link
+              className="cursor-pointer"
+              href="/signup/developer"
+              underline="hover"
+            >
+              Developer
+            </Link>
+            <span className="text-default-400">|</span>
+            <Link
+              className="cursor-pointer"
+              href="/signup/agent"
+              underline="hover"
+            >
+              Agent
+            </Link>
+            <span className="text-default-400">|</span>
+            <Link
+              className="cursor-pointer"
+              href="/signup/broker"
+              underline="hover"
+            >
+              Broker
+            </Link>
+          </div>
         </div>
       </div>
     </div>

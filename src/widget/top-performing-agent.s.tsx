@@ -51,7 +51,11 @@ export const TopPerformingAgent = () => {
         </span>
       </div>
 
-      <Table removeWrapper aria-label="Top Performing Agents" className="mt-8">
+      <Table
+        removeWrapper
+        aria-label="Top Performing Agents"
+        className="mt-8 overflow-x-scroll"
+      >
         <TableHeader>
           <TableColumn>NAME</TableColumn>
           <TableColumn>ACTIVE LEADS</TableColumn>
@@ -138,7 +142,7 @@ export const TopPerformingAgent = () => {
                     <a
                       className="mt-4 text-foreground-700 flex items-center w-full hover:underline"
                       href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                        selectedAgent.address,
+                        selectedAgent.address
                       )}`}
                       rel="noopener noreferrer"
                       target="_blank"

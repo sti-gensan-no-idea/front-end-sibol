@@ -1,101 +1,63 @@
-import { useRef } from "react";
-import {
-  Button,
-  Input,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  useDisclosure,
-} from "@heroui/react";
-import { IconMessageChatbot, IconSend2 } from "@tabler/icons-react";
+import { Button } from "@heroui/react";
+import { IconMessageChatbot } from "@tabler/icons-react";
+import { useEffect } from "react";
 
-export const Chatbot = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const inputMessage = useRef<HTMLInputElement>(null);
+declare global {
+  interface Window {
+    chatbase?: any;
+    chatbaseConfig?: { showFloatingInitialMessages?: boolean; floatingInitialMessagesDelay?: number; };
+    __chatbaseLoaded?: boolean;
+  }
+}
 
-  const handleOpen = () => {
-    onOpen();
-  };
+export function Chatbot() {
+  useEffect(() => {
+    if (window.__chatbaseLoaded) return;
+    window.__chatbaseLoaded = true;
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const message = inputMessage.current?.value?.trim();
+    // optional: floating initial messages
+    window.chatbaseConfig = { showFloatingInitialMessages: true, floatingInitialMessagesDelay: 2 };
 
-    if (!message) return;
-    
-    // TODO: Implement actual chatbot API call here
-    // You can integrate with your backend's chatbot endpoint
-    console.log("Sending message:", message);
-    
-    inputMessage.current!.value = "";
-  };
+    // your provided loader snippet
+    (function () {
+      if (!window.chatbase || window.chatbase("getState") !== "initialized") {
+        const queued = (...args: any[]) => {
+          if (!window.chatbase.q) window.chatbase.q = [];
+          window.chatbase.q.push(args);
+        };
+        window.chatbase = new Proxy(queued as any, {
+          get(target, prop) {
+            if (prop === "q") return (target as any).q;
+            return (...args: any[]) => (target as any)(prop, ...args);
+          },
+        });
+      }
+      const onLoad = function () {
+        const script = document.createElement("script");
+        script.src = "https://www.chatbase.co/embed.min.js";
+        script.id = "TvbB6m5YtJVSQylnEdP9s";
+        (script as any).domain = "www.chatbase.co";
+        document.body.appendChild(script);
+      };
+      if (document.readyState === "complete") onLoad();
+      else window.addEventListener("load", onLoad);
+    })();
+  }, []);
+
+  const openChat = () => { try { window.chatbase?.("open"); } catch {} };
 
   return (
-    <>
-      <Button
-        className="fixed right-8 bottom-8 z-50 bg-white"
-        radius="full"
-        size="lg"
-        startContent={<IconMessageChatbot />}
-        variant="shadow"
-        onPress={handleOpen}
-      >
-        Chat with AI
-      </Button>
-
-      {/* Modal */}
-      <Modal
-        backdrop="blur"
-        isDismissable={false}
-        isOpen={isOpen}
-        size="xl"
-        onClose={onClose}
-      >
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1 text-foreground-700">
-                AI Assistant
-              </ModalHeader>
-              <ModalBody>
-                <ChatGetStarted />
-              </ModalBody>
-              <ModalFooter>
-                <form
-                  className="flex items-center w-full"
-                  onSubmit={handleSubmit}
-                >
-                  <Input
-                    ref={inputMessage}
-                    className="mr-2"
-                    placeholder="Enter message..."
-                  />
-                  <Button
-                    isIconOnly
-                    color="primary"
-                    radius="full"
-                    type="submit"
-                    variant="light"
-                  >
-                    <IconSend2 />
-                  </Button>
-                </form>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
-    </>
+    <Button
+      className="fixed right-8 bottom-8 z-50 bg-white"
+      radius="full"
+      size="lg"
+      startContent={<IconMessageChatbot />}
+      variant="shadow"
+      onPress={openChat}
+    >
+      Chat with AI
+    </Button>
   );
-};
+}
 
-const ChatGetStarted = () => {
-  return (
-    <span className="flex flex-col items-center justify-center bg-gray-100 p-8 rounded-medium text-foreground-500 select-none">
-      <IconMessageChatbot size={32} />
-      Chat with our AI Assistant
-    </span>
-  );
-};
+export default Chatbot;

@@ -9,6 +9,7 @@ import {
   Card,
   CardBody,
   Progress,
+  Alert,
 } from "@heroui/react";
 import {
   IconFileUpload,
@@ -45,6 +46,7 @@ export const BulkUploadModal = ({
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+
     if (file && acceptedFileTypes.includes(file.type)) {
       setSelectedFile(file);
       setUploadComplete(false);
@@ -61,6 +63,7 @@ export const BulkUploadModal = ({
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
+
     if (file && acceptedFileTypes.includes(file.type)) {
       setSelectedFile(file);
       setUploadComplete(false);
@@ -84,12 +87,12 @@ export const BulkUploadModal = ({
       clearInterval(progressInterval);
       setUploadProgress(100);
       setUploadComplete(true);
-      
+
       // Map the response structure to match what the UI expects
       setUploadResults({
         successful: result.success_count,
         failed: result.error_count,
-        errors: result.errors
+        errors: result.errors,
       });
     } catch (err: any) {
       setUploadProgress(0);
@@ -112,7 +115,7 @@ export const BulkUploadModal = ({
     // Create a CSV template
     const headers = [
       "name",
-      "description", 
+      "description",
       "address",
       "city",
       "province",
@@ -122,9 +125,9 @@ export const BulkUploadModal = ({
       "bathrooms",
       "area",
       "parking_slots",
-      "amenities"
+      "amenities",
     ];
-    
+
     const sampleData = [
       "Sample House",
       "Beautiful 3-bedroom house",
@@ -137,13 +140,14 @@ export const BulkUploadModal = ({
       "2",
       "120",
       "2",
-      "Swimming pool, Garage"
+      "Swimming pool, Garage",
     ];
 
     const csvContent = [headers.join(","), sampleData.join(",")].join("\n");
     const blob = new Blob([csvContent], { type: "text/csv" });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
+
     a.href = url;
     a.download = "properties_template.csv";
     a.click();
@@ -172,11 +176,7 @@ export const BulkUploadModal = ({
             </ModalHeader>
 
             <ModalBody>
-              {error && (
-                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                  {error}
-                </div>
-              )}
+              {error && <Alert color="danger" title={error} variant="solid" />}
 
               {!uploadComplete && (
                 <>
@@ -203,7 +203,8 @@ export const BulkUploadModal = ({
                                 {selectedFile.name}
                               </p>
                               <p className="text-sm text-gray-500">
-                                {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
+                                {(selectedFile.size / 1024 / 1024).toFixed(2)}{" "}
+                                MB
                               </p>
                             </div>
                           </>

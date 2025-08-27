@@ -6,6 +6,8 @@ import { Chatbot } from "@/widget/chatbot";
 import { Notification } from "@/widget/notification";
 import { CalendarEvents } from "@/widget/calendar-events";
 import { ClientBookmark } from "@/widget/client-bookmark";
+import { SearchProperties } from "@/widget/search-properties";
+import { IconBuildingCommunity } from "@tabler/icons-react";
 
 export const DashboardClientPage = () => {
   const [searchParams] = useSearchParams();
@@ -46,7 +48,21 @@ export const DashboardClientPage = () => {
 
 // Dashboard content.
 const DashboardTabContent = () => {
-  return <></>;
+  return (
+    <>
+      <div className="col-span-2 bg-white rounded-large shadow-medium">
+        <div className="flex items-center md:items-start justify-between px-8 pt-8">
+          <div className="flex items-center">
+            <IconBuildingCommunity className="text-gray-500" size={26} />
+            <span className="text-lg font-bold ml-2 text-foreground-700">
+              Browse Properties
+            </span>
+          </div>
+        </div>
+        <SearchProperties />
+      </div>
+    </>
+  );
 };
 
 // Bookmark content

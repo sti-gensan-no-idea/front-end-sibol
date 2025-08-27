@@ -44,7 +44,12 @@ const DashboardTabContent = () => {
   return (
     <div className="flex flex-col gap-4">
       <BrokerWelcome />
-      <TopPerformingAgent />
+      <div className="grid grid-cols-3 gap-4">
+        <div className="col-span-2">
+          <BrokerTeams />
+        </div>
+        <TopPerformingAgent />
+      </div>
     </div>
   );
 };

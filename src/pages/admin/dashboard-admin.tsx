@@ -2,6 +2,9 @@ import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { AdminSideBar } from "@/widget/admin-sidebar";
+import { AdminWelcome } from "@/widget/admin-welcome";
+import { AdminRequests } from "@/widget/admin-requests";
+import { TopPerformingAgent } from "@/widget/top-performing-agent.s";
 
 export const DashboardAdminPage = () => {
   const [searchParams] = useSearchParams();
@@ -14,11 +17,11 @@ export const DashboardAdminPage = () => {
   const renderTab = () => {
     switch (tab) {
       case "dashboard":
-        return <BannedTabContent />;
-      case "calendar":
-        return <BannedTabContent />;
+        return <DashboardTabContent />;
+      case "request":
+        return <RequestTabContent />;
       default:
-        return <BannedTabContent />;
+        return <DashboardTabContent />;
     }
   };
 
@@ -33,7 +36,26 @@ export const DashboardAdminPage = () => {
   );
 };
 
+// Dashboard content
+const DashboardTabContent = () => {
+  return (
+    <div className="flex flex-col gap-4">
+      <AdminWelcome />
+      <div className="grid grid-cols-3 gap-4">
+        <div className="col-span-2">
+          <AdminRequests />
+        </div>
+        <TopPerformingAgent />
+      </div>
+    </div>
+  );
+};
+
 // Banned content
-const BannedTabContent = () => {
-  return <></>;
+const RequestTabContent = () => {
+  return (
+    <>
+      <AdminRequests />
+    </>
+  );
 };
